@@ -3,4 +3,6 @@
     <string name="app_name">CheckIt</string>
     <string name="voice_trigger_start_program">check it</string>
 
+    <string name="stop">Stop</string>
+    
 </resources>
