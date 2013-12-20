@@ -33,7 +33,9 @@ public class MenuActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
-        	case R.id.selectChecklist:
+        	case R.id.newChecklist:
+        		return true;
+        	case R.id.continueChecklist:
         		return true;
             case R.id.stop:
                 stopService(new Intent(this, ChecklistService.class));

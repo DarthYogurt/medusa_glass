@@ -3,7 +3,8 @@
     <string name="app_name">Do Checklist</string>
     <string name="voice_trigger_start_program">do checklist</string>
 
-    <string name="selectChecklist">Select Checklist</string>
+    <string name="newChecklist">New Checklist</string>
+    <string name="continueChecklist">Continue</string>
     <string name="stop">Stop</string>
     
 </resources>
