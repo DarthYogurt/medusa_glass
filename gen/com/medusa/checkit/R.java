@@ -28,19 +28,6 @@ public final class R {
         public static final int voice_trigger_start_program=0x7f040001;
     }
     public static final class style {
-        /** 
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-    
- API 11 theme customizations can go here. 
-
-        Base application theme for API 14+. This theme completely replaces
-        AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.
-    
- API 14 theme customizations can go here. 
-         */
-        public static final int AppBaseTheme=0x7f050001;
         public static final int MenuTheme=0x7f050000;
     }
     public static final class xml {

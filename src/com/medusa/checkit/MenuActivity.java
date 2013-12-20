@@ -27,12 +27,14 @@ public class MenuActivity extends Activity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.checklist, menu);
         return true;
-    }
+    } 
 	
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
+        	case R.id.selectChecklist:
+        		return true;
             case R.id.stop:
                 stopService(new Intent(this, ChecklistService.class));
                 return true;
