@@ -6,7 +6,6 @@
     <string name="newChecklist">New Checklist</string>
     <string name="continueChecklist">Continue</string>
     <string name="stop">Stop</string>
-    <string name="title_activity_new_checklist">NewChecklistActivity</string>
     <string name="action_settings">Settings</string>
 
 </resources>

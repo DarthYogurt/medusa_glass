@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.Menu;
 import android.view.MotionEvent;
-import android.widget.TextView;
 
 public class NewChecklistActivity extends Activity {
 	
