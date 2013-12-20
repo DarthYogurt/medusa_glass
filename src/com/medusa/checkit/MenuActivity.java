@@ -37,6 +37,7 @@ public class MenuActivity extends Activity {
         		startActivity(new Intent(this, NewChecklistActivity.class));
         		return true;
         	case R.id.continueChecklist:
+        		startActivity(new Intent(this, ContinueChecklistActivity.class));
         		return true;
             case R.id.stop:
                 stopService(new Intent(this, ChecklistService.class));

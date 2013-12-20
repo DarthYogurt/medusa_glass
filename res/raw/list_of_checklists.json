@@ -1,0 +1,9 @@
+{
+	"listOfChecklists": 
+	[
+		{ "id":"1", "checklistName":"Assembly Line Checklist" },
+		{ "id":"2", "checklistName":"Safety Checklist" },
+		{ "id":"3", "checklistName":"ISO Checklist" },
+		{ "id":"4", "checklistName":"Automotive Checklist" }
+	]
+}
