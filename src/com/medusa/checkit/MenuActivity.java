@@ -34,6 +34,7 @@ public class MenuActivity extends Activity {
         // Handle item selection.
         switch (item.getItemId()) {
         	case R.id.newChecklist:
+        		startActivity(new Intent(this, NewChecklistActivity.class));
         		return true;
         	case R.id.continueChecklist:
         		return true;
