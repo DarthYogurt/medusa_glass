@@ -14,11 +14,7 @@
         android:text="@string/newChecklist"
         android:textSize="50px"
         android:textStyle="bold" />
-    
-    <TextView
-        android:id="@+id/testText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
 
 
 </LinearLayout>

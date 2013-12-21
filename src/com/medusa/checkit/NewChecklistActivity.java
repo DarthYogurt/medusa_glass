@@ -15,32 +15,57 @@ import com.google.android.glass.touchpad.GestureDetector;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.widget.TextView;
 
 public class NewChecklistActivity extends Activity {
 	
 	private GestureDetector mGestureDetector;
 	ArrayList<String[]> data;
-	TextView tvTest;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_checklist);
 		mGestureDetector = createGestureDetector(this);
-		tvTest = (TextView)findViewById(R.id.testText);
 		readJson();
 	}
+	
+	@Override
+    public void onResume() {
+        super.onResume();
+        openOptionsMenu();
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.new_checklist, menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.new_checklist, menu);
 		return true;
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection.
+        switch (item.getItemId()) {
+        	case R.id.newChecklist:
+        		startActivity(new Intent(this, NewChecklistActivity.class));
+        		return true;
+        	case R.id.continueChecklist:
+        		startActivity(new Intent(this, ContinueChecklistActivity.class));
+        		return true;
+            case R.id.stop:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 	
 	private GestureDetector createGestureDetector(Context context) {
 	    GestureDetector gestureDetector = new GestureDetector(context);
@@ -51,7 +76,6 @@ public class NewChecklistActivity extends Activity {
             public boolean onGesture(Gesture gesture) {
                 if (gesture == Gesture.TAP) {
                 	// do something on one finger tap
-                	tvTest.setText("Tap Test Works!");
                     return true;
                 } else if (gesture == Gesture.TWO_TAP) {
                     // do something on two finger tap

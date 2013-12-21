@@ -12,6 +12,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
+        
         <activity
             android:name="com.medusa.checkit.MenuActivity"
             android:enabled="true"
@@ -25,6 +26,7 @@
                 android:name="com.google.android.glass.VoiceTrigger"
                 android:resource="@xml/voice_trigger_start" />
         </activity>
+        
         <activity
             android:name="com.medusa.checkit.NewChecklistActivity"
             android:label="@string/app_name" >
