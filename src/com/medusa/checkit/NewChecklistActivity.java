@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,12 +24,14 @@ public class NewChecklistActivity extends Activity {
 	
 	private GestureDetector mGestureDetector;
 	ArrayList<String[]> data;
+	TextView tvTest;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_checklist);
 		mGestureDetector = createGestureDetector(this);
+		tvTest = (TextView)findViewById(R.id.testText);
 		readJson();
 	}
 
@@ -48,6 +51,7 @@ public class NewChecklistActivity extends Activity {
             public boolean onGesture(Gesture gesture) {
                 if (gesture == Gesture.TAP) {
                 	// do something on one finger tap
+                	tvTest.setText("Tap Test Works!");
                     return true;
                 } else if (gesture == Gesture.TWO_TAP) {
                     // do something on two finger tap
@@ -104,10 +108,8 @@ public class NewChecklistActivity extends Activity {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        Log.v("Text Data", byteArrayOutputStream.toString());
         try {
-
-            // Parse the data into JSONObject to get original data in form of JSON
+        	// Parse the data into JSONObject to get original data in form of JSON
             JSONObject jObject = new JSONObject(byteArrayOutputStream.toString());
 
             JSONArray jArray = jObject.getJSONArray("listOfChecklists");
@@ -118,10 +120,12 @@ public class NewChecklistActivity extends Activity {
             for (int i = 0; i < jArray.length(); i++) {
                 id = jArray.getJSONObject(i).getString("id");
                 checklistName = jArray.getJSONObject(i).getString("checklistName");
-
+                
+                Log.v("ID", id);
+                Log.v("Checklist Name", checklistName);
                 data.add(new String[] {id, checklistName});
+//                System.out.println(Arrays.toString(data.get(i)));
             }
-
         } catch (Exception e2) {
             e2.printStackTrace();
         }
