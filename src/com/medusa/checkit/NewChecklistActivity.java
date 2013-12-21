@@ -124,7 +124,7 @@ public class NewChecklistActivity extends Activity {
                 Log.v("ID", id);
                 Log.v("Checklist Name", checklistName);
                 data.add(new String[] {id, checklistName});
-//                System.out.println(Arrays.toString(data.get(i)));
+                System.out.println(Arrays.toString(data.get(i)));
             }
         } catch (Exception e2) {
             e2.printStackTrace();

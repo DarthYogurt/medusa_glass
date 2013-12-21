@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-
-// Show options menu
 public class MenuActivity extends Activity {
 
 	@Override
@@ -25,7 +23,7 @@ public class MenuActivity extends Activity {
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.checklist, menu);
+        inflater.inflate(R.menu.main_menu, menu);
         return true;
     } 
 	
