@@ -13,7 +13,7 @@ public class ServerCall {
 	String checklistURL;
 	
 	public ServerCall(int groupId) {
-		this.baseURL = "http://dev.darthyogurt.com/";
+		this.baseURL = "http://dev.darthyogurt.com:8000/";
 		this.baseGroupId = "checklist/groupid/";
 		this.groupId = Integer.toString(groupId);
 		this.checklistURL = baseURL + baseGroupId + groupId;
@@ -24,7 +24,6 @@ public class ServerCall {
 		URLConnection connection = new URL(checklistURL).openConnection();
 		InputStream response = connection.getInputStream();
 		String contentType = connection.getHeaderField("Content-Type");
-		Log.v("content-type", contentType);
 		for (String param : contentType.replace(" ", "").split(";")) {
 			if (param.startsWith("charset=")) {
 				charset = param.split("=", 2)[1];
@@ -36,7 +35,6 @@ public class ServerCall {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(response, charset));
 			try {
 				for (String line; (line = reader.readLine()) != null;) {
-					System.out.println(checklistURL);
 					System.out.println(line);
 				}
 			}
@@ -44,8 +42,5 @@ public class ServerCall {
 					try { reader.close(); } catch (IOException logOrIgnore) {}
 				}
 			}
-		else {
-			System.out.println("no charset");
-		}
 	}
 }
