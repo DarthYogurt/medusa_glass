@@ -51,13 +51,16 @@ public class JSONReader {
                 id = jArray.getJSONObject(i).getString("id");
                 checklistName = jArray.getJSONObject(i).getString("checklistName");
                 
-                Log.v("ID", id);
-                Log.v("Checklist Name", checklistName);
                 data.add(new String[] {id, checklistName});
-                System.out.println(Arrays.toString(data.get(i)));
             }
         } catch (Exception e2) {
             e2.printStackTrace();
         }
     }
+	
+	void getData() {
+		for (int i = 0; i < data.size(); i++) {
+			System.out.println(Arrays.toString(data.get(i)));
+		}
+	}
 }

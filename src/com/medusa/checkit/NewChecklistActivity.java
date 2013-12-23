@@ -1,8 +1,12 @@
 package com.medusa.checkit;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -24,6 +28,26 @@ public class NewChecklistActivity extends Activity {
 		
 		JSONReader jsonReader = new JSONReader(this.getApplicationContext());
 		jsonReader.readJson();
+		jsonReader.getData();
+		
+		new BackgroundTask().execute("");
+
+	}
+	
+	public class BackgroundTask extends AsyncTask<String, Void, String> {
+		@Override
+		protected String doInBackground(String... params) {
+			ServerCall sc = new ServerCall(1);
+			try {
+				sc.GetRequest();
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+	
 	}
 	
 	@Override
