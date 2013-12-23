@@ -22,7 +22,7 @@ public class JSONReader {
 	}
 	
 	void readJson() {
-		InputStream inputStream = getResources().openRawResource(R.raw.list_of_checklists);
+		InputStream inputStream = context.getResources().openRawResource(R.raw.list_of_checklists);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 

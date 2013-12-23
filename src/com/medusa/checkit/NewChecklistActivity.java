@@ -1,14 +1,5 @@
 package com.medusa.checkit;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
 
@@ -16,7 +7,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,7 +21,9 @@ public class NewChecklistActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_checklist);
 		mGestureDetector = createGestureDetector(this);
-		readJson();
+		
+		JSONReader jsonReader = new JSONReader(this.getApplicationContext());
+		jsonReader.readJson();
 	}
 	
 	@Override
