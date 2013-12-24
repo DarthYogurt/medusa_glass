@@ -5,8 +5,8 @@ import java.io.*;
 
 public class HTTPRequest {
 	String baseURL;
-	String baseGroupURL;
-	String baseChecklistURL;
+	String baseGroupId;
+	String baseChecklistId;
 	String groupId;
 	String checklistId;
 	String listOfChecklistsURL;
@@ -14,12 +14,12 @@ public class HTTPRequest {
 	
 	public HTTPRequest(int groupId, int checklistId) {
 		this.baseURL = "http://dev.darthyogurt.com:8000/checklist/";
-		this.baseGroupURL = "groupid/";
-		this.baseChecklistURL = "checklistid/";
+		this.baseGroupId = "groupid/";
+		this.baseChecklistId = "checklistid/";
 		this.groupId = Integer.toString(groupId);
 		this.checklistId = Integer.toString(checklistId);
-		this.listOfChecklistsURL = baseURL + baseGroupURL + groupId;
-		this.checklistStepsURL = baseURL + baseChecklistURL + checklistId;
+		this.listOfChecklistsURL = baseURL + baseGroupId + groupId;
+		this.checklistStepsURL = baseURL + baseChecklistId + checklistId;
 	}
 	
 	public void GetRequest() throws MalformedURLException, IOException {

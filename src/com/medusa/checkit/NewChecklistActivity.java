@@ -26,9 +26,9 @@ public class NewChecklistActivity extends Activity {
 		setContentView(R.layout.activity_new_checklist);
 		mGestureDetector = createGestureDetector(this);
 		
-//		JSONReader jsonReader = new JSONReader(this.getApplicationContext());
-//		jsonReader.readJson();
-//		jsonReader.getData();
+		JSONReader jsonReader = new JSONReader(this.getApplicationContext());
+		jsonReader.readJson();
+		jsonReader.getData();
 		
 		new BackgroundTask().execute("");
 
