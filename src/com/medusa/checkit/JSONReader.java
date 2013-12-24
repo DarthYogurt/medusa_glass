@@ -42,14 +42,14 @@ public class JSONReader {
         	// Parse the data into JSONObject to get original data in form of JSON
             JSONObject jObject = new JSONObject(byteArrayOutputStream.toString());
 
-            JSONArray jArray = jObject.getJSONArray("listOfChecklists");
+            JSONArray jArray = jObject.getJSONArray("checklist");
             String id="";
             String checklistName ="";
 
             data = new ArrayList<String[]>();
             for (int i = 0; i < jArray.length(); i++) {
                 id = jArray.getJSONObject(i).getString("id");
-                checklistName = jArray.getJSONObject(i).getString("checklistName");
+                checklistName = jArray.getJSONObject(i).getString("name");
                 
                 data.add(new String[] {id, checklistName});
             }

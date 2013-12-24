@@ -26,9 +26,9 @@ public class NewChecklistActivity extends Activity {
 		setContentView(R.layout.activity_new_checklist);
 		mGestureDetector = createGestureDetector(this);
 		
-		JSONReader jsonReader = new JSONReader(this.getApplicationContext());
-		jsonReader.readJson();
-		jsonReader.getData();
+//		JSONReader jsonReader = new JSONReader(this.getApplicationContext());
+//		jsonReader.readJson();
+//		jsonReader.getData();
 		
 		new BackgroundTask().execute("");
 
@@ -37,9 +37,9 @@ public class NewChecklistActivity extends Activity {
 	public class BackgroundTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			ServerCall sc = new ServerCall(1);
+			HTTPRequest request = new HTTPRequest(1, 2);
 			try {
-				sc.GetRequest();
+				request.GetRequest();
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

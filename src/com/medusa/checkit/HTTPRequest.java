@@ -3,25 +3,28 @@ package com.medusa.checkit;
 import java.net.*;
 import java.io.*;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
-public class ServerCall {
+public class HTTPRequest {
 	String baseURL;
-	String baseGroupId;
+	String baseGroupURL;
+	String baseChecklistURL;
 	String groupId;
-	String checklistURL;
+	String checklistId;
+	String listOfChecklistsURL;
+	String checklistStepsURL;
 	
-	public ServerCall(int groupId) {
-		this.baseURL = "http://dev.darthyogurt.com:8000/";
-		this.baseGroupId = "checklist/groupid/";
+	public HTTPRequest(int groupId, int checklistId) {
+		this.baseURL = "http://dev.darthyogurt.com:8000/checklist/";
+		this.baseGroupURL = "groupid/";
+		this.baseChecklistURL = "checklistid/";
 		this.groupId = Integer.toString(groupId);
-		this.checklistURL = baseURL + baseGroupId + groupId;
+		this.checklistId = Integer.toString(checklistId);
+		this.listOfChecklistsURL = baseURL + baseGroupURL + groupId;
+		this.checklistStepsURL = baseURL + baseChecklistURL + checklistId;
 	}
 	
 	public void GetRequest() throws MalformedURLException, IOException {
 		String charset = "UTF-8";
-		URLConnection connection = new URL(checklistURL).openConnection();
+		URLConnection connection = new URL(checklistStepsURL).openConnection();
 		InputStream response = connection.getInputStream();
 		String contentType = connection.getHeaderField("Content-Type");
 		for (String param : contentType.replace(" ", "").split(";")) {
@@ -38,9 +41,9 @@ public class ServerCall {
 					System.out.println(line);
 				}
 			}
-				finally {
-					try { reader.close(); } catch (IOException logOrIgnore) {}
-				}
+			finally {
+				try { reader.close(); } catch (IOException logOrIgnore) {}
 			}
+		}
 	}
 }
