@@ -22,37 +22,28 @@ import android.view.MotionEvent;
 
 public class NewChecklistActivity extends Activity {
 	
+	Context context;
 	private GestureDetector mGestureDetector;
 	String data;
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_checklist);
+		context = getApplicationContext();
 		mGestureDetector = createGestureDetector(this);
+		
+		new BackgroundTask().execute();
 		
 //		JSONReader jsonReader = new JSONReader(this.getApplicationContext());
 //		jsonReader.readJson();
 //		jsonReader.getData();
-		
-		new BackgroundTask().execute();
-		
-
-	}
-	
-	public void writeToJSON() throws IOException {
-		String filename = "test.json";
-		FileOutputStream fos = openFileOutput(filename, Context.MODE_PRIVATE);
-		fos.write(data.getBytes());
-		fos.close();
 	}
 	
 	public class BackgroundTask extends AsyncTask<Void, Void, Void> {
 		
 		protected Void doInBackground(Void... params) {
 			HTTPRequest request = new HTTPRequest(1, 2);
-			
 			try {
 				data = request.GetRequest();
 				Log.v("doInBackground", data);
@@ -67,8 +58,9 @@ public class NewChecklistActivity extends Activity {
 
 		protected void onPostExecute() {
 			try {
-				Log.v("onPostExecute", "1");
-				writeToJSON();
+				Log.v("onPostExecute", "");
+				JSONWriter writer = new JSONWriter(context, data);
+				writer.writeToJSON();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
