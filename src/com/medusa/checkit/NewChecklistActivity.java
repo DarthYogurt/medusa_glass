@@ -1,5 +1,8 @@
 package com.medusa.checkit;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +23,8 @@ import android.view.MotionEvent;
 public class NewChecklistActivity extends Activity {
 	
 	private GestureDetector mGestureDetector;
+	String data;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +32,31 @@ public class NewChecklistActivity extends Activity {
 		setContentView(R.layout.activity_new_checklist);
 		mGestureDetector = createGestureDetector(this);
 		
-		JSONReader jsonReader = new JSONReader(this.getApplicationContext());
-		jsonReader.readJson();
-		jsonReader.getData();
+//		JSONReader jsonReader = new JSONReader(this.getApplicationContext());
+//		jsonReader.readJson();
+//		jsonReader.getData();
 		
-		new BackgroundTask().execute("");
+		new BackgroundTask().execute();
+		
 
 	}
 	
-	public class BackgroundTask extends AsyncTask<String, Void, String> {
-		@Override
-		protected String doInBackground(String... params) {
+	public void writeToJSON() throws IOException {
+		String filename = "test.json";
+		FileOutputStream fos = openFileOutput(filename, Context.MODE_PRIVATE);
+		fos.write(data.getBytes());
+		fos.close();
+	}
+	
+	public class BackgroundTask extends AsyncTask<Void, Void, Void> {
+		
+		protected Void doInBackground(Void... params) {
 			HTTPRequest request = new HTTPRequest(1, 2);
+			
 			try {
-				request.GetRequest();
+				data = request.GetRequest();
+				Log.v("doInBackground", data);
+//				request.writeToJSON();
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -47,7 +64,15 @@ public class NewChecklistActivity extends Activity {
 			}
 			return null;
 		}
-	
+
+		protected void onPostExecute() {
+			try {
+				Log.v("onPostExecute", "1");
+				writeToJSON();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@Override
