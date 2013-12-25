@@ -1,8 +1,5 @@
 package com.medusa.checkit;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -40,14 +37,13 @@ public class NewChecklistActivity extends Activity {
 //		jsonReader.getData();
 	}
 	
-	public class BackgroundTask extends AsyncTask<Void, Void, Void> {
+	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
 		
 		protected Void doInBackground(Void... params) {
 			HTTPRequest request = new HTTPRequest(1, 2);
 			try {
 				data = request.GetRequest();
 				Log.v("doInBackground", data);
-//				request.writeToJSON();
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -56,14 +52,15 @@ public class NewChecklistActivity extends Activity {
 			return null;
 		}
 
-		protected void onPostExecute() {
+		protected void onPostExecute(Void result) {
 			try {
-				Log.v("onPostExecute", "");
+				Log.v("onPostExecute", "writing to JSON");
 				JSONWriter writer = new JSONWriter(context, data);
 				writer.writeToJSON();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			return;
 		}
 	}
 	
