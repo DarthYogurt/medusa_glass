@@ -21,7 +21,7 @@ public class NewChecklistActivity extends Activity {
 	
 	Context context;
 	private GestureDetector mGestureDetector;
-	String data;
+	String JSONString;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,8 @@ public class NewChecklistActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			HTTPGetRequest getRequest = new HTTPGetRequest(1, 2);
 			try {
-				data = getRequest.GetJSONString();
-				Log.v("doInBackground", data);
+				JSONString = getRequest.GetJSONString();
+				Log.v("doInBackground", JSONString);
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -55,8 +55,9 @@ public class NewChecklistActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			try {
 				Log.v("onPostExecute", "writing to JSON");
-				JSONWriter writer = new JSONWriter(context, data);
+				JSONWriter writer = new JSONWriter(context, JSONString);
 				writer.writeToJSON();
+				writer.readFromJSON();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
