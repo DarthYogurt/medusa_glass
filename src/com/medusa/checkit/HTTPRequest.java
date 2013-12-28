@@ -13,7 +13,7 @@ public class HTTPRequest {
 	String checklistId;
 	String listOfChecklistsURL;
 	String checklistStepsURL;
-	String data;
+	String JSONString;
 	
 	public HTTPRequest(int groupId, int checklistId) {
 		this.baseURL = "http://dev.darthyogurt.com:8000/checklist/";
@@ -42,7 +42,7 @@ public class HTTPRequest {
 			try {
 				for (String line; (line = reader.readLine()) != null;) {
 //					System.out.println(line);
-					data = line;
+					JSONString = line;
 				}
 			}
 			finally {
@@ -50,7 +50,7 @@ public class HTTPRequest {
 			}
 		}
 		
-		return data;
+		return JSONString;
 	}
 	
 	public void writeToJSON() throws IOException {
