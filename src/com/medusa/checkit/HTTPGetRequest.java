@@ -3,9 +3,7 @@ package com.medusa.checkit;
 import java.net.*;
 import java.io.*;
 
-import android.content.Context;
-
-public class HTTPRequest {
+public class HTTPGetRequest {
 	String baseURL;
 	String baseGroupId;
 	String baseChecklistId;
@@ -15,7 +13,7 @@ public class HTTPRequest {
 	String checklistStepsURL;
 	String JSONString;
 	
-	public HTTPRequest(int groupId, int checklistId) {
+	public HTTPGetRequest(int groupId, int checklistId) {
 		this.baseURL = "http://dev.darthyogurt.com:8000/checklist/";
 		this.baseGroupId = "groupid/";
 		this.baseChecklistId = "checklistid/";
@@ -25,7 +23,7 @@ public class HTTPRequest {
 		this.checklistStepsURL = baseURL + baseChecklistId + checklistId;
 	}
 	
-	public String GetRequest() throws MalformedURLException, IOException {
+	public String GetJSONString() throws MalformedURLException, IOException {
 		String charset = "UTF-8";
 		URLConnection connection = new URL(listOfChecklistsURL).openConnection();
 		InputStream response = connection.getInputStream();
@@ -41,7 +39,6 @@ public class HTTPRequest {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(response, charset));
 			try {
 				for (String line; (line = reader.readLine()) != null;) {
-//					System.out.println(line);
 					JSONString = line;
 				}
 			}
@@ -53,12 +50,4 @@ public class HTTPRequest {
 		return JSONString;
 	}
 	
-	public void writeToJSON() throws IOException {
-//		String FILENAME = "test.json";
-//		String string = "hello world!";
-//
-//		FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-//		fos.write(string.getBytes());
-//		fos.close();
-	}
 }
