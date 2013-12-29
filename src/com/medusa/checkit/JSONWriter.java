@@ -36,15 +36,26 @@ public class JSONWriter {
 	}
 	
 	public void readFromJSON() throws IOException {
-		DataInputStream dis = null;
-		try	{
-			dis = new DataInputStream(context.openFileInput(filename));
-			String text = dis.readUTF();
-			Log.v("readFromJSON", text);
-		} catch (EOFException e) {
+		BufferedReader br = null;
+		
+		try {
+			FileInputStream fis = context.openFileInput(filename);
+			InputStreamReader isr = new InputStreamReader(fis);
+			br = new BufferedReader(isr);
 			
+			String text = br.readLine();
+			Log.v("readFromJSON", text);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null) {
+					br.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		dis.close();
 	}
 	
 }
