@@ -13,19 +13,15 @@ public class HTTPGetRequest {
 	String checklistStepsURL;
 	String JSONString;
 	
-	public HTTPGetRequest(int groupId, int checklistId) {
+	public HTTPGetRequest() {
 		this.baseURL = "http://dev.darthyogurt.com:8000/checklist/";
 		this.baseGroupId = "groupid/";
 		this.baseChecklistId = "checklistid/";
-		this.groupId = Integer.toString(groupId);
-		this.checklistId = Integer.toString(checklistId);
-		this.listOfChecklistsURL = baseURL + baseGroupId + groupId;
-		this.checklistStepsURL = baseURL + baseChecklistId + checklistId;
 	}
 	
-	public String GetJSONString() throws MalformedURLException, IOException {
+	public String getJSONString(String JSONURL) throws MalformedURLException, IOException {
 		String charset = "UTF-8";
-		URLConnection connection = new URL(listOfChecklistsURL).openConnection();
+		URLConnection connection = new URL(JSONURL).openConnection();
 		InputStream response = connection.getInputStream();
 		String contentType = connection.getHeaderField("Content-Type");
 		for (String param : contentType.replace(" ", "").split(";")) {
@@ -46,8 +42,16 @@ public class HTTPGetRequest {
 				try { reader.close(); } catch (IOException logOrIgnore) {}
 			}
 		}
-		
 		return JSONString;
 	}
 	
+	public String getChecklists(int groupId) throws MalformedURLException, IOException {
+		listOfChecklistsURL = baseURL + baseGroupId + Integer.toString(groupId);
+		return getJSONString(listOfChecklistsURL);
+	}
+	
+	public String getSteps(int checklistId) throws MalformedURLException, IOException {
+		checklistStepsURL = baseURL + baseChecklistId + Integer.toString(checklistId);
+		return getJSONString(checklistStepsURL);
+	}
 }

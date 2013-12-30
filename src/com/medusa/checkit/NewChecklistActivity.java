@@ -40,9 +40,9 @@ public class NewChecklistActivity extends Activity {
 	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
 		
 		protected Void doInBackground(Void... params) {
-			HTTPGetRequest getRequest = new HTTPGetRequest(1, 2);
+			HTTPGetRequest getRequest = new HTTPGetRequest();
 			try {
-				JSONString = getRequest.GetJSONString();
+				JSONString = getRequest.getChecklists(1);
 				Log.v("doInBackground", JSONString);
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
