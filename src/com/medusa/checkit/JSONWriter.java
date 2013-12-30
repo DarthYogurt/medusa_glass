@@ -1,8 +1,6 @@
 package com.medusa.checkit;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 
 import java.io.*;
@@ -15,11 +13,12 @@ public class JSONWriter {
 	public JSONWriter(Context context, String data) {
 		this.context = context;
 		this.data = data;
+		this.filename = "temp.json";
 	}
 	
-	public void writeToJSON() throws IOException {
-		filename = "test.json";
+	public void writeToInternal() throws IOException {
 		FileOutputStream fos = null;
+		
 		try {
 			fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
 			fos.write(data.getBytes());
@@ -29,29 +28,6 @@ public class JSONWriter {
 		} finally {
 			try {
 				fos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public void readFromJSON() throws IOException {
-		BufferedReader br = null;
-		
-		try {
-			FileInputStream fis = context.openFileInput(filename);
-			InputStreamReader isr = new InputStreamReader(fis);
-			br = new BufferedReader(isr);
-			
-			String text = br.readLine();
-			Log.v("readFromJSON", text);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null) {
-					br.close();
-				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
