@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 
 public class NewChecklistActivity extends Activity {
-	
 	Context context;
 	private GestureDetector mGestureDetector;
 	String JSONString;
@@ -31,10 +30,6 @@ public class NewChecklistActivity extends Activity {
 		mGestureDetector = createGestureDetector(this);
 		
 		new BackgroundTask().execute();
-		
-//		JSONReader jsonReader = new JSONReader(this.getApplicationContext());
-//		jsonReader.readJson();
-//		jsonReader.getData();
 	}
 	
 	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
@@ -145,6 +140,5 @@ public class NewChecklistActivity extends Activity {
         }
         return false;
     }
-
 
 }

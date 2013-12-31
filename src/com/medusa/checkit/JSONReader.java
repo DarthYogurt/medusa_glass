@@ -19,7 +19,8 @@ public class JSONReader {
 	Context context;
 	String filename;
 	String jsonString;
-	ArrayList<String[]> data;
+	ArrayList<String[]> checklistsArray;
+	ArrayList<String[]> stepsArray;
 	
 	public JSONReader(Context context, String filename) {
 		this.context = context;
@@ -56,15 +57,15 @@ public class JSONReader {
             String id = null;
             String checklistName = null;
 
-            data = new ArrayList<String[]>();
+            checklistsArray = new ArrayList<String[]>();
             for (int i = 0; i < jArray.length(); i++) {
                 id = jArray.getJSONObject(i).getString("id");
                 checklistName = jArray.getJSONObject(i).getString("name");
-                data.add(new String[] {id, checklistName});
+                checklistsArray.add(new String[] {id, checklistName});
             }
             
-            for (int i = 0; i < data.size(); i++) {
-    			Log.v("Data Array", Arrays.toString(data.get(i)));
+            for (int i = 0; i < checklistsArray.size(); i++) {
+    			Log.v("Checklists Array", Arrays.toString(checklistsArray.get(i)));
     		}
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,16 +80,16 @@ public class JSONReader {
             String stepName = null;
             String stepType = null;
 
-            data = new ArrayList<String[]>();
+            stepsArray = new ArrayList<String[]>();
             for (int i = 0; i < jArray.length(); i++) {
                 stepNumber = jArray.getJSONObject(i).getString("stepNumber");
                 stepName = jArray.getJSONObject(i).getString("name");
                 stepType = jArray.getJSONObject(i).getString("stepType");
-                data.add(new String[] {stepNumber, stepName, stepType});
+                stepsArray.add(new String[] {stepNumber, stepName, stepType});
             }
             
-            for (int i = 0; i < data.size(); i++) {
-    			Log.v("Data Array", Arrays.toString(data.get(i)));
+            for (int i = 0; i < stepsArray.size(); i++) {
+    			Log.v("Steps Array", Arrays.toString(stepsArray.get(i)));
     		}
         } catch (Exception e) {
             e.printStackTrace();
