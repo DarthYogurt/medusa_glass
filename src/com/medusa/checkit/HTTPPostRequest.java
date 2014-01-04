@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -13,20 +14,26 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
 
-public class HTTPSendRequest {
-	String url = "http://dev.darthyogurt.com:8000/";
+public class HTTPPostRequest {
+	String url = "http://dev.darthyogurt.com:8000/testPost/";
 	
 	public void sendPost() throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost post = new HttpPost(url);
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
+		
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("test_string", "test"));
-		post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-		httpClient.execute(post);
+		httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		Log.v("sendPost", "POST sent successfully");
+		
+		HttpResponse response = httpClient.execute(httpPost);
+		String responseBody = EntityUtils.toString(response.getEntity());
+		Log.v("Error Msg", responseBody);
 
 		
 //		HttpClient httpClient = new DefaultHttpClient();

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,11 +20,13 @@ public class MenuActivity extends Activity {
 	String JSONString;
 	ArrayList<String[]> checklistsArray;
 	int numOfChecklists;
+	Bundle bundle;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
+        bundle = new Bundle();
         
         new BackgroundTask().execute();
     }
@@ -69,7 +72,7 @@ public class MenuActivity extends Activity {
 		
 		protected Void doInBackground(Void... params) {
 			HTTPGetRequest getRequest = new HTTPGetRequest();
-			HTTPSendRequest sendRequest = new HTTPSendRequest();
+			HTTPPostRequest sendRequest = new HTTPPostRequest();
 			try {
 				JSONString = getRequest.getChecklists(1);
 				
@@ -92,6 +95,11 @@ public class MenuActivity extends Activity {
 				reader.readFromInternal();
 				checklistsArray = reader.getChecklistsArray();
 				numOfChecklists = reader.getNumOfChecklists();
+				
+//				bundle.putParcelable("checklists", (Parcelable) checklistsArray);
+//				Intent i = new Intent(context, NewChecklistActivity.class);
+//				i.putExtras(bundle);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

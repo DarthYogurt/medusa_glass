@@ -2,6 +2,7 @@ package com.medusa.checkit;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
@@ -21,6 +22,8 @@ public class NewChecklistActivity extends Activity {
 	Context context;
 	private GestureDetector mGestureDetector;
 	String JSONString;
+	Bundle bundle;
+	ArrayList<String[]> checklistsArray;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,8 @@ public class NewChecklistActivity extends Activity {
 		context = getApplicationContext();
 		mGestureDetector = createGestureDetector(this);
 		
+//		bundle = this.getIntent().getExtras();
+//		checklistsArray = bundle.getSerializable("checklists");		
 //		new BackgroundTask().execute();
 	}
 	
