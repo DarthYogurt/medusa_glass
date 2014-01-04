@@ -2,6 +2,7 @@ package com.medusa.checkit;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 public class MenuActivity extends Activity {
 	Context context;
 	String JSONString;
+	ArrayList<String[]> checklistsArray;
+	int numOfChecklists;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +90,8 @@ public class MenuActivity extends Activity {
 				JSONReader reader = new JSONReader(context, writer.filename);
 				writer.writeToInternal();
 				reader.readFromInternal();
-				reader.getChecklistsArray();
-				
-				
+				checklistsArray = reader.getChecklistsArray();
+				numOfChecklists = reader.getNumOfChecklists();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

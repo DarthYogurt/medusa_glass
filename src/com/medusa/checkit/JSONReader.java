@@ -50,7 +50,7 @@ public class JSONReader {
 		}
 	}
 	
-	public void getChecklistsArray() {
+	public ArrayList<String[]> getChecklistsArray() {
 		try {
             JSONObject jObject = new JSONObject(jsonString);
             JSONArray jArray = jObject.getJSONArray("checklist");
@@ -64,19 +64,21 @@ public class JSONReader {
                 checklistsArray.add(new String[] {id, checklistName});
             }
             
+            // Shows contents of checklistsArray
             for (int i = 0; i < checklistsArray.size(); i++) {
     			Log.v("Checklists Array", Arrays.toString(checklistsArray.get(i)));
     		}
         } catch (Exception e) {
             e.printStackTrace();
         }
+		return checklistsArray;
 	}
 	
 	public int getNumOfChecklists() {
 		return checklistsArray.size();
 	}
 	
-	public void getStepsArray() {
+	public ArrayList<String[]> getStepsArray() {
 		try {
             JSONObject jObject = new JSONObject(jsonString);
             JSONArray jArray = jObject.getJSONArray("steps");
@@ -92,12 +94,14 @@ public class JSONReader {
                 stepsArray.add(new String[] {stepNumber, stepName, stepType});
             }
             
+            // Show contents of stepsArray
             for (int i = 0; i < stepsArray.size(); i++) {
     			Log.v("Steps Array", Arrays.toString(stepsArray.get(i)));
     		}
         } catch (Exception e) {
             e.printStackTrace();
         }
+		return stepsArray;
 	}
 	
 	public int getNumOfSteps() {
