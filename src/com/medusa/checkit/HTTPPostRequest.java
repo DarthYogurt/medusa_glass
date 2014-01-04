@@ -27,13 +27,14 @@ public class HTTPPostRequest {
 		httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
 		
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("test_string", "test"));
+		nameValuePairs.add(new BasicNameValuePair("test string", "test"));
 		httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		Log.v("sendPost", "POST sent successfully");
 		
+		// Response from sending HTTP POST
 		HttpResponse response = httpClient.execute(httpPost);
 		String responseBody = EntityUtils.toString(response.getEntity());
-		Log.v("Error Msg", responseBody);
+		Log.v("HTTP Response", responseBody);
 
 		
 //		HttpClient httpClient = new DefaultHttpClient();
