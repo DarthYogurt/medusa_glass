@@ -29,43 +29,43 @@ public class NewChecklistActivity extends Activity {
 		context = getApplicationContext();
 		mGestureDetector = createGestureDetector(this);
 		
-		new BackgroundTask().execute();
+//		new BackgroundTask().execute();
 	}
 	
-	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
-		
-		protected Void doInBackground(Void... params) {
-			HTTPGetRequest getRequest = new HTTPGetRequest();
-			HTTPSendRequest sendRequest = new HTTPSendRequest();
-			try {
-				JSONString = getRequest.getSteps(2);
-				
-				sendRequest.sendPost();
-				
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		protected void onPostExecute(Void result) {
-			try {
-				Log.v("onPostExecute", "writing to JSON");
-				JSONWriter writer = new JSONWriter(context, JSONString);
-				JSONReader reader = new JSONReader(context, writer.filename);
-				writer.writeToInternal();
-				reader.readFromInternal();
-				reader.getStepsArray();
-				
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return;
-		}
-	}
+//	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
+//		
+//		protected Void doInBackground(Void... params) {
+//			HTTPGetRequest getRequest = new HTTPGetRequest();
+//			HTTPSendRequest sendRequest = new HTTPSendRequest();
+//			try {
+//				JSONString = getRequest.getChecklists(1);
+//				
+//				sendRequest.sendPost();
+//				
+//			} catch (MalformedURLException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			return null;
+//		}
+//
+//		protected void onPostExecute(Void result) {
+//			try {
+//				Log.v("onPostExecute", "writing to JSON");
+//				JSONWriter writer = new JSONWriter(context, JSONString);
+//				JSONReader reader = new JSONReader(context, writer.filename);
+//				writer.writeToInternal();
+//				reader.readFromInternal();
+//				reader.getChecklistsArray();
+//				
+//				
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			return;
+//		}
+//	}
 	
 	@Override
     public void onResume() {
@@ -77,7 +77,6 @@ public class NewChecklistActivity extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
