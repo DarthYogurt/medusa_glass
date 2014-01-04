@@ -36,8 +36,12 @@ public class NewChecklistActivity extends Activity {
 		
 		protected Void doInBackground(Void... params) {
 			HTTPGetRequest getRequest = new HTTPGetRequest();
+			HTTPSendRequest sendRequest = new HTTPSendRequest();
 			try {
 				JSONString = getRequest.getSteps(2);
+				
+				sendRequest.sendPost();
+				
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -54,6 +58,8 @@ public class NewChecklistActivity extends Activity {
 				writer.writeToInternal();
 				reader.readFromInternal();
 				reader.getStepsArray();
+				
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
