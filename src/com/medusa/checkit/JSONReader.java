@@ -72,6 +72,10 @@ public class JSONReader {
         }
 	}
 	
+	public int getNumOfChecklists() {
+		return checklistsArray.size();
+	}
+	
 	public void getStepsArray() {
 		try {
             JSONObject jObject = new JSONObject(jsonString);
@@ -94,6 +98,10 @@ public class JSONReader {
         } catch (Exception e) {
             e.printStackTrace();
         }
+	}
+	
+	public int getNumOfSteps() {
+		return stepsArray.size();
 	}
 
 }
