@@ -29,6 +29,11 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f0a0000;
+        public static final int checklistFive=0x7f0a0008;
+        public static final int checklistFour=0x7f0a0007;
+        public static final int checklistOne=0x7f0a0004;
+        public static final int checklistThree=0x7f0a0006;
+        public static final int checklistTwo=0x7f0a0005;
         public static final int continueChecklist=0x7f0a0002;
         public static final int newChecklist=0x7f0a0001;
         public static final int stop=0x7f0a0003;

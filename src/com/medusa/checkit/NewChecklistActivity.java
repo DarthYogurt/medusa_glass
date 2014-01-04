@@ -72,13 +72,13 @@ public class NewChecklistActivity extends Activity {
         super.onResume();
         openOptionsMenu();
     }
-
+	
+	// Use this instead of onCreateOptionsMenu if menu is dynamic
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.new_checklist, menu);
-		return true;
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.clear();
+		
+		return super.onPrepareOptionsMenu(menu);
 	}
 	
 	@Override
