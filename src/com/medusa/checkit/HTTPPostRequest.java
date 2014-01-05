@@ -30,11 +30,9 @@ public class HTTPPostRequest {
 	static final File EXTERNALSTORAGE = Environment.getExternalStorageDirectory();
 	String url = "http://dev.darthyogurt.com:8000/testPost/";
 	
-	
-	public void sendPost() throws ClientProtocolException, IOException {
+	public void textPost() throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
-		httpPost.setHeader("Content-type", "application/json");
 		
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("Test String", "test"));
@@ -47,11 +45,24 @@ public class HTTPPostRequest {
 		Log.v("HTTP Response", responseBody);
 	}
 	
-	public void sendJSONPost() throws ClientProtocolException, IOException {
+	public void imagePost() throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
 		
 		httpPost.setEntity(new FileEntity(new File(EXTERNALSTORAGE + "/Pictures/sample.jpg"), "application/octet-stream"));
+		Log.v("sendPost", "POST sent successfully");
+		
+		// Response from sending HTTP POST
+		HttpResponse response = httpClient.execute(httpPost);
+		String responseBody = EntityUtils.toString(response.getEntity());
+		Log.v("HTTP Response", responseBody);
+	}
+	
+	public void jsonPost() throws ClientProtocolException, IOException {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		
+		httpPost.setEntity(new FileEntity(new File(EXTERNALSTORAGE + "/Pictures/checklist1.json"), "application/json"));
 		Log.v("sendPost", "POST sent successfully");
 		
 		// Response from sending HTTP POST

@@ -76,7 +76,7 @@ public class MenuActivity extends Activity {
 			try {
 				JSONString = getRequest.getChecklists(1);
 				
-				sendRequest.sendPost();
+				sendRequest.jsonPost();
 				
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
