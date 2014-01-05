@@ -48,14 +48,15 @@ public class HTTPPostRequest {
 	public void imagePost() throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
+		File image = new File(EXTERNALSTORAGE + "/Pictures/sample.jpg");
 		
-		httpPost.setEntity(new FileEntity(new File(EXTERNALSTORAGE + "/Pictures/sample.jpg"), "application/octet-stream"));
+		httpPost.setEntity(new FileEntity(image, "enctype=multipart/form-data"));
 		Log.v("sendPost", "POST sent successfully");
 		
 		// Response from sending HTTP POST
 		HttpResponse response = httpClient.execute(httpPost);
 		String responseBody = EntityUtils.toString(response.getEntity());
-		Log.v("HTTP Response", responseBody);
+		Log.v("imagePost HTTP Response", responseBody);
 	}
 	
 	public void jsonPost() throws ClientProtocolException, IOException {
@@ -68,7 +69,7 @@ public class HTTPPostRequest {
 		// Response from sending HTTP POST
 		HttpResponse response = httpClient.execute(httpPost);
 		String responseBody = EntityUtils.toString(response.getEntity());
-		Log.v("HTTP Response", responseBody);
+		Log.v("jsonPost HTTP Response", responseBody);
 	}
 		
 	public void multiPartPost() throws ClientProtocolException, IOException {
