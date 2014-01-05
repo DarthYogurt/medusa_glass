@@ -1,0 +1,8 @@
+{
+	"cagingTheMonkey": [
+		{ "id":"1", "step":"Lure monkey with banana", "value":"true" },
+		{ "id":"2", "step":"Knock monkey out", "value":"true" },
+		{ "id":"3", "step":"Throw monkey in cage", "value":"true" },
+		{ "id":"4", "step":"Close cage", "value":"true" }
+	]
+}

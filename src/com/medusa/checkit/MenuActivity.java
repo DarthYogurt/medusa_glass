@@ -91,8 +91,10 @@ public class MenuActivity extends Activity {
 				Log.v("onPostExecute", "writing to JSON");
 				JSONWriter writer = new JSONWriter(context, JSONString);
 				JSONReader reader = new JSONReader(context, writer.filename);
+				
 				writer.writeToInternal();
 				reader.readFromInternal();
+				
 				checklistsArray = reader.getChecklistsArray();
 				numOfChecklists = reader.getNumOfChecklists();
 				

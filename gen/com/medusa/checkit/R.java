@@ -48,7 +48,7 @@ public final class R {
         public static final int new_checklist=0x7f090002;
     }
     public static final class raw {
-        public static final int list_of_checklists=0x7f050000;
+        public static final int checklist1=0x7f050000;
     }
     public static final class string {
         public static final int action_settings=0x7f070005;
