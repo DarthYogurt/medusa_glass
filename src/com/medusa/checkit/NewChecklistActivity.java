@@ -25,6 +25,7 @@ public class NewChecklistActivity extends Activity {
 	String JSONString;
 	Bundle bundle;
 	ArrayList<String[]> checklistsArray;
+	int numOfChecklists;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -35,6 +36,7 @@ public class NewChecklistActivity extends Activity {
 		mGestureDetector = createGestureDetector(this);
 		
 		checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
+		numOfChecklists = this.getIntent().getIntExtra("numOfChecklists", 0);
 		
 		for (int i = 0; i < checklistsArray.size(); i++) {
 			Log.v("Checklists Array", Arrays.toString(checklistsArray.get(i)));
@@ -88,7 +90,13 @@ public class NewChecklistActivity extends Activity {
 	// Use this instead of onCreateOptionsMenu if menu is dynamic
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
+		String[] menuItem;
+		
 		menu.clear();
+		for (int i = 0; i < checklistsArray.size(); i++) {
+			menuItem = checklistsArray.get(i);
+			menu.add(menuItem[1]);
+		}
 		return super.onPrepareOptionsMenu(menu);
 	}
 	

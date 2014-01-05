@@ -98,6 +98,7 @@ public class MenuActivity extends Activity {
 				
 				newChecklistIntent = new Intent(context, NewChecklistActivity.class);
 				newChecklistIntent.putExtra("checklists", checklistsArray);
+				newChecklistIntent.putExtra("numOfChecklists", numOfChecklists);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
