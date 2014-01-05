@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,16 +16,15 @@ import android.view.MenuItem;
 
 public class MenuActivity extends Activity {
 	Context context;
+	Intent newChecklistIntent;
 	String JSONString;
 	ArrayList<String[]> checklistsArray;
 	int numOfChecklists;
-	Bundle bundle;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
-        bundle = new Bundle();
         
         new BackgroundTask().execute();
     }
@@ -49,7 +47,7 @@ public class MenuActivity extends Activity {
         // Handle item selection.
         switch (item.getItemId()) {
         	case R.id.newChecklist:
-        		startActivity(new Intent(this, NewChecklistActivity.class));
+        		startActivity(newChecklistIntent);
         		return true;
         	case R.id.continueChecklist:
         		startActivity(new Intent(this, ContinueChecklistActivity.class));
@@ -98,9 +96,8 @@ public class MenuActivity extends Activity {
 				checklistsArray = reader.getChecklistsArray();
 				numOfChecklists = reader.getNumOfChecklists();
 				
-//				bundle.putParcelable("checklists", (Parcelable) checklistsArray);
-//				Intent i = new Intent(context, NewChecklistActivity.class);
-//				i.putExtras(bundle);
+				newChecklistIntent = new Intent(context, NewChecklistActivity.class);
+				newChecklistIntent.putExtra("checklists", checklistsArray);
 				
 			} catch (IOException e) {
 				e.printStackTrace();

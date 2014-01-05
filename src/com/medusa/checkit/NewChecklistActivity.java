@@ -3,6 +3,7 @@ package com.medusa.checkit;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
@@ -25,6 +26,7 @@ public class NewChecklistActivity extends Activity {
 	Bundle bundle;
 	ArrayList<String[]> checklistsArray;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,8 +34,13 @@ public class NewChecklistActivity extends Activity {
 		context = getApplicationContext();
 		mGestureDetector = createGestureDetector(this);
 		
-//		bundle = this.getIntent().getExtras();
-//		checklistsArray = bundle.getSerializable("checklists");		
+		checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
+		
+		for (int i = 0; i < checklistsArray.size(); i++) {
+			Log.v("Checklists Array", Arrays.toString(checklistsArray.get(i)));
+		}
+		
+		
 //		new BackgroundTask().execute();
 	}
 	
