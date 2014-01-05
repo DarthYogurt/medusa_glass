@@ -46,9 +46,10 @@ public class HTTPPostRequest {
 	}
 	
 	public void imagePost() throws ClientProtocolException, IOException {
+		File image = new File(EXTERNALSTORAGE + "/Pictures/sample.jpg");
+		
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
-		File image = new File(EXTERNALSTORAGE + "/Pictures/sample.jpg");
 		
 		httpPost.setEntity(new FileEntity(image, "enctype=multipart/form-data"));
 		Log.v("sendPost", "POST sent successfully");
@@ -73,20 +74,21 @@ public class HTTPPostRequest {
 	}
 		
 	public void multiPartPost() throws ClientProtocolException, IOException {
-		String imageFile = "/Pictures/sample.jpg";
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(url);
+		File image = new File(EXTERNALSTORAGE + "/Pictures/sample.jpg");
+		FileBody fileBody = new FileBody(image);
 		
-		File file = new File(imageFile);
-		FileBody fileBody = new FileBody(file);
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(url);
 		
+		post.setHeader("enctype", "multipart/form-data");
 		MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 		multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 		multipartEntity.addPart("image", fileBody);
+		post.setEntity(multipartEntity.build());
 		
-		httpPost.setEntity(multipartEntity.build());
-		HttpResponse response = httpClient.execute(httpPost);
+		HttpResponse response = client.execute(post);
 		String responseBody = EntityUtils.toString(response.getEntity());
+		Log.v("multiPartPost HTTP Response", responseBody);
 	}
 	
 }
