@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     
-    <item
-        android:id="@+id/checklistOne" />
-    
-    <item
-        android:id="@+id/checklistTwo" />
-    
-    <item
-        android:id="@+id/checklistThree" />
-    
-    <item
-        android:id="@+id/checklistFour" />
-    
-    <item
-        android:id="@+id/checklistFive" />
-    
     
 </menu>

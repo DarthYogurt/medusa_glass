@@ -15,7 +15,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
@@ -95,7 +94,7 @@ public class NewChecklistActivity extends Activity {
 		menu.clear();
 		for (int i = 0; i < checklistsArray.size(); i++) {
 			menuItem = checklistsArray.get(i);
-			menu.add(menuItem[1]);
+			menu.add(0, i, Menu.NONE, menuItem[1]);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -104,14 +103,20 @@ public class NewChecklistActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
-        	case R.id.newChecklist:
+        	case 0:
         		startActivity(new Intent(this, NewChecklistActivity.class));
         		return true;
-        	case R.id.continueChecklist:
-        		startActivity(new Intent(this, ContinueChecklistActivity.class));
+        	case 1:
+        		startActivity(new Intent(this, NewChecklistActivity.class));
         		return true;
-            case R.id.stop:
-                finish();
+            case 2:
+            	startActivity(new Intent(this, NewChecklistActivity.class));
+                return true;
+        	case 3:
+        		startActivity(new Intent(this, NewChecklistActivity.class));
+        		return true;
+            case 4:
+            	startActivity(new Intent(this, NewChecklistActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
