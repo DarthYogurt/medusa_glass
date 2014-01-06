@@ -14,14 +14,13 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-
-import com.google.gson.Gson;
 
 import android.os.Environment;
 import android.util.Log;
@@ -73,17 +72,17 @@ public class HTTPPostRequest {
 		Log.v("jsonPost HTTP Response", responseBody);
 	}
 		
-	public void multiPartPost() throws ClientProtocolException, IOException {
+	// For sending files using MultipartEntity
+	public void multipartPost() throws ClientProtocolException, IOException {
 		File image = new File(EXTERNALSTORAGE + "/Pictures/sample.jpg");
-		FileBody fileBody = new FileBody(image);
 		
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(url);
-		
 		post.setHeader("enctype", "multipart/form-data");
+
 		MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 		multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-		multipartEntity.addPart("image", fileBody);
+		multipartEntity.addPart("sampleImage", new FileBody(image));
 		post.setEntity(multipartEntity.build());
 		
 		HttpResponse response = client.execute(post);
