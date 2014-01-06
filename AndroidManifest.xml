@@ -16,7 +16,7 @@
         android:label="@string/app_name" >
         
         <activity
-            android:name="com.medusa.checkit.MenuActivity"
+            android:name="com.medusa.checkit.MainMenuActivity"
             android:enabled="true"
             android:label="@string/app_name"
             android:theme="@style/MenuTheme" >

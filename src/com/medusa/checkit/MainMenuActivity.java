@@ -13,21 +13,28 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
-public class MenuActivity extends Activity {
+public class MainMenuActivity extends Activity {
 	
 	Context context;
+	BackgroundTask backgroundTask;
 	Intent newChecklistIntent;
 	String JSONString;
 	ArrayList<String[]> checklistsArray;
 	int numOfChecklists;
+	TextView bgTaskRunning;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_menu);
         context = getApplicationContext();
+        bgTaskRunning = (TextView)findViewById(R.id.bgTaskRunning);
         
-        new BackgroundTask().execute();
+        backgroundTask = new BackgroundTask();
+        backgroundTask.execute();
     }
 	
 	@Override
@@ -48,7 +55,12 @@ public class MenuActivity extends Activity {
         // Handle item selection.
         switch (item.getItemId()) {
         	case R.id.newChecklist:
-        		startActivity(newChecklistIntent);
+
+        		
+        		// My AsyncTask is done and onPostExecute was called
+        		if (backgroundTask.getStatus() == AsyncTask.Status.FINISHED) {
+        			startActivity(newChecklistIntent);
+        		}
         		return true;
         	case R.id.continueChecklist:
         		startActivity(new Intent(this, ContinueChecklistActivity.class));
@@ -99,6 +111,7 @@ public class MenuActivity extends Activity {
 				newChecklistIntent = new Intent(context, NewChecklistActivity.class);
 				newChecklistIntent.putExtra("checklists", checklistsArray);
 				
+				bgTaskRunning.setVisibility(View.GONE);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

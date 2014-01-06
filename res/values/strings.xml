@@ -7,5 +7,6 @@
     <string name="continueChecklist">Continue</string>
     <string name="stop">Stop</string>
     <string name="action_settings">Settings</string>
+    <string name="please_wait">Server Calls Still Running</string>
 
 </resources>

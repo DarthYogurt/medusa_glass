@@ -40,7 +40,7 @@ public class ChecklistService extends Service {
 //            mCallback = new ChronometerDrawer(this);
 //            mLiveCard.setDirectRenderingEnabled(true).getSurfaceHolder().addCallback(mCallback);
 
-            Intent menuIntent = new Intent(this, MenuActivity.class);
+            Intent menuIntent = new Intent(this, MainMenuActivity.class);
             menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             mLiveCard.setAction(PendingIntent.getActivity(this, 0, menuIntent, 0));
 
