@@ -28,49 +28,6 @@ public class HTTPPostRequest {
 	static final File EXTERNALSTORAGE = Environment.getExternalStorageDirectory();
 	String url = "http://dev.darthyogurt.com:8000/testPost/";
 	
-	public void textPost() throws ClientProtocolException, IOException {
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(url);
-		
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("Test String", "test"));
-		httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-		Log.v("sendPost", "POST sent successfully");
-		
-		// Response from sending HTTP POST
-		HttpResponse response = httpClient.execute(httpPost);
-		String responseBody = EntityUtils.toString(response.getEntity());
-		Log.v("HTTP Response", responseBody);
-	}
-	
-	public void imagePost() throws ClientProtocolException, IOException {
-		File image = new File(EXTERNALSTORAGE + "/Pictures/sample.jpg");
-		
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(url);
-		
-		httpPost.setEntity(new FileEntity(image, "enctype=multipart/form-data"));
-		Log.v("sendPost", "POST sent successfully");
-		
-		// Response from sending HTTP POST
-		HttpResponse response = httpClient.execute(httpPost);
-		String responseBody = EntityUtils.toString(response.getEntity());
-		Log.v("imagePost HTTP Response", responseBody);
-	}
-	
-	public void jsonPost() throws ClientProtocolException, IOException {
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(url);
-		
-		httpPost.setEntity(new FileEntity(new File(EXTERNALSTORAGE + "/Pictures/checklist1.json"), "application/json"));
-		Log.v("sendPost", "POST sent successfully");
-		
-		// Response from sending HTTP POST
-		HttpResponse response = httpClient.execute(httpPost);
-		String responseBody = EntityUtils.toString(response.getEntity());
-		Log.v("jsonPost HTTP Response", responseBody);
-	}
-		
 	// For sending files using MultipartEntity
 	public void multipartPost() throws ClientProtocolException, IOException {
 		File image = new File(EXTERNALSTORAGE + "/Pictures/sample.jpg");
@@ -91,4 +48,47 @@ public class HTTPPostRequest {
 		Log.v("multiPartPost HTTP Response", responseBody);
 	}
 	
+//	public void textPost() throws ClientProtocolException, IOException {
+//		HttpClient httpClient = new DefaultHttpClient();
+//		HttpPost httpPost = new HttpPost(url);
+//		
+//		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+//		nameValuePairs.add(new BasicNameValuePair("Test String", "test"));
+//		httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//		Log.v("sendPost", "POST sent successfully");
+//		
+//		// Response from sending HTTP POST
+//		HttpResponse response = httpClient.execute(httpPost);
+//		String responseBody = EntityUtils.toString(response.getEntity());
+//		Log.v("HTTP Response", responseBody);
+//	}
+//	
+//	public void imagePost() throws ClientProtocolException, IOException {
+//		File image = new File(EXTERNALSTORAGE + "/Pictures/sample.jpg");
+//		
+//		HttpClient httpClient = new DefaultHttpClient();
+//		HttpPost httpPost = new HttpPost(url);
+//		
+//		httpPost.setEntity(new FileEntity(image, "enctype=multipart/form-data"));
+//		Log.v("sendPost", "POST sent successfully");
+//		
+//		// Response from sending HTTP POST
+//		HttpResponse response = httpClient.execute(httpPost);
+//		String responseBody = EntityUtils.toString(response.getEntity());
+//		Log.v("imagePost HTTP Response", responseBody);
+//	}
+//	
+//	public void jsonPost() throws ClientProtocolException, IOException {
+//		HttpClient httpClient = new DefaultHttpClient();
+//		HttpPost httpPost = new HttpPost(url);
+//		
+//		httpPost.setEntity(new FileEntity(new File(EXTERNALSTORAGE + "/Pictures/checklist1.json"), "application/json"));
+//		Log.v("sendPost", "POST sent successfully");
+//		
+//		// Response from sending HTTP POST
+//		HttpResponse response = httpClient.execute(httpPost);
+//		String responseBody = EntityUtils.toString(response.getEntity());
+//		Log.v("jsonPost HTTP Response", responseBody);
+//	}
+			
 }
