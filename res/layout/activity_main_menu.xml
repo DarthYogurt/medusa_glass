@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:text="@string/please_wait"
-        android:textSize="40px"
+        android:textSize="30px"
         android:textStyle="bold"
         android:textColor="#ff0000" />
 
