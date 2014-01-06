@@ -19,12 +19,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 
 public class NewChecklistActivity extends Activity {
+	
 	Context context;
 	private GestureDetector mGestureDetector;
-	String JSONString;
-	Bundle bundle;
 	ArrayList<String[]> checklistsArray;
-	int numOfChecklists;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -35,12 +33,6 @@ public class NewChecklistActivity extends Activity {
 		mGestureDetector = createGestureDetector(this);
 		
 		checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
-		numOfChecklists = this.getIntent().getIntExtra("numOfChecklists", 0);
-		
-		for (int i = 0; i < checklistsArray.size(); i++) {
-			Log.v("Checklists Array", Arrays.toString(checklistsArray.get(i)));
-		}
-		
 		
 //		new BackgroundTask().execute();
 	}
@@ -104,19 +96,19 @@ public class NewChecklistActivity extends Activity {
         // Handle item selection.
         switch (item.getItemId()) {
         	case 0:
-        		startActivity(new Intent(this, NewChecklistActivity.class));
+        		startActivity(new Intent(this, ContinueChecklistActivity.class));
         		return true;
         	case 1:
-        		startActivity(new Intent(this, NewChecklistActivity.class));
+        		startActivity(new Intent(this, ContinueChecklistActivity.class));
         		return true;
             case 2:
-            	startActivity(new Intent(this, NewChecklistActivity.class));
+            	startActivity(new Intent(this, ContinueChecklistActivity.class));
                 return true;
         	case 3:
-        		startActivity(new Intent(this, NewChecklistActivity.class));
+        		startActivity(new Intent(this, ContinueChecklistActivity.class));
         		return true;
             case 4:
-            	startActivity(new Intent(this, NewChecklistActivity.class));
+            	startActivity(new Intent(this, ContinueChecklistActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

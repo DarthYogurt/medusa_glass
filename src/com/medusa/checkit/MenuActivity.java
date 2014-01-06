@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class MenuActivity extends Activity {
+	
 	Context context;
 	Intent newChecklistIntent;
 	String JSONString;
@@ -70,11 +71,12 @@ public class MenuActivity extends Activity {
 		
 		protected Void doInBackground(Void... params) {
 			HTTPGetRequest getRequest = new HTTPGetRequest();
-			HTTPPostRequest sendRequest = new HTTPPostRequest();
+			HTTPPostRequest postRequest = new HTTPPostRequest();
 			try {
+				
 				JSONString = getRequest.getChecklists(1);
 				
-				sendRequest.jsonPost();
+//				postRequest.multiPartPost();
 				
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -94,11 +96,8 @@ public class MenuActivity extends Activity {
 				reader.readFromInternal();
 				
 				checklistsArray = reader.getChecklistsArray();
-				numOfChecklists = reader.getNumOfChecklists();
-				
 				newChecklistIntent = new Intent(context, NewChecklistActivity.class);
 				newChecklistIntent.putExtra("checklists", checklistsArray);
-				newChecklistIntent.putExtra("numOfChecklists", numOfChecklists);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
