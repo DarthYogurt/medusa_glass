@@ -55,8 +55,6 @@ public class MainMenuActivity extends Activity {
         // Handle item selection.
         switch (item.getItemId()) {
         	case R.id.newChecklist:
-
-        		
         		// My AsyncTask is done and onPostExecute was called
         		if (backgroundTask.getStatus() == AsyncTask.Status.FINISHED) {
         			startActivity(newChecklistIntent);

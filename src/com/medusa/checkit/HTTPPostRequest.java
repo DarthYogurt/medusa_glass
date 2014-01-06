@@ -14,7 +14,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -75,6 +74,7 @@ public class HTTPPostRequest {
 	// For sending files using MultipartEntity
 	public void multipartPost() throws ClientProtocolException, IOException {
 		File image = new File(EXTERNALSTORAGE + "/Pictures/sample.jpg");
+		File json = new File(EXTERNALSTORAGE + "/Pictures/checklist1.json");
 		
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(url);
@@ -83,6 +83,7 @@ public class HTTPPostRequest {
 		MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 		multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 		multipartEntity.addPart("sampleImage", new FileBody(image));
+		multipartEntity.addPart("sampleJSON", new FileBody(json));
 		post.setEntity(multipartEntity.build());
 		
 		HttpResponse response = client.execute(post);
