@@ -21,6 +21,7 @@ public class JSONReader {
 	String filename;
 	String jsonString;
 	ArrayList<String[]> checklistsArray;
+	ArrayList<String> checklistsIdArray;
 	ArrayList<String[]> stepsArray;
 	
 	public JSONReader(Context context, String filename) {
@@ -59,15 +60,22 @@ public class JSONReader {
             String checklistName = null;
 
             checklistsArray = new ArrayList<String[]>();
+            checklistsIdArray = new ArrayList<String>();
             for (int i = 0; i < jArray.length(); i++) {
             	checklistId = jArray.getJSONObject(i).getString("id");
                 checklistName = jArray.getJSONObject(i).getString("name");
                 checklistsArray.add(new String[] {checklistId, checklistName});
+                checklistsIdArray.add(checklistId);
             }
             
             // Shows contents of checklistsArray
             for (int i = 0; i < checklistsArray.size(); i++) {
     			Log.v("Checklists Array", Arrays.toString(checklistsArray.get(i)));
+    		}
+            
+            // Shows contents of checklistsIdArray
+            for (int i = 0; i < checklistsIdArray.size(); i++) {
+    			Log.v("Checklist Ids", checklistsIdArray.get(i));
     		}
         } catch (Exception e) {
             e.printStackTrace();
