@@ -18,21 +18,19 @@ import android.util.Log;
 public class JSONReader {
 
 	Context context;
-	String filename;
 	String jsonString;
 	ArrayList<String[]> checklistsArray;
 	ArrayList<String> checklistsIdArray;
 	ArrayList<String[]> stepsArray;
 	
-	public JSONReader(Context context, String filename) {
+	public JSONReader(Context context) {
 		this.context = context;
-		this.filename = filename;
 		this.checklistsArray = new ArrayList<String[]>();
         this.checklistsIdArray = new ArrayList<String>();
         this.stepsArray = new ArrayList<String[]>();
 	}
 	
-	public void readFromInternal() throws IOException {
+	public void readFromInternal(String filename) throws IOException {
 		BufferedReader br = null;
 		
 		try {

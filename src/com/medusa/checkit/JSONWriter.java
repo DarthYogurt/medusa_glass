@@ -7,16 +7,14 @@ import java.io.*;
 
 public class JSONWriter {
 	Context context;
-	String data;
 	String filename;
 	
-	public JSONWriter(Context context, String data) {
+	public JSONWriter(Context context) {
 		this.context = context;
-		this.data = data;
 		this.filename = "temp.json";
 	}
 	
-	public void writeToInternal() throws IOException {
+	public void writeToInternal(String data) throws IOException {
 		FileOutputStream fos = null;
 		
 		try {

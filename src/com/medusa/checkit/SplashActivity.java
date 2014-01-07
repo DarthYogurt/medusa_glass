@@ -44,19 +44,17 @@ public class SplashActivity extends Activity {
 				// Test POST to server
 				postRequest.multipartPost();
 				
-				// Retrieves JSON String
+				JSONWriter writer = new JSONWriter(context);
+				JSONReader reader = new JSONReader(context);
+				
+				// Creates array of all checklists based on GroupId
 				allChecklistsJSONString = getRequest.getChecklists(1);
 				
-				// Creates array of all checklists
-				Log.v("Checklists Array", "writing to JSON");
-				JSONWriter checklistWriter = new JSONWriter(context, allChecklistsJSONString);
-				JSONReader checklistReader = new JSONReader(context, checklistWriter.filename);
+				writer.writeToInternal(allChecklistsJSONString);
+				reader.readFromInternal(writer.filename);
 				
-				checklistWriter.writeToInternal();
-				checklistReader.readFromInternal();
-				
-				checklistsArray = checklistReader.getChecklistsArray();
-				checklistsIdArray = checklistReader.getChecklistIdsArray();
+				checklistsArray = reader.getChecklistsArray();
+				checklistsIdArray = reader.getChecklistIdsArray();
 				
 				// Creates array of all steps
 				allStepsJSONStringArray = new ArrayList<String>();
