@@ -23,7 +23,6 @@ public class MainMenuActivity extends Activity {
 	Intent newChecklistIntent;
 	String JSONString;
 	ArrayList<String[]> checklistsArray;
-	int numOfChecklists;
 	TextView bgTaskRunning;
 
 	@Override

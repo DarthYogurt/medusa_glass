@@ -74,10 +74,6 @@ public class JSONReader {
 		return checklistsArray;
 	}
 	
-	public int getNumOfChecklists() {
-		return checklistsArray.size();
-	}
-	
 	public ArrayList<String[]> getStepsArray() {
 		try {
             JSONObject jObject = new JSONObject(jsonString);
@@ -102,10 +98,6 @@ public class JSONReader {
             e.printStackTrace();
         }
 		return stepsArray;
-	}
-	
-	public int getNumOfSteps() {
-		return stepsArray.size();
 	}
 
 }
