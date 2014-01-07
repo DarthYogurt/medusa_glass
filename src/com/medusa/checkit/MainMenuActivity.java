@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class MainMenuActivity extends Activity {
 	
 	Context context;
-	BackgroundTask backgroundTask;
+	BackgroundTask bgTask;
 	Intent newChecklistIntent;
 	String allChecklistsJSONString;
 	ArrayList<String[]> checklistsArray;
@@ -32,8 +32,8 @@ public class MainMenuActivity extends Activity {
         context = getApplicationContext();
         bgTaskRunning = (TextView)findViewById(R.id.bgTaskRunning);
         
-        backgroundTask = new BackgroundTask();
-        backgroundTask.execute();
+        bgTask = new BackgroundTask();
+        bgTask.execute();
     }
 	
 	@Override
@@ -55,7 +55,7 @@ public class MainMenuActivity extends Activity {
         switch (item.getItemId()) {
         	case R.id.newChecklist:
         		// My AsyncTask is done and onPostExecute was called
-        		if (backgroundTask.getStatus() == AsyncTask.Status.FINISHED) {
+        		if (bgTask.getStatus() == AsyncTask.Status.FINISHED) {
         			startActivity(newChecklistIntent);
         		}
         		return true;

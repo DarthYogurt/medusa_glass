@@ -78,16 +78,18 @@ public class JSONReader {
 		try {
             JSONObject jObject = new JSONObject(jsonString);
             JSONArray jArray = jObject.getJSONArray("steps");
-            String stepNumber = null;
+            String stepOrder = null;
             String stepName = null;
             String stepType = null;
+            String stepId = null;
 
             stepsArray = new ArrayList<String[]>();
             for (int i = 0; i < jArray.length(); i++) {
-                stepNumber = jArray.getJSONObject(i).getString("stepNumber");
+                stepOrder = jArray.getJSONObject(i).getString("order");
                 stepName = jArray.getJSONObject(i).getString("name");
-                stepType = jArray.getJSONObject(i).getString("stepType");
-                stepsArray.add(new String[] {stepNumber, stepName, stepType});
+                stepType = jArray.getJSONObject(i).getString("type");
+                stepId = jArray.getJSONObject(i).getString("id");
+                stepsArray.add(new String[] {stepOrder, stepName, stepType, stepId});
             }
             
             // Show contents of stepsArray

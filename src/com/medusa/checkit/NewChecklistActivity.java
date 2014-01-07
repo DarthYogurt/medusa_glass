@@ -17,12 +17,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 
 public class NewChecklistActivity extends Activity {
 	
-	Context context;
 	private GestureDetector mGestureDetector;
+	Context context;
+	BackgroundTask bgTask;
+	String allStepsJSONString;
+	ArrayList<String[]> allStepsArray;
 	ArrayList<String[]> checklistsArray;
+	ArrayList<String[]> stepsArray;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -34,43 +39,44 @@ public class NewChecklistActivity extends Activity {
 		
 		checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
 		
-//		new BackgroundTask().execute();
+		bgTask = new BackgroundTask();
+		bgTask.execute();
 	}
 	
-//	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
-//		
-//		protected Void doInBackground(Void... params) {
-//			HTTPGetRequest getRequest = new HTTPGetRequest();
-//			HTTPSendRequest sendRequest = new HTTPSendRequest();
-//			try {
-//				JSONString = getRequest.getChecklists(1);
-//				
-//				sendRequest.sendPost();
-//				
-//			} catch (MalformedURLException e) {
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			return null;
-//		}
-//
-//		protected void onPostExecute(Void result) {
-//			try {
-//				Log.v("onPostExecute", "writing to JSON");
-//				JSONWriter writer = new JSONWriter(context, JSONString);
-//				JSONReader reader = new JSONReader(context, writer.filename);
-//				writer.writeToInternal();
-//				reader.readFromInternal();
-//				reader.getChecklistsArray();
-//				
-//				
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			return;
-//		}
-//	}
+	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
+		
+		protected Void doInBackground(Void... params) {
+			HTTPGetRequest getRequest = new HTTPGetRequest();
+			HTTPPostRequest postRequest = new HTTPPostRequest();
+			try {
+				
+				allStepsJSONString = getRequest.getSteps(2);
+				
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		protected void onPostExecute(Void result) {
+			try {
+				Log.v("onPostExecute", "writing to JSON");
+				JSONWriter writer = new JSONWriter(context, allStepsJSONString);
+				JSONReader reader = new JSONReader(context, writer.filename);
+				
+				writer.writeToInternal();
+				reader.readFromInternal();
+				
+				stepsArray = reader.getStepsArray();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+	}
 	
 	@Override
     public void onResume() {
@@ -115,7 +121,7 @@ public class NewChecklistActivity extends Activity {
         }
     }
 	
-// === GESTURE DETECTION ===	
+//  === GESTURE DETECTION ===	
 //	private GestureDetector createGestureDetector(Context context) {
 //	    GestureDetector gestureDetector = new GestureDetector(context);
 //	    
