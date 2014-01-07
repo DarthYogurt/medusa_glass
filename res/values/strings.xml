@@ -7,6 +7,6 @@
     <string name="newChecklist">New Checklist</string>
     <string name="continueChecklist">Continue</string>
     <string name="stop">Stop</string>
-    <string name="please_wait">Server Calls Still Running... Please Wait</string>
+    <string name="loading">Loading Please Wait</string>
 
 </resources>

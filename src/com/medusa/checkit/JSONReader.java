@@ -16,6 +16,7 @@ import android.util.Log;
 
 //Reads JSON file and puts all info into ArrayList<String[]>
 public class JSONReader {
+
 	Context context;
 	String filename;
 	String jsonString;
@@ -54,14 +55,14 @@ public class JSONReader {
 		try {
             JSONObject jObject = new JSONObject(jsonString);
             JSONArray jArray = jObject.getJSONArray("checklist");
-            String id = null;
+            String checklistId = null;
             String checklistName = null;
 
             checklistsArray = new ArrayList<String[]>();
             for (int i = 0; i < jArray.length(); i++) {
-                id = jArray.getJSONObject(i).getString("id");
+            	checklistId = jArray.getJSONObject(i).getString("id");
                 checklistName = jArray.getJSONObject(i).getString("name");
-                checklistsArray.add(new String[] {id, checklistName});
+                checklistsArray.add(new String[] {checklistId, checklistName});
             }
             
             // Shows contents of checklistsArray
@@ -82,6 +83,8 @@ public class JSONReader {
             String stepName = null;
             String stepType = null;
             String stepId = null;
+            String checklistId = null;
+            String checklistName = null;
 
             stepsArray = new ArrayList<String[]>();
             for (int i = 0; i < jArray.length(); i++) {
@@ -89,7 +92,9 @@ public class JSONReader {
                 stepName = jArray.getJSONObject(i).getString("name");
                 stepType = jArray.getJSONObject(i).getString("type");
                 stepId = jArray.getJSONObject(i).getString("id");
-                stepsArray.add(new String[] {stepOrder, stepName, stepType, stepId});
+                checklistId = jObject.getString("checklistId");
+                checklistName = jObject.getString("checklistName");
+                stepsArray.add(new String[] {stepOrder, stepName, stepType, stepId, checklistName, checklistId});
             }
             
             // Show contents of stepsArray

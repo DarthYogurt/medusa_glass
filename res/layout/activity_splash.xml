@@ -9,10 +9,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="top|center_horizontal"
         android:text="@string/check_it"
-        android:textSize="80px"
+        android:textSize="100px"
         android:textStyle="bold"
         android:textColor="#ffffff" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="@string/loading"
+        android:textSize="30px"
+        android:textColor="#ff0000" />
 
 </FrameLayout>

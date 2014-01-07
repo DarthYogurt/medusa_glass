@@ -23,7 +23,6 @@ public class NewChecklistActivity extends Activity {
 	
 	private GestureDetector mGestureDetector;
 	Context context;
-	BackgroundTask bgTask;
 	String allStepsJSONString;
 	ArrayList<String[]> allStepsArray;
 	ArrayList<String[]> checklistsArray;
@@ -39,44 +38,42 @@ public class NewChecklistActivity extends Activity {
 		
 		checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
 		
-		bgTask = new BackgroundTask();
-		bgTask.execute();
 	}
 	
-	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
-		
-		protected Void doInBackground(Void... params) {
-			HTTPGetRequest getRequest = new HTTPGetRequest();
-			
-			try {
-				
-				allStepsJSONString = getRequest.getSteps(2);
-				
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		protected void onPostExecute(Void result) {
-			try {
-				Log.v("onPostExecute", "writing to JSON");
-				JSONWriter writer = new JSONWriter(context, allStepsJSONString);
-				JSONReader reader = new JSONReader(context, writer.filename);
-				
-				writer.writeToInternal();
-				reader.readFromInternal();
-				
-				stepsArray = reader.getStepsArray();
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return;
-		}
-	}
+//	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
+//		
+//		protected Void doInBackground(Void... params) {
+//			HTTPGetRequest getRequest = new HTTPGetRequest();
+//			
+//			try {
+//				
+//				allStepsJSONString = getRequest.getSteps(2);
+//				
+//			} catch (MalformedURLException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			return null;
+//		}
+//
+//		protected void onPostExecute(Void result) {
+//			try {
+//				Log.v("onPostExecute", "writing to JSON");
+//				JSONWriter writer = new JSONWriter(context, allStepsJSONString);
+//				JSONReader reader = new JSONReader(context, writer.filename);
+//				
+//				writer.writeToInternal();
+//				reader.readFromInternal();
+//				
+//				stepsArray = reader.getStepsArray();
+//				
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			return;
+//		}
+//	}
 	
 	@Override
     public void onResume() {

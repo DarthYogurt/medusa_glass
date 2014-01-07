@@ -19,12 +19,12 @@ import android.widget.TextView;
 public class MainMenuActivity extends Activity {
 	
 	Context context;
-//	BackgroundTask bgTask;
 	Intent newChecklistIntent;
 	String allChecklistsJSONString;
 	ArrayList<String[]> checklistsArray;
-	TextView bgTaskRunning;
+	ArrayList<String[]> stepsArray;
 
+	@SuppressWarnings("unchecked")
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +32,11 @@ public class MainMenuActivity extends Activity {
         context = getApplicationContext();
         
         checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
+        stepsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
+        
 		newChecklistIntent = new Intent(context, NewChecklistActivity.class);
 		newChecklistIntent.putExtra("checklists", checklistsArray);
+		newChecklistIntent.putExtra("steps", stepsArray);
         
     }
 	

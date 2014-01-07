@@ -50,8 +50,8 @@ public final class R {
         public static final int app_name=0x7f070001;
         public static final int check_it=0x7f070000;
         public static final int continueChecklist=0x7f070004;
+        public static final int loading=0x7f070006;
         public static final int newChecklist=0x7f070003;
-        public static final int please_wait=0x7f070006;
         public static final int stop=0x7f070005;
         public static final int voice_trigger_start_program=0x7f070002;
     }

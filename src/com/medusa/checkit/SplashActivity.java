@@ -15,7 +15,9 @@ public class SplashActivity extends Activity {
 	Context context;
 	Intent intent;
 	String allChecklistsJSONString;
+	String allStepsJSONString;
 	ArrayList<String[]> checklistsArray;
+	ArrayList<String[]> stepsArray;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +38,32 @@ public class SplashActivity extends Activity {
 			HTTPPostRequest postRequest = new HTTPPostRequest();
 			try {
 				
-				allChecklistsJSONString = getRequest.getChecklists(1);
-				
+				// Test POST to server
 				postRequest.multipartPost();
 				
-				Log.v("onPostExecute", "writing to JSON");
-				JSONWriter writer = new JSONWriter(context, allChecklistsJSONString);
-				JSONReader reader = new JSONReader(context, writer.filename);
+				// Retrieves JSON String
+				allChecklistsJSONString = getRequest.getChecklists(1);
+				allStepsJSONString = getRequest.getSteps(2);
 				
-				writer.writeToInternal();
-				reader.readFromInternal();
+				// Creates array of all checklists
+				Log.v("Checklists Array", "writing to JSON");
+				JSONWriter checklistWriter = new JSONWriter(context, allChecklistsJSONString);
+				JSONReader checklistReader = new JSONReader(context, checklistWriter.filename);
 				
-				checklistsArray = reader.getChecklistsArray();
+				checklistWriter.writeToInternal();
+				checklistReader.readFromInternal();
+				
+				checklistsArray = checklistReader.getChecklistsArray();
+				
+				// Creates array of all steps
+				Log.v("Steps Array", "writing to JSON");
+				JSONWriter stepsWriter = new JSONWriter(context, allStepsJSONString);
+				JSONReader stepsReader = new JSONReader(context, stepsWriter.filename);
+				
+				stepsWriter.writeToInternal();
+				stepsReader.readFromInternal();
+				
+				stepsArray = stepsReader.getStepsArray();
 				
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -55,9 +71,12 @@ public class SplashActivity extends Activity {
 				e.printStackTrace();
 			}
 
-			// Start main menu activity and pass in checklists and steps data
+			// Pass checklists and steps arrays to main menu
 			intent = new Intent(context, MainMenuActivity.class);
 			intent.putExtra("checklists", checklistsArray);
+			intent.putExtra("steps", stepsArray);
+			
+			// Start main menu activity
 			SplashActivity.this.startActivity(intent);
 			SplashActivity.this.finish();
 		}
