@@ -21,7 +21,7 @@ public class MainMenuActivity extends Activity {
 	Context context;
 	BackgroundTask backgroundTask;
 	Intent newChecklistIntent;
-	String JSONString;
+	String allChecklistsJSONString;
 	ArrayList<String[]> checklistsArray;
 	TextView bgTaskRunning;
 
@@ -83,7 +83,7 @@ public class MainMenuActivity extends Activity {
 			HTTPPostRequest postRequest = new HTTPPostRequest();
 			try {
 				
-				JSONString = getRequest.getChecklists(1);
+				allChecklistsJSONString = getRequest.getChecklists(1);
 				
 				postRequest.multipartPost();
 				
@@ -98,7 +98,7 @@ public class MainMenuActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			try {
 				Log.v("onPostExecute", "writing to JSON");
-				JSONWriter writer = new JSONWriter(context, JSONString);
+				JSONWriter writer = new JSONWriter(context, allChecklistsJSONString);
 				JSONReader reader = new JSONReader(context, writer.filename);
 				
 				writer.writeToInternal();
@@ -109,6 +109,7 @@ public class MainMenuActivity extends Activity {
 				newChecklistIntent.putExtra("checklists", checklistsArray);
 				
 				bgTaskRunning.setVisibility(View.GONE);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
