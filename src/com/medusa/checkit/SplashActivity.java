@@ -16,8 +16,9 @@ public class SplashActivity extends Activity {
 	Context context;
 	Intent intent;
 	String allChecklistsJSONString;
-	String allStepsJSONString;
 	ArrayList<String[]> checklistsArray;
+	ArrayList<String> checklistsIdArray;
+	ArrayList<String> allStepsJSONStringArray;
 	ArrayList<String[]> stepsArray;
 	
 	@Override
@@ -44,7 +45,6 @@ public class SplashActivity extends Activity {
 				
 				// Retrieves JSON String
 				allChecklistsJSONString = getRequest.getChecklists(1);
-				allStepsJSONString = getRequest.getSteps(2);
 				
 				// Creates array of all checklists
 				Log.v("Checklists Array", "writing to JSON");
@@ -55,6 +55,7 @@ public class SplashActivity extends Activity {
 				checklistReader.readFromInternal();
 				
 				checklistsArray = checklistReader.getChecklistsArray();
+				checklistsIdArray = checklistReader.getChecklistIdsArray();
 				
 				// Creates array of all steps
 				Log.v("Steps Array", "writing to JSON");

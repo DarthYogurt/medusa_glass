@@ -27,6 +27,9 @@ public class JSONReader {
 	public JSONReader(Context context, String filename) {
 		this.context = context;
 		this.filename = filename;
+		this.checklistsArray = new ArrayList<String[]>();
+        this.checklistsIdArray = new ArrayList<String>();
+        this.stepsArray = new ArrayList<String[]>();
 	}
 	
 	public void readFromInternal() throws IOException {
@@ -59,8 +62,6 @@ public class JSONReader {
             String checklistId = null;
             String checklistName = null;
 
-            checklistsArray = new ArrayList<String[]>();
-            checklistsIdArray = new ArrayList<String>();
             for (int i = 0; i < jArray.length(); i++) {
             	checklistId = jArray.getJSONObject(i).getString("id");
                 checklistName = jArray.getJSONObject(i).getString("name");
@@ -73,14 +74,18 @@ public class JSONReader {
     			Log.v("Checklists Array", Arrays.toString(checklistsArray.get(i)));
     		}
             
-            // Shows contents of checklistsIdArray
-            for (int i = 0; i < checklistsIdArray.size(); i++) {
-    			Log.v("Checklist Ids", checklistsIdArray.get(i));
-    		}
         } catch (Exception e) {
             e.printStackTrace();
         }
 		return checklistsArray;
+	}
+	
+	public ArrayList<String> getChecklistIdsArray() {
+		// Shows contents of checklistsIdArray
+        for (int i = 0; i < checklistsIdArray.size(); i++) {
+			Log.v("Checklist Ids", checklistsIdArray.get(i));
+		}
+		return checklistsIdArray;
 	}
 	
 	public ArrayList<String[]> getStepsArray() {
@@ -94,7 +99,6 @@ public class JSONReader {
             String checklistId = null;
             String checklistName = null;
 
-            stepsArray = new ArrayList<String[]>();
             for (int i = 0; i < jArray.length(); i++) {
                 stepOrder = jArray.getJSONObject(i).getString("order");
                 stepName = jArray.getJSONObject(i).getString("name");
