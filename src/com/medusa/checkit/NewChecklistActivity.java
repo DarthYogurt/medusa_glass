@@ -47,7 +47,7 @@ public class NewChecklistActivity extends Activity {
 		
 		protected Void doInBackground(Void... params) {
 			HTTPGetRequest getRequest = new HTTPGetRequest();
-			HTTPPostRequest postRequest = new HTTPPostRequest();
+			
 			try {
 				
 				allStepsJSONString = getRequest.getSteps(2);

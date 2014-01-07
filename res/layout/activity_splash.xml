@@ -1,0 +1,18 @@
+<FrameLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40px"
+    tools:context=".MainMenuActivity" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/check_it"
+        android:textSize="80px"
+        android:textStyle="bold"
+        android:textColor="#ffffff" />
+
+</FrameLayout>
