@@ -30,7 +30,7 @@ public class NewChecklistActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_checklist);
 		context = getApplicationContext();
-		mGestureDetector = createGestureDetector(this);
+//		mGestureDetector = createGestureDetector(this);
 		
 		checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
 		
@@ -115,52 +115,53 @@ public class NewChecklistActivity extends Activity {
         }
     }
 	
-	private GestureDetector createGestureDetector(Context context) {
-	    GestureDetector gestureDetector = new GestureDetector(context);
-	    
-        //Create a base listener for generic gestures
-        gestureDetector.setBaseListener( new GestureDetector.BaseListener() {
-            @Override
-            public boolean onGesture(Gesture gesture) {
-                if (gesture == Gesture.TAP) {
-                	// do something on one finger tap
-                    return true;
-                } else if (gesture == Gesture.TWO_TAP) {
-                    // do something on two finger tap
-                    return true;
-                } else if (gesture == Gesture.SWIPE_RIGHT) {
-                    // do something on right (forward) swipe
-                    return true;
-                } else if (gesture == Gesture.SWIPE_LEFT) {
-                    // do something on left (backwards) swipe
-                    return true;
-                }
-                return false;
-            }
-        });
-        gestureDetector.setFingerListener(new GestureDetector.FingerListener() {
-            @Override
-            public void onFingerCountChanged(int previousCount, int currentCount) {
-              // do something on finger count changes
-            }
-        });
-        gestureDetector.setScrollListener(new GestureDetector.ScrollListener() {
-            @Override
-            public boolean onScroll(float displacement, float delta, float velocity) {
-                // do something on scrolling
-            	return true;
-            }
-        });
-        return gestureDetector;
-    }
-	
-    // Send generic motion events to the gesture detector
-    @Override
-    public boolean onGenericMotionEvent(MotionEvent event) {
-        if (mGestureDetector != null) {
-            return mGestureDetector.onMotionEvent(event);
-        }
-        return false;
-    }
+// === GESTURE DETECTION ===	
+//	private GestureDetector createGestureDetector(Context context) {
+//	    GestureDetector gestureDetector = new GestureDetector(context);
+//	    
+//        //Create a base listener for generic gestures
+//        gestureDetector.setBaseListener( new GestureDetector.BaseListener() {
+//            @Override
+//            public boolean onGesture(Gesture gesture) {
+//                if (gesture == Gesture.TAP) {
+//                	// do something on one finger tap
+//                    return true;
+//                } else if (gesture == Gesture.TWO_TAP) {
+//                    // do something on two finger tap
+//                    return true;
+//                } else if (gesture == Gesture.SWIPE_RIGHT) {
+//                    // do something on right (forward) swipe
+//                    return true;
+//                } else if (gesture == Gesture.SWIPE_LEFT) {
+//                    // do something on left (backwards) swipe
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        gestureDetector.setFingerListener(new GestureDetector.FingerListener() {
+//            @Override
+//            public void onFingerCountChanged(int previousCount, int currentCount) {
+//              // do something on finger count changes
+//            }
+//        });
+//        gestureDetector.setScrollListener(new GestureDetector.ScrollListener() {
+//            @Override
+//            public boolean onScroll(float displacement, float delta, float velocity) {
+//                // do something on scrolling
+//            	return true;
+//            }
+//        });
+//        return gestureDetector;
+//    }
+//	
+//    // Send generic motion events to the gesture detector
+//    @Override
+//    public boolean onGenericMotionEvent(MotionEvent event) {
+//        if (mGestureDetector != null) {
+//            return mGestureDetector.onMotionEvent(event);
+//        }
+//        return false;
+//    }
 
 }
