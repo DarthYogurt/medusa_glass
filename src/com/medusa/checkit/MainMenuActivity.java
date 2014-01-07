@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class MainMenuActivity extends Activity {
 	
 	Context context;
-	BackgroundTask bgTask;
+//	BackgroundTask bgTask;
 	Intent newChecklistIntent;
 	String allChecklistsJSONString;
 	ArrayList<String[]> checklistsArray;
@@ -30,10 +30,11 @@ public class MainMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         context = getApplicationContext();
-        bgTaskRunning = (TextView)findViewById(R.id.bgTaskRunning);
         
-        bgTask = new BackgroundTask();
-        bgTask.execute();
+        checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
+		newChecklistIntent = new Intent(context, NewChecklistActivity.class);
+		newChecklistIntent.putExtra("checklists", checklistsArray);
+        
     }
 	
 	@Override
@@ -54,10 +55,7 @@ public class MainMenuActivity extends Activity {
         // Handle item selection.
         switch (item.getItemId()) {
         	case R.id.newChecklist:
-        		// My AsyncTask is done and onPostExecute was called
-        		if (bgTask.getStatus() == AsyncTask.Status.FINISHED) {
-        			startActivity(newChecklistIntent);
-        		}
+        		startActivity(newChecklistIntent);
         		return true;
         	case R.id.continueChecklist:
         		startActivity(new Intent(this, ContinueChecklistActivity.class));
@@ -76,44 +74,45 @@ public class MainMenuActivity extends Activity {
         finish();
     }
 	
-	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
-		
-		protected Void doInBackground(Void... params) {
-			HTTPGetRequest getRequest = new HTTPGetRequest();
-			HTTPPostRequest postRequest = new HTTPPostRequest();
-			try {
-				
-				allChecklistsJSONString = getRequest.getChecklists(1);
-				
-				postRequest.multipartPost();
-				
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		protected void onPostExecute(Void result) {
-			try {
-				Log.v("onPostExecute", "writing to JSON");
-				JSONWriter writer = new JSONWriter(context, allChecklistsJSONString);
-				JSONReader reader = new JSONReader(context, writer.filename);
-				
-				writer.writeToInternal();
-				reader.readFromInternal();
-				
-				checklistsArray = reader.getChecklistsArray();
-				newChecklistIntent = new Intent(context, NewChecklistActivity.class);
-				newChecklistIntent.putExtra("checklists", checklistsArray);
-				
-				bgTaskRunning.setVisibility(View.GONE);
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return;
-		}
-	}
+//	private class BackgroundTask extends AsyncTask<Void, Void, Void> {
+//		
+//		protected Void doInBackground(Void... params) {
+//			HTTPGetRequest getRequest = new HTTPGetRequest();
+//			HTTPPostRequest postRequest = new HTTPPostRequest();
+//			try {
+//				
+//				allChecklistsJSONString = getRequest.getChecklists(1);
+//				
+//				postRequest.multipartPost();
+//				
+//			} catch (MalformedURLException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			return null;
+//		}
+//
+//		protected void onPostExecute(Void result) {
+//			try {
+//				Log.v("onPostExecute", "writing to JSON");
+//				JSONWriter writer = new JSONWriter(context, allChecklistsJSONString);
+//				JSONReader reader = new JSONReader(context, writer.filename);
+//				
+//				writer.writeToInternal();
+//				reader.readFromInternal();
+//				
+//				checklistsArray = reader.getChecklistsArray();
+//				newChecklistIntent = new Intent(context, NewChecklistActivity.class);
+//				newChecklistIntent.putExtra("checklists", checklistsArray);
+//				
+//				bgTaskRunning.setVisibility(View.GONE);
+//				
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			return;
+//		}
+//	}
+	
 }

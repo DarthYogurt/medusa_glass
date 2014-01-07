@@ -6,14 +6,5 @@
     android:padding="40px"
     tools:context=".MainMenuActivity" >
 
-    <TextView
-        android:id="@+id/bgTaskRunning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
-        android:text="@string/please_wait"
-        android:textSize="30px"
-        android:textStyle="bold"
-        android:textColor="#ff0000" />
 
 </FrameLayout>

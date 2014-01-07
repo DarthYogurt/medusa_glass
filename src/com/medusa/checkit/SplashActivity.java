@@ -1,41 +1,63 @@
 package com.medusa.checkit;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 
 public class SplashActivity extends Activity {
 
-	private static String TAG = SplashActivity.class.getName();
-	private static long SLEEP_TIME = 3; // Sleep for this number of seconds
-
+	Context context;
+	Intent intent;
+	String allChecklistsJSONString;
+	ArrayList<String[]> checklistsArray;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
-
 		setContentView(R.layout.activity_splash);
+		context = getApplicationContext();
 
-		// Start timer and launch main activity
 		IntentLauncher launcher = new IntentLauncher();
 		launcher.start();
 	}
 
 	private class IntentLauncher extends Thread {
+		
 		@Override
-		// Sleep for some time and than start new activity.
 		public void run() {
+			
+			HTTPGetRequest getRequest = new HTTPGetRequest();
+			HTTPPostRequest postRequest = new HTTPPostRequest();
 			try {
-				// Sleeping
-				Thread.sleep(SLEEP_TIME * 1000);
-			} catch (Exception e) {
-				Log.e(TAG, e.getMessage());
+				
+				allChecklistsJSONString = getRequest.getChecklists(1);
+				
+				postRequest.multipartPost();
+				
+				Log.v("onPostExecute", "writing to JSON");
+				JSONWriter writer = new JSONWriter(context, allChecklistsJSONString);
+				JSONReader reader = new JSONReader(context, writer.filename);
+				
+				writer.writeToInternal();
+				reader.readFromInternal();
+				
+				checklistsArray = reader.getChecklistsArray();
+				
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 
-			// Start main activity
-			Intent intent = new Intent(SplashActivity.this, MainMenuActivity.class);
+			// Start main menu activity and pass in checklists and steps data
+			intent = new Intent(context, MainMenuActivity.class);
+			intent.putExtra("checklists", checklistsArray);
 			SplashActivity.this.startActivity(intent);
 			SplashActivity.this.finish();
 		}

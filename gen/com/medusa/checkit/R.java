@@ -28,10 +28,9 @@ public final class R {
         public static final int new_checklist_bg=0x7f020004;
     }
     public static final class id {
-        public static final int bgTaskRunning=0x7f0a0000;
-        public static final int continueChecklist=0x7f0a0002;
-        public static final int newChecklist=0x7f0a0001;
-        public static final int stop=0x7f0a0003;
+        public static final int continueChecklist=0x7f0a0001;
+        public static final int newChecklist=0x7f0a0000;
+        public static final int stop=0x7f0a0002;
     }
     public static final class layout {
         public static final int activity_continue_checklist=0x7f030000;
