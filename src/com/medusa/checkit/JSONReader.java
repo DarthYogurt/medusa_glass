@@ -66,10 +66,10 @@ public class JSONReader {
                 checklistsIdArray.add(checklistId);
             }
             
-            // Shows contents of checklistsArray
-            for (int i = 0; i < checklistsArray.size(); i++) {
-    			Log.v("Checklists Array", Arrays.toString(checklistsArray.get(i)));
-    		}
+//            // Shows contents of checklistsArray
+//            for (int i = 0; i < checklistsArray.size(); i++) {
+//    			Log.v("Checklists Array", Arrays.toString(checklistsArray.get(i)));
+//    		}
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,10 +78,10 @@ public class JSONReader {
 	}
 	
 	public ArrayList<String> getChecklistIdsArray() {
-		// Shows contents of checklistsIdArray
-        for (int i = 0; i < checklistsIdArray.size(); i++) {
-			Log.v("Checklist Ids", checklistsIdArray.get(i));
-		}
+//		// Shows contents of checklistsIdArray
+//        for (int i = 0; i < checklistsIdArray.size(); i++) {
+//			Log.v("Checklist Ids", checklistsIdArray.get(i));
+//		}
 		return checklistsIdArray;
 	}
 	
@@ -107,10 +107,10 @@ public class JSONReader {
                 stepsArray.add(new String[] {stepOrder, stepName, stepType, stepId, checklistName, checklistId});
             }
             
-            // Show contents of stepsArray
-            for (int i = 0; i < stepsArray.size(); i++) {
-    			Log.v("Steps Array", Arrays.toString(stepsArray.get(i)));
-    		}
+//            // Show contents of stepsArray
+//            for (int i = 0; i < stepsArray.size(); i++) {
+//    			Log.v("Steps Array", Arrays.toString(stepsArray.get(i)));
+//    		}
             
         } catch (Exception e) {
             e.printStackTrace();

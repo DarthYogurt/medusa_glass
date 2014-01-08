@@ -2,6 +2,11 @@ package com.medusa.checkit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import com.google.android.glass.app.Card;
+import com.google.android.glass.widget.CardScrollAdapter;
+import com.google.android.glass.widget.CardScrollView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,9 +14,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 public class ChecklistActivity extends Activity {
 	ArrayList<String[]> steps;
+	
+	private List<Card> mCards;
+    private CardScrollView mCardScrollView;
 
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +32,13 @@ public class ChecklistActivity extends Activity {
 		
 		steps = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
 		
-		for (int i = 0; i < steps.size(); i++) {
-			Log.v("test", Arrays.toString(steps.get(i)));
-		}
+		createCards();
+
+        mCardScrollView = new CardScrollView(this);
+        StepCardScrollAdapter adapter = new StepCardScrollAdapter();
+        mCardScrollView.setAdapter(adapter);
+        mCardScrollView.activate();
+        setContentView(mCardScrollView);
 		
 	}
 	
@@ -67,6 +81,69 @@ public class ChecklistActivity extends Activity {
         }
     }
 		
+	private void createCards() {
+        mCards = new ArrayList<Card>();
+        Card card;
+        String[] step;
+        String stepName;
+        String stepOrder;
+        
+        for (int i = 0; i < steps.size(); i++) {
+        	step = steps.get(i);
+        	card = new Card(this);
+        	card.setText(step[1]);
+        	card.setFootnote("Step #" + step[0]);
+        	mCards.add(card);
+        }
+        
+//        card = new Card(this);
+//        card.setText("This card has a footer.");
+//        card.setFootnote("I'm the footer!");
+//        mCards.add(card);
+//
+//        card = new Card(this);
+//        card.setText("This card has a puppy background image.");
+//        card.setFootnote("How can you resist?");
+//        card.setImageLayout(Card.ImageLayout.FULL);
+////        card.addImage(R.drawable.puppy_bg);
+//        mCards.add(card);
+//
+//        card = new Card(this);
+//        card.setText("This card has a mosaic of puppies.");
+//        card.setFootnote("Aren't they precious?");
+//        card.setImageLayout(Card.ImageLayout.LEFT);
+////        card.addImage(R.drawable.puppy_small_1);
+////        card.addImage(R.drawable.puppy_small_2);
+////        card.addImage(R.drawable.puppy_small_3);
+//        mCards.add(card);
+    }
+	
+	private class StepCardScrollAdapter extends CardScrollAdapter {
 
+        @Override
+        public int findIdPosition(Object id) {
+            return -1;
+        }
+
+        @Override
+        public int findItemPosition(Object item) {
+            return mCards.indexOf(item);
+        }
+
+        @Override
+        public int getCount() {
+            return mCards.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mCards.get(position);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return mCards.get(position).toView();
+        }
+    }
 	
 }
