@@ -23,10 +23,12 @@ public class NewChecklistActivity extends Activity {
 	
 	private GestureDetector mGestureDetector;
 	Context context;
+	Intent checklistIntent;
 	String allStepsJSONString;
 	ArrayList<String[]> allStepsArray;
 	ArrayList<String[]> checklistsArray;
 	ArrayList<String[]> stepsArray;
+	ArrayList<String[]> checklistSteps;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -97,27 +99,48 @@ public class NewChecklistActivity extends Activity {
 	
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
+		checklistIntent = new Intent(context, ChecklistActivity.class);
+		
         // Handle item selection.
         switch (item.getItemId()) {
         	case 0:
-        		startActivity(new Intent(this, ContinueChecklistActivity.class));
+        		checklistIntent.putExtra("steps", getChecklistSteps(0));
+        		startActivity(checklistIntent);
         		return true;
         	case 1:
-        		startActivity(new Intent(this, ContinueChecklistActivity.class));
+        		checklistIntent.putExtra("steps", getChecklistSteps(1));
+        		startActivity(checklistIntent);
         		return true;
             case 2:
-            	startActivity(new Intent(this, ContinueChecklistActivity.class));
+            	checklistIntent.putExtra("steps", getChecklistSteps(2));
+        		startActivity(checklistIntent);
                 return true;
         	case 3:
-        		startActivity(new Intent(this, ContinueChecklistActivity.class));
+        		checklistIntent.putExtra("steps", getChecklistSteps(3));
+        		startActivity(checklistIntent);
         		return true;
             case 4:
-            	startActivity(new Intent(this, ContinueChecklistActivity.class));
+            	checklistIntent.putExtra("steps", getChecklistSteps(4));
+        		startActivity(checklistIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+	
+	private ArrayList<String[]> getChecklistSteps(int id) {
+		checklistSteps = new ArrayList<String[]>();
+		String[] array = checklistsArray.get(id);
+		String checklistId = array[0];
+		
+		for (int i = 0; i < stepsArray.size(); i++) {
+			String[] step = stepsArray.get(i);
+			if (step[5].equals(checklistId)) {
+				checklistSteps.add(step);
+			}
+		}
+		return checklistSteps;
+	}
 	
 //  === GESTURE DETECTION ===	
 //	private GestureDetector createGestureDetector(Context context) {
