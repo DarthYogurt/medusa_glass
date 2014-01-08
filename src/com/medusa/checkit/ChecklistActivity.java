@@ -18,18 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class ChecklistActivity extends Activity {
-	ArrayList<String[]> steps;
 	
 	private List<Card> mCards;
     private CardScrollView mCardScrollView;
+	private ArrayList<String[]> steps;
 
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_checklist);
-//		context = getApplicationContext();
-//		mGestureDetector = createGestureDetector(this);
-		
 		steps = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
 		
 		createCards();
@@ -39,54 +35,12 @@ public class ChecklistActivity extends Activity {
         mCardScrollView.setAdapter(adapter);
         mCardScrollView.activate();
         setContentView(mCardScrollView);
-		
 	}
 	
-	@Override
-    public void onResume() {
-        super.onResume();
-        openOptionsMenu();
-    }
-	
-	// Use this instead of onCreateOptionsMenu if menu is dynamic
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		String[] menuItem;
-		
-		menu.clear();
-		for (int i = 0; i < steps.size(); i++) {
-			menuItem = steps.get(i);
-			menu.add(0, i, Menu.NONE, menuItem[1]);
-		}
-		return super.onPrepareOptionsMenu(menu);
-	}
-	
-	@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-		
-        // Handle item selection.
-        switch (item.getItemId()) {
-        	case 0:
-        		return true;
-        	case 1:
-        		return true;
-            case 2:
-                return true;
-        	case 3:
-        		return true;
-            case 4:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-		
 	private void createCards() {
         mCards = new ArrayList<Card>();
         Card card;
         String[] step;
-        String stepName;
-        String stepOrder;
         
         for (int i = 0; i < steps.size(); i++) {
         	step = steps.get(i);
@@ -95,27 +49,6 @@ public class ChecklistActivity extends Activity {
         	card.setFootnote("Step #" + step[0]);
         	mCards.add(card);
         }
-        
-//        card = new Card(this);
-//        card.setText("This card has a footer.");
-//        card.setFootnote("I'm the footer!");
-//        mCards.add(card);
-//
-//        card = new Card(this);
-//        card.setText("This card has a puppy background image.");
-//        card.setFootnote("How can you resist?");
-//        card.setImageLayout(Card.ImageLayout.FULL);
-////        card.addImage(R.drawable.puppy_bg);
-//        mCards.add(card);
-//
-//        card = new Card(this);
-//        card.setText("This card has a mosaic of puppies.");
-//        card.setFootnote("Aren't they precious?");
-//        card.setImageLayout(Card.ImageLayout.LEFT);
-////        card.addImage(R.drawable.puppy_small_1);
-////        card.addImage(R.drawable.puppy_small_2);
-////        card.addImage(R.drawable.puppy_small_3);
-//        mCards.add(card);
     }
 	
 	private class StepCardScrollAdapter extends CardScrollAdapter {
@@ -145,5 +78,44 @@ public class ChecklistActivity extends Activity {
             return mCards.get(position).toView();
         }
     }
+	
+//	@Override
+//    public void onResume() {
+//        super.onResume();
+//        openOptionsMenu();
+//    }
+//	
+//	// Use this instead of onCreateOptionsMenu if menu is dynamic
+//	@Override
+//	public boolean onPrepareOptionsMenu(Menu menu) {
+//		String[] menuItem;
+//		
+//		menu.clear();
+//		for (int i = 0; i < steps.size(); i++) {
+//			menuItem = steps.get(i);
+//			menu.add(0, i, Menu.NONE, menuItem[1]);
+//		}
+//		return super.onPrepareOptionsMenu(menu);
+//	}
+//	
+//	@Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//		
+//        // Handle item selection.
+//        switch (item.getItemId()) {
+//        	case 0:
+//        		return true;
+//        	case 1:
+//        		return true;
+//            case 2:
+//                return true;
+//        	case 3:
+//        		return true;
+//            case 4:
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 	
 }

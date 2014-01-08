@@ -22,7 +22,6 @@ import android.view.View;
 public class NewChecklistActivity extends Activity {
 	
 	private GestureDetector mGestureDetector;
-	Context context;
 	Intent checklistIntent;
 	String allStepsJSONString;
 	ArrayList<String[]> allStepsArray;
@@ -35,7 +34,6 @@ public class NewChecklistActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_checklist);
-		context = getApplicationContext();
 //		mGestureDetector = createGestureDetector(this);
 		
 		checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
@@ -64,33 +62,36 @@ public class NewChecklistActivity extends Activity {
 	
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
-		checklistIntent = new Intent(context, ChecklistActivity.class);
+		checklistIntent = new Intent(this, ChecklistActivity.class);
+		checklistIntent.putExtra("steps", getChecklistSteps(item.getItemId()));
+		startActivity(checklistIntent);
+		return true;
 		
-        // Handle item selection.
-        switch (item.getItemId()) {
-        	case 0:
-        		checklistIntent.putExtra("steps", getChecklistSteps(0));
-        		startActivity(checklistIntent);
-        		return true;
-        	case 1:
-        		checklistIntent.putExtra("steps", getChecklistSteps(1));
-        		startActivity(checklistIntent);
-        		return true;
-            case 2:
-            	checklistIntent.putExtra("steps", getChecklistSteps(2));
-        		startActivity(checklistIntent);
-                return true;
-        	case 3:
-        		checklistIntent.putExtra("steps", getChecklistSteps(3));
-        		startActivity(checklistIntent);
-        		return true;
-            case 4:
-            	checklistIntent.putExtra("steps", getChecklistSteps(4));
-        		startActivity(checklistIntent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+//        // Handle item selection.
+//        switch (item.getItemId()) {
+//        	case 0:
+//        		checklistIntent.putExtra("steps", getChecklistSteps(0));
+//        		startActivity(checklistIntent);
+//        		return true;
+//        	case 1:
+//        		checklistIntent.putExtra("steps", getChecklistSteps(1));
+//        		startActivity(checklistIntent);
+//        		return true;
+//            case 2:
+//            	checklistIntent.putExtra("steps", getChecklistSteps(2));
+//        		startActivity(checklistIntent);
+//                return true;
+//        	case 3:
+//        		checklistIntent.putExtra("steps", getChecklistSteps(3));
+//        		startActivity(checklistIntent);
+//        		return true;
+//            case 4:
+//            	checklistIntent.putExtra("steps", getChecklistSteps(4));
+//        		startActivity(checklistIntent);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
     }
 	
 	private ArrayList<String[]> getChecklistSteps(int id) {

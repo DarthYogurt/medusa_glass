@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 public class MainMenuActivity extends Activity {
 	
-	Context context;
 	Intent newChecklistIntent;
 	String allChecklistsJSONString;
 	ArrayList<String[]> checklistsArray;
@@ -29,12 +28,11 @@ public class MainMenuActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        context = getApplicationContext();
         
         checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
         stepsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
         
-		newChecklistIntent = new Intent(context, NewChecklistActivity.class);
+		newChecklistIntent = new Intent(this, NewChecklistActivity.class);
 		newChecklistIntent.putExtra("checklists", checklistsArray);
 		newChecklistIntent.putExtra("steps", stepsArray);
         
