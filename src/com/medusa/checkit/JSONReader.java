@@ -27,7 +27,6 @@ public class JSONReader {
 		this.context = context;
 		this.checklistsArray = new ArrayList<String[]>();
         this.checklistsIdArray = new ArrayList<String>();
-        this.stepsArray = new ArrayList<String[]>();
 	}
 	
 	public void readFromInternal(String filename) throws IOException {
@@ -87,6 +86,7 @@ public class JSONReader {
 	}
 	
 	public ArrayList<String[]> getStepsArray() {
+        stepsArray = new ArrayList<String[]>();
 		try {
             JSONObject jObject = new JSONObject(jsonString);
             JSONArray jArray = jObject.getJSONArray("steps");

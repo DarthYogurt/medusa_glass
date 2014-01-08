@@ -70,17 +70,17 @@ public class SplashActivity extends Activity {
 				for (int i = 0; i < allStepsJSONStringArray.size(); i++) {
 					writer.writeToInternal(allStepsJSONStringArray.get(i));
 					reader.readFromInternal(writer.filename); 
-					allStepsArray.addAll(reader.getStepsArray());
+					stepsArray = reader.getStepsArray();
+					for (int s = 0; s < stepsArray.size(); s++) {
+						allStepsArray.add(stepsArray.get(s));
+					}
 				}
-	
 				
 				Log.v("# of steps", Integer.toString(allStepsArray.size()));
 				
 				for (int i = 0; i < allStepsArray.size(); i++) {
 					Log.v("Checklist Steps", Arrays.toString(allStepsArray.get(i)));
 				}
-				
-				
 				
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
