@@ -21,6 +21,7 @@ public class SplashActivity extends Activity {
 	ArrayList<String[]> checklistsArray;
 	ArrayList<String> checklistsIdArray;
 	ArrayList<String[]> stepsArray;
+	ArrayList<String[]> allStepsArray;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,23 +59,28 @@ public class SplashActivity extends Activity {
 				
 				// Creates array of all steps
 				allStepsJSONStringArray = new ArrayList<String>();
+				allStepsArray = new ArrayList<String[]>();
+				
 				for (int i = 0; i < checklistsIdArray.size(); i++) {
 					allStepsJSONString = getRequest.getSteps(Integer.parseInt(checklistsIdArray.get(i)));
 					allStepsJSONStringArray.add(allStepsJSONString);
+					
 				}
 				
 				for (int i = 0; i < allStepsJSONStringArray.size(); i++) {
-					Log.v("Checklist Steps", allStepsJSONStringArray.get(i));
+					writer.writeToInternal(allStepsJSONStringArray.get(i));
+					reader.readFromInternal(writer.filename); 
+					allStepsArray.addAll(reader.getStepsArray());
+				}
+	
+				
+				Log.v("# of steps", Integer.toString(allStepsArray.size()));
+				
+				for (int i = 0; i < allStepsArray.size(); i++) {
+					Log.v("Checklist Steps", Arrays.toString(allStepsArray.get(i)));
 				}
 				
-//				Log.v("Steps Array", "writing to JSON");
-//				JSONWriter stepsWriter = new JSONWriter(context, allStepsJSONString);
-//				JSONReader stepsReader = new JSONReader(context, stepsWriter.filename);
-//				
-//				stepsWriter.writeToInternal();
-//				stepsReader.readFromInternal();
-//				
-//				stepsArray = stepsReader.getStepsArray();
+				
 				
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
