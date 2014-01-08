@@ -37,6 +37,7 @@ public class NewChecklistActivity extends Activity {
 //		mGestureDetector = createGestureDetector(this);
 		
 		checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
+		stepsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
 		
 	}
 	

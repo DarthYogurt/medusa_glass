@@ -48,7 +48,6 @@ public class SplashActivity extends Activity {
 				JSONWriter writer = new JSONWriter(context);
 				JSONReader reader = new JSONReader(context);
 				
-				// Creates array of all checklists based on GroupId
 				allChecklistsJSONString = getRequest.getChecklists(1);
 				
 				writer.writeToInternal(allChecklistsJSONString);
@@ -57,26 +56,25 @@ public class SplashActivity extends Activity {
 				checklistsArray = reader.getChecklistsArray();
 				checklistsIdArray = reader.getChecklistIdsArray();
 				
-				// Creates array of all steps
 				allStepsJSONStringArray = new ArrayList<String>();
 				allStepsArray = new ArrayList<String[]>();
 				
+				// Adds all steps for each checklist into a String array
 				for (int i = 0; i < checklistsIdArray.size(); i++) {
 					allStepsJSONString = getRequest.getSteps(Integer.parseInt(checklistsIdArray.get(i)));
 					allStepsJSONStringArray.add(allStepsJSONString);
-					
 				}
 				
+				// Adds all steps for all checklists into an ArrayList
 				for (int i = 0; i < allStepsJSONStringArray.size(); i++) {
 					writer.writeToInternal(allStepsJSONStringArray.get(i));
 					reader.readFromInternal(writer.filename); 
 					stepsArray = reader.getStepsArray();
+					
 					for (int s = 0; s < stepsArray.size(); s++) {
 						allStepsArray.add(stepsArray.get(s));
 					}
 				}
-				
-				Log.v("# of steps", Integer.toString(allStepsArray.size()));
 				
 				for (int i = 0; i < allStepsArray.size(); i++) {
 					Log.v("Checklist Steps", Arrays.toString(allStepsArray.get(i)));
@@ -88,10 +86,10 @@ public class SplashActivity extends Activity {
 				e.printStackTrace();
 			}
 
-			// Pass checklists and steps arrays to main menu
+			// Passes checklist and step arrays to main menu
 			intent = new Intent(context, MainMenuActivity.class);
 			intent.putExtra("checklists", checklistsArray);
-			intent.putExtra("steps", stepsArray);
+			intent.putExtra("steps", allStepsArray);
 			
 			// Start main menu activity
 			SplashActivity.this.startActivity(intent);
