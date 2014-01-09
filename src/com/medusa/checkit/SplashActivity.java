@@ -51,7 +51,7 @@ public class SplashActivity extends Activity {
 				allChecklistsJSONString = getRequest.getChecklists(1);
 				
 				writer.writeToInternal(allChecklistsJSONString);
-				reader.readFromInternal(writer.filename);
+				reader.readFromInternal(writer.FILENAME);
 				
 				checklistsArray = reader.getChecklistsArray();
 				checklistsIdArray = reader.getChecklistIdsArray();
@@ -68,7 +68,7 @@ public class SplashActivity extends Activity {
 				// Adds all steps for all checklists into an ArrayList
 				for (int i = 0; i < allStepsJSONStringArray.size(); i++) {
 					writer.writeToInternal(allStepsJSONStringArray.get(i));
-					reader.readFromInternal(writer.filename); 
+					reader.readFromInternal(writer.FILENAME); 
 					stepsArray = reader.getStepsArray();
 					
 					for (int s = 0; s < stepsArray.size(); s++) {

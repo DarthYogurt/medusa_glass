@@ -96,8 +96,8 @@ public class ChecklistActivity extends Activity {
 		menu.clear();
 		
 		if (stepType.equalsIgnoreCase("bool")) {
-			menu.add(0, Menu.NONE, Menu.NONE, "Yes");
-			menu.add(0, Menu.NONE, Menu.NONE, "No");
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Yes");
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "No");
 		}
 		
 		return super.onPrepareOptionsMenu(menu);
