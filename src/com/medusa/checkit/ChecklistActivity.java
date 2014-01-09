@@ -9,13 +9,19 @@ import com.google.android.glass.widget.CardScrollAdapter;
 import com.google.android.glass.widget.CardScrollView;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class ChecklistActivity extends Activity {
 	
@@ -31,6 +37,12 @@ public class ChecklistActivity extends Activity {
 		createCards();
 
         mCardScrollView = new CardScrollView(this);
+        mCardScrollView.setOnItemClickListener(new OnItemClickListener() {
+        	@Override
+    		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+    			openOptionsMenu();
+    		}
+        });
         StepCardScrollAdapter adapter = new StepCardScrollAdapter();
         mCardScrollView.setAdapter(adapter);
         mCardScrollView.activate();
@@ -77,45 +89,27 @@ public class ChecklistActivity extends Activity {
         public View getView(int position, View convertView, ViewGroup parent) {
             return mCards.get(position).toView();
         }
+
+    }	
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
     }
 	
-//	@Override
-//    public void onResume() {
-//        super.onResume();
-//        openOptionsMenu();
-//    }
-//	
-//	// Use this instead of onCreateOptionsMenu if menu is dynamic
-//	@Override
-//	public boolean onPrepareOptionsMenu(Menu menu) {
-//		String[] menuItem;
-//		
-//		menu.clear();
-//		for (int i = 0; i < steps.size(); i++) {
-//			menuItem = steps.get(i);
-//			menu.add(0, i, Menu.NONE, menuItem[1]);
-//		}
-//		return super.onPrepareOptionsMenu(menu);
-//	}
-//	
-//	@Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//		
-//        // Handle item selection.
-//        switch (item.getItemId()) {
-//        	case 0:
-//        		return true;
-//        	case 1:
-//        		return true;
-//            case 2:
-//                return true;
-//        	case 3:
-//        		return true;
-//            case 4:
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection. Menu items typically start another
+        // activity, start a service, or broadcast another intent.
+        switch (item.getItemId()) {
+            case R.id.stop:
+                startActivity(new Intent(this, MainMenuActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 	
 }
