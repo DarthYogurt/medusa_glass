@@ -24,6 +24,8 @@ public class ChecklistActivity extends Activity {
 	private List<Card> mCards;
     private CardScrollView mCardScrollView;
 	private ArrayList<String[]> steps;
+	private String[] currentStep;
+	private String stepType;
 
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,9 @@ public class ChecklistActivity extends Activity {
         setContentView(mCardScrollView);
         
         mCardScrollView.setOnItemClickListener(new OnItemClickListener() {
-    		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+        	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        		currentStep = steps.get(position);
+        		stepType = currentStep[2];
     			openOptionsMenu();
     		}
         });
@@ -86,21 +90,17 @@ public class ChecklistActivity extends Activity {
         }
     }	
 	
+	// Use this instead of onCreateOptionsMenu if menu is dynamic
 	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-	
-	@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.stop:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.clear();
+		
+		if (stepType.equalsIgnoreCase("bool")) {
+			menu.add(0, Menu.NONE, Menu.NONE, "Yes");
+			menu.add(0, Menu.NONE, Menu.NONE, "No");
+		}
+		
+		return super.onPrepareOptionsMenu(menu);
+	}
 	
 }
