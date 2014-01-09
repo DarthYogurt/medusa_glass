@@ -57,8 +57,14 @@ public class NewChecklistActivity extends Activity {
         mCardScrollView.activate();
         setContentView(mCardScrollView);
         
-        mCardScrollView.setOnItemClickListener(adapter);
         checklistIntent = new Intent(this, ChecklistActivity.class);
+        mCardScrollView.setOnItemClickListener(new OnItemClickListener() {
+        	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    			checklistIntent.putExtra("steps", getChecklistSteps(position));
+    			startActivity(checklistIntent);
+    		}
+        });
+        
 	}
 	
 	private void createCards() {
@@ -74,7 +80,7 @@ public class NewChecklistActivity extends Activity {
         }
     }
 	
-	private class StepCardScrollAdapter extends CardScrollAdapter implements OnItemClickListener {
+	private class StepCardScrollAdapter extends CardScrollAdapter {
 		
         @Override
         public int findIdPosition(Object id) {
@@ -100,11 +106,6 @@ public class NewChecklistActivity extends Activity {
         public View getView(int position, View convertView, ViewGroup parent) {
             return mCards.get(position).toView();
         }
-        
-        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-			checklistIntent.putExtra("steps", getChecklistSteps(adapter.findItemPosition(position)));
-			startActivity(checklistIntent);
-		}
     }	
 	
 	private ArrayList<String[]> getChecklistSteps(int id) {
