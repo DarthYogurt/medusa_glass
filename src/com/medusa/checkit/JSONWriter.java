@@ -38,7 +38,7 @@ public class JSONWriter {
 		}
 	}
 	
-	public void startNewChecklist() throws IOException {
+	public void startNewChecklist(int checklistId) throws IOException {
 		
 		File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "new_checklist.json");
 		
@@ -53,9 +53,9 @@ public class JSONWriter {
 			checklistWriter.beginObject();
 			checklistWriter.name("userId").value(1);
 			checklistWriter.name("groupId").value(1);
-			checklistWriter.name("checklistId").value(1);
+			checklistWriter.name("checklistId").value(checklistId);
 			checklistWriter.name("steps");
-			checklistWriter.beginArray();		
+			checklistWriter.beginArray();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

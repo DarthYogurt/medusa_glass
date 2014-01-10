@@ -30,6 +30,7 @@ public class ChecklistActivity extends Activity {
 	private ArrayList<String[]> steps;
 	private Card currentCard;
 	private String[] currentStepArray;
+	private int checklistId;
 	private int currentStepId;
 	private String currentStepType;
 	private boolean finishedChecklist;
@@ -46,22 +47,24 @@ public class ChecklistActivity extends Activity {
         mCardScrollView.activate();
         setContentView(mCardScrollView);
         
-        try {
-        	jsonWriter = new JSONWriter(this);
-			jsonWriter.startNewChecklist();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        
         mCardScrollView.setOnItemClickListener(new OnItemClickListener() {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         		currentCard = mCards.get(position);
         		currentStepArray = steps.get(position);
+        		Log.v("this checklist id", currentStepArray[5]);
+        		checklistId = Integer.parseInt(currentStepArray[5]);
         		currentStepId = Integer.parseInt(currentStepArray[3]);
         		currentStepType = currentStepArray[2];
     			openOptionsMenu();
     		}
         });
+        
+        try {
+        	jsonWriter = new JSONWriter(this);
+			jsonWriter.startNewChecklist(checklistId);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void createCards() {
@@ -115,25 +118,23 @@ public class ChecklistActivity extends Activity {
 		if (currentStepType.equalsIgnoreCase("bool")) {
 			menu.add(Menu.NONE, 1, Menu.NONE, "Yes");
 			menu.add(Menu.NONE, 2, Menu.NONE, "No");
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
 		if (currentStepType.equalsIgnoreCase("double")){
 			menu.add(Menu.NONE, 3, Menu.NONE, "Enter Number");
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
 		if (currentStepType.equalsIgnoreCase("text")){
 			menu.add(Menu.NONE, 4, Menu.NONE, "Record Message");
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
 		if (currentStepType.equalsIgnoreCase("file")){
 			menu.add(Menu.NONE, 5, Menu.NONE, "Take Picture");
 			menu.add(Menu.NONE, 6, Menu.NONE, "Record Video");
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
+		menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
+		menu.add(Menu.NONE, 7, Menu.NONE, "Finish Checklist");
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
@@ -145,6 +146,7 @@ public class ChecklistActivity extends Activity {
 			itemId 4 = Record Message
 			itemId 5 = Take Picture
 			itemId 6 = Record Video
+			itemId 7 = Finish Checklist
 		*/
 		switch (item.getItemId()) {
 			case 1:
@@ -154,7 +156,7 @@ public class ChecklistActivity extends Activity {
 				return true;
 			case 2:
 				currentCard.setFootnote("Result: NO");
-				try { jsonWriter.writeStepBoolean(currentStepId, false);	} 
+				try { jsonWriter.writeStepBoolean(currentStepId, false); } 
 				catch (IOException e) { e.printStackTrace(); }
 				return true;
 			case 3:
@@ -172,6 +174,9 @@ public class ChecklistActivity extends Activity {
 				takeVideo();
 				currentCard.setFootnote("Result: VIDEO RECORDED");
 				return true;
+			case 7:
+				try { jsonWriter.finishNewChecklist(); } 
+				catch (IOException e) { e.printStackTrace(); }
 			default:
 				return super.onOptionsItemSelected(item);
 		}
