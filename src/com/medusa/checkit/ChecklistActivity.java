@@ -1,5 +1,6 @@
 package com.medusa.checkit;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,10 @@ public class ChecklistActivity extends Activity {
 	private List<Card> mCards;
     private CardScrollView mCardScrollView;
 	private ArrayList<String[]> steps;
-	private String[] currentStep;
-	private String stepType;
-	private boolean resultYesNo;
 	private Card currentCard;
+	private String[] currentStep;
+	private String currentStepType;
+	private boolean resultYesNo;
 
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +44,19 @@ public class ChecklistActivity extends Activity {
         mCardScrollView.activate();
         setContentView(mCardScrollView);
         
+        JSONWriter writer = new JSONWriter(getApplicationContext());
+        try {
+			writer.newChecklist();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         mCardScrollView.setOnItemClickListener(new OnItemClickListener() {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        		currentStep = steps.get(position);
-        		stepType = currentStep[2];
-        		
         		currentCard = mCards.get(position);
+        		currentStep = steps.get(position);
+        		currentStepType = currentStep[2];
     			openOptionsMenu();
     		}
         });
@@ -102,23 +110,23 @@ public class ChecklistActivity extends Activity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
 		
-		if (stepType.equalsIgnoreCase("bool")) {
+		if (currentStepType.equalsIgnoreCase("bool")) {
 			menu.add(Menu.NONE, 1, Menu.NONE, "Yes");
 			menu.add(Menu.NONE, 2, Menu.NONE, "No");
 			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
-		if (stepType.equalsIgnoreCase("double")){
+		if (currentStepType.equalsIgnoreCase("double")){
 			menu.add(Menu.NONE, 3, Menu.NONE, "Enter Number");
 			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
-		if (stepType.equalsIgnoreCase("text")){
+		if (currentStepType.equalsIgnoreCase("text")){
 			menu.add(Menu.NONE, 4, Menu.NONE, "Record Message");
 			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
-		if (stepType.equalsIgnoreCase("file")){
+		if (currentStepType.equalsIgnoreCase("file")){
 			menu.add(Menu.NONE, 5, Menu.NONE, "Take Picture");
 			menu.add(Menu.NONE, 6, Menu.NONE, "Record Video");
 			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
