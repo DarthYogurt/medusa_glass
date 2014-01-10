@@ -10,6 +10,7 @@ import com.google.android.glass.widget.CardScrollView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -129,8 +130,7 @@ public class ChecklistActivity extends Activity {
 			itemId 4 = Record Message
 			itemId 5 = Take Picture
 			itemId 6 = Record Video
-		 */
-	
+		*/
 		switch (item.getItemId()) {
 			case 1:
 				resultYesNo = true;
@@ -148,6 +148,7 @@ public class ChecklistActivity extends Activity {
 				return true;
 			case 5:
 				Log.v("selected", "take picture");
+				takePicture();
 				return true;
 			case 6:
 				Log.v("selected", "record video");
@@ -155,6 +156,11 @@ public class ChecklistActivity extends Activity {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	private void takePicture() {
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		startActivityForResult(intent, 1);
 	}
 	
 }
