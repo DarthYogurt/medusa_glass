@@ -49,9 +49,10 @@ public class SplashActivity extends Activity {
 				JSONReader reader = new JSONReader(context);
 				
 				allChecklistsJSONString = getRequest.getChecklists(1);
+				Log.v("allChecklistsJSONString", allChecklistsJSONString);
 				
 				writer.writeToInternal(allChecklistsJSONString);
-				reader.readFromInternal(writer.FILENAME);
+				reader.readFromInternal(JSONWriter.FILENAME);
 				
 				checklistsArray = reader.getChecklistsArray();
 				checklistsIdArray = reader.getChecklistIdsArray();
@@ -68,7 +69,7 @@ public class SplashActivity extends Activity {
 				// Adds all steps for all checklists into an ArrayList
 				for (int i = 0; i < allStepsJSONStringArray.size(); i++) {
 					writer.writeToInternal(allStepsJSONStringArray.get(i));
-					reader.readFromInternal(writer.FILENAME); 
+					reader.readFromInternal(JSONWriter.FILENAME); 
 					stepsArray = reader.getStepsArray();
 					
 					for (int s = 0; s < stepsArray.size(); s++) {

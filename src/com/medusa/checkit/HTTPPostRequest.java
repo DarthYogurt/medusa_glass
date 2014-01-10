@@ -25,13 +25,14 @@ import android.os.Environment;
 import android.util.Log;
 
 public class HTTPPostRequest {
+	
 	static final File EXTERNALSTORAGE = Environment.getExternalStorageDirectory();
 	static final String URL = "http://dev.darthyogurt.com:8000/upload/";
 	
 	// For sending files using MultipartEntity
 	public void multipartPost() throws ClientProtocolException, IOException {
-		File image = new File(EXTERNALSTORAGE + "/Pictures/sample.jpg");
-		File json = new File(EXTERNALSTORAGE + "/Pictures/checklist1.json");
+		File json = new File(EXTERNALSTORAGE + "/Pictures/test.json");
+		File image = new File(EXTERNALSTORAGE + "/Pictures/test.jpg");
 		
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(URL);
@@ -39,8 +40,8 @@ public class HTTPPostRequest {
 
 		MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 		multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+		multipartEntity.addPart("data", new FileBody(json));
 		multipartEntity.addPart("sampleImage", new FileBody(image));
-		multipartEntity.addPart("sampleJSON", new FileBody(json));
 		post.setEntity(multipartEntity.build());
 		
 		HttpResponse response = client.execute(post);
