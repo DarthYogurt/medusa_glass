@@ -25,6 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ChecklistActivity extends Activity {
 	
 	private List<Card> mCards;
+	private StepCardScrollAdapter adapter;
     private CardScrollView mCardScrollView;
     private JSONWriter jsonWriter;
 	private ArrayList<String[]> steps;
@@ -42,7 +43,7 @@ public class ChecklistActivity extends Activity {
 		
 		createCards();
         mCardScrollView = new CardScrollView(this);
-        StepCardScrollAdapter adapter = new StepCardScrollAdapter();
+        adapter = new StepCardScrollAdapter();
         mCardScrollView.setAdapter(adapter);
         mCardScrollView.activate();
         setContentView(mCardScrollView);
@@ -51,7 +52,6 @@ public class ChecklistActivity extends Activity {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         		currentCard = mCards.get(position);
         		currentStepArray = steps.get(position);
-        		Log.v("this checklist id", currentStepArray[5]);
         		checklistId = Integer.parseInt(currentStepArray[5]);
         		currentStepId = Integer.parseInt(currentStepArray[3]);
         		currentStepType = currentStepArray[2];
@@ -72,6 +72,7 @@ public class ChecklistActivity extends Activity {
         Card card;
         String[] step;
         
+        // Dynamically set up Cards based on ArrayList of steps
         for (int i = 0; i < steps.size(); i++) {
         	step = steps.get(i);
         	card = new Card(this);
@@ -151,28 +152,34 @@ public class ChecklistActivity extends Activity {
 		switch (item.getItemId()) {
 			case 1:
 				currentCard.setFootnote("Result: YES");
+				adapter.notifyDataSetChanged();
 				try { jsonWriter.writeStepBoolean(currentStepId, true);	} 
 				catch (IOException e) { e.printStackTrace(); }
 				return true;
 			case 2:
 				currentCard.setFootnote("Result: NO");
+				adapter.notifyDataSetChanged();
 				try { jsonWriter.writeStepBoolean(currentStepId, false); } 
 				catch (IOException e) { e.printStackTrace(); }
 				return true;
 			case 3:
 				currentCard.setFootnote("Result: NUMBER ENTERED");
+				adapter.notifyDataSetChanged();
 				return true;
 			case 4:
 				recordMessage();
 				currentCard.setFootnote("Result: MESSAGE RECORDED");
+				adapter.notifyDataSetChanged();
 				return true;
 			case 5:
 				takePicture();
 				currentCard.setFootnote("Result: PICTURE TAKEN");
+				adapter.notifyDataSetChanged();
 				return true;
 			case 6:
 				takeVideo();
 				currentCard.setFootnote("Result: VIDEO RECORDED");
+				adapter.notifyDataSetChanged();
 				return true;
 			case 7:
 				try { jsonWriter.finishNewChecklist(); } 
