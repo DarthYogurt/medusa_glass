@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +29,7 @@ public class ChecklistActivity extends Activity {
 	private String[] currentStep;
 	private String stepType;
 	private boolean resultYesNo;
+	private Card currentCard;
 
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,8 @@ public class ChecklistActivity extends Activity {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         		currentStep = steps.get(position);
         		stepType = currentStep[2];
+        		
+        		currentCard = mCards.get(position);
     			openOptionsMenu();
     		}
         });
@@ -59,7 +63,8 @@ public class ChecklistActivity extends Activity {
         	step = steps.get(i);
         	card = new Card(this);
         	card.setText(step[1]);
-        	card.setFootnote("Step #" + step[0]);
+//        	card.setFootnote("Step #" + step[0]);
+        	card.setFootnote("Result:");
         	mCards.add(card);
         }
     }
@@ -134,28 +139,35 @@ public class ChecklistActivity extends Activity {
 		switch (item.getItemId()) {
 			case 1:
 				resultYesNo = true;
-				Log.v("selected", "yes");
+				currentCard.setFootnote("Result: YES");
 				return true;
 			case 2:
 				resultYesNo = false;
-				Log.v("selected", "no");
+				currentCard.setFootnote("Result: NO");
 				return true;
 			case 3:
-				Log.v("selected", "enter number");
+				currentCard.setFootnote("Result: NUMBER ENTERED");
 				return true;
 			case 4:
-				Log.v("selected", "record message");
+				recordMessage();
+				currentCard.setFootnote("Result: MESSAGE RECORDED");
 				return true;
 			case 5:
-				Log.v("selected", "take picture");
 				takePicture();
+				currentCard.setFootnote("Result: PICTURE TAKEN");
 				return true;
 			case 6:
-				Log.v("selected", "record video");
+				takeVideo();
+				currentCard.setFootnote("Result: VIDEO RECORDED");
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	private void recordMessage() {
+	    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+	    startActivityForResult(intent, 0);
 	}
 	
 	private void takePicture() {
@@ -163,4 +175,8 @@ public class ChecklistActivity extends Activity {
 		startActivityForResult(intent, 1);
 	}
 	
+	private void takeVideo() {
+		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+		startActivityForResult(intent, 1);
+	}
 }
