@@ -26,6 +26,7 @@ public class ChecklistActivity extends Activity {
 	private ArrayList<String[]> steps;
 	private String[] currentStep;
 	private String stepType;
+	private boolean resultYesNo;
 
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,28 +97,64 @@ public class ChecklistActivity extends Activity {
 		menu.clear();
 		
 		if (stepType.equalsIgnoreCase("bool")) {
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Yes");
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "No");
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
-		}
-		
-		if (stepType.equalsIgnoreCase("text")){
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Record Message");
+			menu.add(Menu.NONE, 1, Menu.NONE, "Yes");
+			menu.add(Menu.NONE, 2, Menu.NONE, "No");
 			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
 		if (stepType.equalsIgnoreCase("double")){
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Enter Number");
+			menu.add(Menu.NONE, 3, Menu.NONE, "Enter Number");
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
+		}
+		
+		if (stepType.equalsIgnoreCase("text")){
+			menu.add(Menu.NONE, 4, Menu.NONE, "Record Message");
 			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
 		if (stepType.equalsIgnoreCase("file")){
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Take Picture");
-			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Record Video");
+			menu.add(Menu.NONE, 5, Menu.NONE, "Take Picture");
+			menu.add(Menu.NONE, 6, Menu.NONE, "Record Video");
 			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
 		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		/*	itemId 1 = Yes/True
+			itemId 2 = No/False
+			itemId 3 = Enter Number
+			itemId 4 = Record Message
+			itemId 5 = Take Picture
+			itemId 6 = Record Video
+		 */
+	
+		switch (item.getItemId()) {
+			case 1:
+				resultYesNo = true;
+				Log.v("selected", "yes");
+				return true;
+			case 2:
+				resultYesNo = false;
+				Log.v("selected", "no");
+				return true;
+			case 3:
+				Log.v("selected", "enter number");
+				return true;
+			case 4:
+				Log.v("selected", "record message");
+				return true;
+			case 5:
+				Log.v("selected", "take picture");
+				return true;
+			case 6:
+				Log.v("selected", "record video");
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 	
 }
