@@ -98,6 +98,23 @@ public class ChecklistActivity extends Activity {
 		if (stepType.equalsIgnoreCase("bool")) {
 			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Yes");
 			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "No");
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
+		}
+		
+		if (stepType.equalsIgnoreCase("text")){
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Record Message");
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
+		}
+		
+		if (stepType.equalsIgnoreCase("double")){
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Enter Number");
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
+		}
+		
+		if (stepType.equalsIgnoreCase("file")){
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Take Picture");
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Record Video");
+			menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
 		}
 		
 		return super.onPrepareOptionsMenu(menu);

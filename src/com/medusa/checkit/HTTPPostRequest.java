@@ -27,7 +27,7 @@ import android.util.Log;
 public class HTTPPostRequest {
 	
 	static final File EXTERNALSTORAGE = Environment.getExternalStorageDirectory();
-	static final String URL = "http://dev.darthyogurt.com:8000/upload/";
+	static final String POST_URL = "http://dev.darthyogurt.com:8000/upload/";
 	
 	// For sending files using MultipartEntity
 	public void multipartPost() throws ClientProtocolException, IOException {
@@ -35,7 +35,7 @@ public class HTTPPostRequest {
 		File image = new File(EXTERNALSTORAGE + "/Pictures/test.jpg");
 		
 		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost(URL);
+		HttpPost post = new HttpPost(POST_URL);
 		post.setHeader("enctype", "multipart/form-data");
 
 		MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();

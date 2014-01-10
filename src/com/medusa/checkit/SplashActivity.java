@@ -49,7 +49,6 @@ public class SplashActivity extends Activity {
 				JSONReader reader = new JSONReader(context);
 				
 				allChecklistsJSONString = getRequest.getChecklists(1);
-				Log.v("allChecklistsJSONString", allChecklistsJSONString);
 				
 				writer.writeToInternal(allChecklistsJSONString);
 				reader.readFromInternal(JSONWriter.FILENAME);
