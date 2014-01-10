@@ -26,11 +26,13 @@ public class ChecklistActivity extends Activity {
 	
 	private List<Card> mCards;
     private CardScrollView mCardScrollView;
+    private JSONWriter jsonWriter;
 	private ArrayList<String[]> steps;
 	private Card currentCard;
-	private String[] currentStep;
+	private String[] currentStepArray;
+	private int currentStepId;
 	private String currentStepType;
-	private boolean resultYesNo;
+	private boolean finishedChecklist;
 
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +46,19 @@ public class ChecklistActivity extends Activity {
         mCardScrollView.activate();
         setContentView(mCardScrollView);
         
-        JSONWriter writer = new JSONWriter(getApplicationContext());
         try {
-			writer.newChecklist();
+        	jsonWriter = new JSONWriter(this);
+			jsonWriter.startNewChecklist();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
         mCardScrollView.setOnItemClickListener(new OnItemClickListener() {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         		currentCard = mCards.get(position);
-        		currentStep = steps.get(position);
-        		currentStepType = currentStep[2];
+        		currentStepArray = steps.get(position);
+        		currentStepId = Integer.parseInt(currentStepArray[3]);
+        		currentStepType = currentStepArray[2];
     			openOptionsMenu();
     		}
         });
@@ -146,12 +148,14 @@ public class ChecklistActivity extends Activity {
 		*/
 		switch (item.getItemId()) {
 			case 1:
-				resultYesNo = true;
 				currentCard.setFootnote("Result: YES");
+				try { jsonWriter.writeStepBoolean(currentStepId, true);	} 
+				catch (IOException e) { e.printStackTrace(); }
 				return true;
 			case 2:
-				resultYesNo = false;
 				currentCard.setFootnote("Result: NO");
+				try { jsonWriter.writeStepBoolean(currentStepId, false);	} 
+				catch (IOException e) { e.printStackTrace(); }
 				return true;
 			case 3:
 				currentCard.setFootnote("Result: NUMBER ENTERED");

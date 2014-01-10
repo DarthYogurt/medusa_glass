@@ -12,7 +12,7 @@ import com.google.gson.stream.JsonWriter;
 public class JSONWriter {
 	
 	static final String FILENAME = "temp.json";
-	static final String CHECKLIST_NAME = "new_checklist.json";
+	JsonWriter checklistWriter;
 	
 	Context context;
 	
@@ -38,59 +38,74 @@ public class JSONWriter {
 		}
 	}
 	
-	public void newChecklist() throws IOException {
+	public void startNewChecklist() throws IOException {
 		
 		File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "new_checklist.json");
-		file.createNewFile();
-		JsonWriter writer = null;
 		
 		try {
 			FileOutputStream out = new FileOutputStream(file);
-			writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+			checklistWriter = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		try {
-			writer.beginObject();
-			writer.name("userId").value(1);
-			writer.name("groupId").value(1);
-			writer.name("checklistId").value(1);
-			writer.name("steps");
-			writer.beginArray();
-			writer.beginObject();
-			writer.name("stepId").value(1);
-			writer.name("stepType").value("bool");
-			writer.name("value").value("true");
-			writer.endObject();
-			writer.beginObject();
-			writer.name("stepId").value(2);
-			writer.name("stepType").value("double");
-			writer.name("value").value("2");
-			writer.endObject();
-			writer.beginObject();
-			writer.name("stepId").value(3);
-			writer.name("stepType").value("text");
-			writer.name("value").value("Monkey is caged");
-			writer.endObject();
-			writer.beginObject();
-			writer.name("stepId").value(4);
-			writer.name("stepType").value("bool");
-			writer.name("value").value("false");
-			writer.endObject();
-			writer.endArray();
-			writer.endObject();
-			
+			checklistWriter.beginObject();
+			checklistWriter.name("userId").value(1);
+			checklistWriter.name("groupId").value(1);
+			checklistWriter.name("checklistId").value(1);
+			checklistWriter.name("steps");
+			checklistWriter.beginArray();		
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-		        writer.close();
-		    } catch (IOException e) {
-
-		    }
 		}
-	    
+	}
+	
+	public void finishNewChecklist() throws IOException {
+		try {
+			checklistWriter.endArray();
+			checklistWriter.endObject();
+			checklistWriter.close();
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+	}
+	
+	public void writeStepBoolean(int stepId, boolean result) throws IOException {
+		try {
+			checklistWriter.beginObject();
+			checklistWriter.name("stepId").value(stepId);
+			checklistWriter.name("stepType").value("bool");
+			if (result == true) { checklistWriter.name("value").value("true"); }
+			else { checklistWriter.name("value").value("false"); }
+			checklistWriter.endObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void writeStepDouble(int stepId, double result) throws IOException {
+		try {
+			checklistWriter.beginObject();
+			checklistWriter.name("stepId").value(2);
+			checklistWriter.name("stepType").value("double");
+			checklistWriter.name("value").value("2");
+			checklistWriter.endObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void writeStepText(int stepId, String result) throws IOException {
+		try {
+			checklistWriter.beginObject();
+			checklistWriter.name("stepId").value(3);
+			checklistWriter.name("stepType").value("text");
+			checklistWriter.name("value").value("Monkey is caged");
+			checklistWriter.endObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
