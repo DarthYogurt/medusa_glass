@@ -220,11 +220,8 @@ public class ChecklistActivity extends Activity {
 			HTTPPostRequest post = new HTTPPostRequest(getApplicationContext());
 			try {
 				post.multipartPost(JSONWriter.CHECKLIST_FILENAME);
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			} catch (ClientProtocolException e) { e.printStackTrace(); } 
+			catch (IOException e) { e.printStackTrace(); }
 		}
 	}
 

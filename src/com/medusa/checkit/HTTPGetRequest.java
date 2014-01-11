@@ -15,10 +15,6 @@ public class HTTPGetRequest {
 	String checklistStepsURL;
 	String JSONString;
 	
-	public HTTPGetRequest() {
-		
-	}
-	
 	public String getJSONString(String JSONURL) throws MalformedURLException, IOException {
 		String charset = "UTF-8";
 		URLConnection connection = new URL(JSONURL).openConnection();

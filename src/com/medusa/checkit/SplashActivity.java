@@ -76,11 +76,8 @@ public class SplashActivity extends Activity {
 					Log.v("Checklist Steps", Arrays.toString(allStepsArray.get(i)));
 				}
 				
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			} catch (MalformedURLException e) { e.printStackTrace(); } 
+			catch (IOException e) { e.printStackTrace(); }
 
 			// Passes checklist and step arrays to main menu
 			intent = new Intent(context, MainMenuActivity.class);

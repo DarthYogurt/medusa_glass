@@ -14,19 +14,15 @@ public class JSONWriter {
 	static final String FILENAME = "temp.json";
 	static final String CHECKLIST_FILENAME = "new_checklist.json";
 	
+	Context context;
 	FileOutputStream fos;
 	JsonWriter checklistWriter;
-	
-	
-	Context context;
 	
 	public JSONWriter(Context context) {
 		this.context = context;
 	}
 	
 	public void writeToInternal(String data) throws IOException {
-		FileOutputStream fos = null;
-		
 		try {
 			fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			fos.write(data.getBytes());
@@ -34,25 +30,17 @@ public class JSONWriter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				fos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			try { fos.close(); } 
+			catch (IOException e) { e.printStackTrace(); }
 		}
 	}
 	
-	public void startNewChecklist(int checklistId) throws IOException {
-		
-//		File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "new_checklist.json");
-		
+	public void startNewChecklist(int checklistId) throws IOException {		
 		try {
 			fos = context.openFileOutput(CHECKLIST_FILENAME, Context.MODE_PRIVATE);
 			checklistWriter = new JsonWriter(new OutputStreamWriter(fos, "UTF-8"));
 			Log.v("new file", CHECKLIST_FILENAME + " has been created");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) { e.printStackTrace(); }
 		
 		try {
 			checklistWriter.beginObject();
@@ -61,9 +49,7 @@ public class JSONWriter {
 			checklistWriter.name("checklistId").value(checklistId);
 			checklistWriter.name("steps");
 			checklistWriter.beginArray();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
 	public void finishNewChecklist() throws IOException {
@@ -85,9 +71,7 @@ public class JSONWriter {
 			if (result == true) { checklistWriter.name("value").value("true"); }
 			else { checklistWriter.name("value").value("false"); }
 			checklistWriter.endObject();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
 	public void writeStepDouble(int stepId, double result) throws IOException {
@@ -97,9 +81,7 @@ public class JSONWriter {
 			checklistWriter.name("stepType").value("double");
 			checklistWriter.name("value").value("2");
 			checklistWriter.endObject();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
 	public void writeStepText(int stepId, String result) throws IOException {
@@ -109,9 +91,7 @@ public class JSONWriter {
 			checklistWriter.name("stepType").value("text");
 			checklistWriter.name("value").value("Monkey is caged");
 			checklistWriter.endObject();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
 }
