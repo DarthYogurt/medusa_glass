@@ -47,7 +47,7 @@ public class JSONWriter {
 //		File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "new_checklist.json");
 		
 		try {
-			FileOutputStream fos = context.openFileOutput(CHECKLIST_FILENAME, Context.MODE_PRIVATE);
+			fos = context.openFileOutput(CHECKLIST_FILENAME, Context.MODE_PRIVATE);
 			checklistWriter = new JsonWriter(new OutputStreamWriter(fos, "UTF-8"));
 			Log.v("new file", CHECKLIST_FILENAME + " has been created");
 		} catch (IOException e) {
@@ -72,8 +72,8 @@ public class JSONWriter {
 			checklistWriter.endObject();
 			checklistWriter.close();
 	    } catch (IOException e) { e.printStackTrace(); }
-//		try { fos.close(); } 
-//		catch (IOException e) { e.printStackTrace(); }
+		try { fos.close(); } 
+		catch (IOException e) { e.printStackTrace(); }
 		
 	}
 	
