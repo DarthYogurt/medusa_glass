@@ -209,9 +209,10 @@ public class ChecklistActivity extends Activity {
 		}
 	}
 	
+	private static final int SPEECH_REQUEST = 0;
 	private void recordMessage() {
 	    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-	    startActivityForResult(intent, 0);
+	    startActivityForResult(intent, SPEECH_REQUEST);
 	}
 	
 	private void takePicture() {
@@ -222,6 +223,17 @@ public class ChecklistActivity extends Activity {
 	private void takeVideo() {
 		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 		startActivityForResult(intent, 1);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
+	        List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+	        String spokenText = results.get(0);
+	        // Do something with spokenText
+	        Log.v("spoken text", spokenText);
+	    }
+	    super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	private class HTTPPostThread extends Thread {
