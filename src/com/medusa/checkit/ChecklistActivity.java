@@ -27,6 +27,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class ChecklistActivity extends Activity {
 	
+	private HTTPPostThread postThread;
 	private List<Card> mCards;
 	private StepCardScrollAdapter adapter;
     private CardScrollView mCardScrollView;
@@ -37,8 +38,7 @@ public class ChecklistActivity extends Activity {
 	private int checklistId;
 	private int currentStepId;
 	private String currentStepType;
-	private boolean finishedChecklist;
-	private HTTPPostThread postThread;
+	
 
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,7 @@ public class ChecklistActivity extends Activity {
     				catch (IOException e) { e.printStackTrace(); }
     				postThread.start();
     				Log.v("HTTP POST", "Checklist JSON sent to server");
+    				startActivity(new Intent(getApplicationContext(), FinishChecklistActivity.class));
         		}
         		else {
         			currentCard = mCards.get(position);

@@ -8,5 +8,7 @@
     <string name="continueChecklist">Continue</string>
     <string name="stop">Stop</string>
     <string name="loading">Loading Please Wait</string>
+    <string name="finished_checklist">Finished Checklist!</string>
+    <string name="click_to_continue">Click to continue</string>
 
 </resources>
