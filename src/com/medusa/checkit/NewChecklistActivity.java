@@ -12,6 +12,7 @@ import com.google.android.glass.touchpad.GestureDetector;
 import com.google.android.glass.widget.CardScrollAdapter;
 import com.google.android.glass.widget.CardScrollView;
 
+import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -28,6 +29,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class NewChecklistActivity extends Activity {
 	
+	private AudioManager mAudioManager;
 	private GestureDetector mGestureDetector;
 	private List<Card> mCards;
     private CardScrollView mCardScrollView;
@@ -44,7 +46,7 @@ public class NewChecklistActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_new_checklist);
+		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 //		mGestureDetector = createGestureDetector(this);
 		
 		checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
@@ -62,6 +64,7 @@ public class NewChecklistActivity extends Activity {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     			checklistIntent.putExtra("steps", getChecklistSteps(position));
     			startActivity(checklistIntent);
+    			mAudioManager.playSoundEffect(AudioManager.FX_KEY_CLICK);
     		}
         });
         

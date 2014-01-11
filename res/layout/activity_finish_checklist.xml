@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/finished_checklist"
-        android:textSize="70px"
+        android:textSize="60px"
         android:textStyle="bold" />
     
     <TextView
@@ -20,6 +20,7 @@
         android:layout_gravity="bottom|center"
         android:text="@string/click_to_continue"
         android:textSize="30px"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="#ffff99" />
 
 </FrameLayout>

@@ -13,7 +13,9 @@ import com.google.android.glass.widget.CardScrollAdapter;
 import com.google.android.glass.widget.CardScrollView;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
@@ -27,6 +29,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class ChecklistActivity extends Activity {
 	
+	private AudioManager mAudioManager;
 	private HTTPPostThread postThread;
 	private List<Card> mCards;
 	private StepCardScrollAdapter adapter;
@@ -43,6 +46,7 @@ public class ChecklistActivity extends Activity {
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		postThread = new HTTPPostThread();
 		steps = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
 		
@@ -70,6 +74,7 @@ public class ChecklistActivity extends Activity {
     				postThread.start();
     				Log.v("HTTP POST", "Checklist JSON sent to server");
     				startActivity(new Intent(getApplicationContext(), FinishChecklistActivity.class));
+    				mAudioManager.playSoundEffect(AudioManager.FX_KEY_CLICK);
         		}
         		else {
         			currentCard = mCards.get(position);
