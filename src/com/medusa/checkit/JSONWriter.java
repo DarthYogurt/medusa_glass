@@ -12,7 +12,11 @@ import com.google.gson.stream.JsonWriter;
 public class JSONWriter {
 	
 	static final String FILENAME = "temp.json";
+	static final String CHECKLIST_FILENAME = "new_checklist.json";
+	
+	FileOutputStream fos;
 	JsonWriter checklistWriter;
+	
 	
 	Context context;
 	
@@ -40,11 +44,12 @@ public class JSONWriter {
 	
 	public void startNewChecklist(int checklistId) throws IOException {
 		
-		File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "new_checklist.json");
+//		File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "new_checklist.json");
 		
 		try {
-			FileOutputStream out = new FileOutputStream(file);
-			checklistWriter = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+			FileOutputStream fos = context.openFileOutput(CHECKLIST_FILENAME, Context.MODE_PRIVATE);
+			checklistWriter = new JsonWriter(new OutputStreamWriter(fos, "UTF-8"));
+			Log.v("new file", CHECKLIST_FILENAME + " has been created");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +58,7 @@ public class JSONWriter {
 			checklistWriter.beginObject();
 			checklistWriter.name("userId").value(1);
 			checklistWriter.name("groupId").value(1);
-			checklistWriter.name("checklistId").value(checklistId);
+			checklistWriter.name("checklistId").value(2);
 			checklistWriter.name("steps");
 			checklistWriter.beginArray();
 		} catch (IOException e) {
@@ -66,9 +71,10 @@ public class JSONWriter {
 			checklistWriter.endArray();
 			checklistWriter.endObject();
 			checklistWriter.close();
-	    } catch (IOException e) {
-	    	e.printStackTrace();
-	    }
+	    } catch (IOException e) { e.printStackTrace(); }
+//		try { fos.close(); } 
+//		catch (IOException e) { e.printStackTrace(); }
+		
 	}
 	
 	public void writeStepBoolean(int stepId, boolean result) throws IOException {

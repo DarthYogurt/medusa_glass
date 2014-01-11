@@ -21,6 +21,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
@@ -29,10 +30,15 @@ public class HTTPPostRequest {
 	static final File EXTERNALSTORAGE = Environment.getExternalStorageDirectory();
 	static final String POST_URL = "http://dev.darthyogurt.com:8000/upload/";
 	
+	Context context;
+	
+	public HTTPPostRequest(Context context) {
+		this.context = context;
+	}
+	
 	// For sending files using MultipartEntity
-	public void multipartPost() throws ClientProtocolException, IOException {
-		File json = new File(EXTERNALSTORAGE + "/Pictures/test.json");
-		File image = new File(EXTERNALSTORAGE + "/Pictures/test.jpg");
+	public void multipartPost(String jsonFilename) throws ClientProtocolException, IOException {
+		File json = new File(context.getFilesDir() + "/new_checklist.json");
 		
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(POST_URL);
@@ -41,7 +47,6 @@ public class HTTPPostRequest {
 		MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 		multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 		multipartEntity.addPart("data", new FileBody(json));
-		multipartEntity.addPart("sampleImage", new FileBody(image));
 		post.setEntity(multipartEntity.build());
 		
 		HttpResponse response = client.execute(post);

@@ -1,8 +1,12 @@
 package com.medusa.checkit;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.apache.http.client.ClientProtocolException;
 
 import com.google.android.glass.app.Card;
 import com.google.android.glass.widget.CardScrollAdapter;
@@ -15,7 +19,6 @@ import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +38,14 @@ public class ChecklistActivity extends Activity {
 	private int currentStepId;
 	private String currentStepType;
 	private boolean finishedChecklist;
+	private HTTPPostThread postThread;
 
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		steps = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
+		
+		postThread = new HTTPPostThread();
 		
 		createCards();
         mCardScrollView = new CardScrollView(this);
@@ -184,6 +190,8 @@ public class ChecklistActivity extends Activity {
 			case 7:
 				try { jsonWriter.finishNewChecklist(); } 
 				catch (IOException e) { e.printStackTrace(); }
+				postThread.start();
+				Log.v("HTTP POST", "Checklist JSON sent to server");
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -203,4 +211,20 @@ public class ChecklistActivity extends Activity {
 		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 		startActivityForResult(intent, 1);
 	}
+	
+	private class HTTPPostThread extends Thread {
+		
+		@Override
+		public void run() {
+			HTTPPostRequest post = new HTTPPostRequest(getApplicationContext());
+			try {
+				post.multipartPost(JSONWriter.CHECKLIST_FILENAME);
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

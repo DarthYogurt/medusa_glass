@@ -39,11 +39,7 @@ public class SplashActivity extends Activity {
 		public void run() {
 			
 			HTTPGetRequest getRequest = new HTTPGetRequest();
-			HTTPPostRequest postRequest = new HTTPPostRequest();
 			try {
-				
-				// Test POST to server
-				postRequest.multipartPost();
 				
 				JSONWriter writer = new JSONWriter(context);
 				JSONReader reader = new JSONReader(context);
