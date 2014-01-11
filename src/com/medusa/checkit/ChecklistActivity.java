@@ -43,9 +43,8 @@ public class ChecklistActivity extends Activity {
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		steps = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
-		
 		postThread = new HTTPPostThread();
+		steps = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
 		
 		createCards();
         mCardScrollView = new CardScrollView(this);
@@ -54,23 +53,25 @@ public class ChecklistActivity extends Activity {
         mCardScrollView.activate();
         setContentView(mCardScrollView);
         
+        // Creates new JSON file and initializes some values
+        currentStepArray = steps.get(0);
+        checklistId = Integer.parseInt(currentStepArray[5]);
+        try {
+        	jsonWriter = new JSONWriter(this);
+			jsonWriter.startNewChecklist(checklistId);
+		} catch (IOException e) { e.printStackTrace(); }
+        
         mCardScrollView.setOnItemClickListener(new OnItemClickListener() {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         		currentCard = mCards.get(position);
         		currentStepArray = steps.get(position);
-        		checklistId = Integer.parseInt(currentStepArray[5]);
         		currentStepId = Integer.parseInt(currentStepArray[3]);
         		currentStepType = currentStepArray[2];
     			openOptionsMenu();
     		}
         });
         
-        try {
-        	jsonWriter = new JSONWriter(this);
-			jsonWriter.startNewChecklist(checklistId);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        
 	}
 	
 	private void createCards() {

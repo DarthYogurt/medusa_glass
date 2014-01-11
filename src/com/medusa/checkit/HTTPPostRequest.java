@@ -38,7 +38,7 @@ public class HTTPPostRequest {
 	
 	// For sending files using MultipartEntity
 	public void multipartPost(String jsonFilename) throws ClientProtocolException, IOException {
-		File json = new File(context.getFilesDir() + "/new_checklist.json");
+		File json = new File(context.getFilesDir() + File.separator + "new_checklist.json");
 		
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(POST_URL);

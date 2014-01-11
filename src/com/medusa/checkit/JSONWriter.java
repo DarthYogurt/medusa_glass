@@ -58,7 +58,7 @@ public class JSONWriter {
 			checklistWriter.beginObject();
 			checklistWriter.name("userId").value(1);
 			checklistWriter.name("groupId").value(1);
-			checklistWriter.name("checklistId").value(2);
+			checklistWriter.name("checklistId").value(checklistId);
 			checklistWriter.name("steps");
 			checklistWriter.beginArray();
 		} catch (IOException e) {
