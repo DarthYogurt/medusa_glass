@@ -63,15 +63,22 @@ public class ChecklistActivity extends Activity {
         
         mCardScrollView.setOnItemClickListener(new OnItemClickListener() {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        		currentCard = mCards.get(position);
-        		currentStepArray = steps.get(position);
-        		currentStepId = Integer.parseInt(currentStepArray[3]);
-        		currentStepType = currentStepArray[2];
-    			openOptionsMenu();
+        		
+        		if (position == mCards.size() - 1) {
+        			try { jsonWriter.finishNewChecklist(); } 
+    				catch (IOException e) { e.printStackTrace(); }
+    				postThread.start();
+    				Log.v("HTTP POST", "Checklist JSON sent to server");
+        		}
+        		else {
+        			currentCard = mCards.get(position);
+            		currentStepArray = steps.get(position);
+            		currentStepId = Integer.parseInt(currentStepArray[3]);
+            		currentStepType = currentStepArray[2];
+        			openOptionsMenu();
+        		}
     		}
         });
-        
-        
 	}
 	
 	private void createCards() {
@@ -88,6 +95,11 @@ public class ChecklistActivity extends Activity {
         	card.setFootnote("Result:");
         	mCards.add(card);
         }
+        
+        // Makes Finish Checklist Card
+        card = new Card(this);
+        card.setText("Finish Checklist");
+        mCards.add(card);
     }
 	
 	private class StepCardScrollAdapter extends CardScrollAdapter {
@@ -142,7 +154,6 @@ public class ChecklistActivity extends Activity {
 		}
 		
 		menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Cancel");
-		menu.add(Menu.NONE, 7, Menu.NONE, "Finish Checklist");
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
@@ -154,7 +165,6 @@ public class ChecklistActivity extends Activity {
 			itemId 4 = Record Message
 			itemId 5 = Take Picture
 			itemId 6 = Record Video
-			itemId 7 = Finish Checklist
 		*/
 		switch (item.getItemId()) {
 			case 1:
@@ -188,11 +198,6 @@ public class ChecklistActivity extends Activity {
 				currentCard.setFootnote("Result: VIDEO RECORDED");
 				adapter.notifyDataSetChanged();
 				return true;
-			case 7:
-				try { jsonWriter.finishNewChecklist(); } 
-				catch (IOException e) { e.printStackTrace(); }
-				postThread.start();
-				Log.v("HTTP POST", "Checklist JSON sent to server");
 			default:
 				return super.onOptionsItemSelected(item);
 		}
