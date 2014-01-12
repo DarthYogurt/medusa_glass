@@ -11,9 +11,9 @@
         android:id="@+id/entered_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="top|center"
         android:text="@string/no_value_entered"
-        android:textSize="60px"
+        android:textSize="70px"
         android:textStyle="bold" />
 
 </FrameLayout>

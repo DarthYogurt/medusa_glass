@@ -2,9 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     
     <item
-        android:id="@+id/value_dot"
-        android:title="@string/dot" />
-    <item
         android:id="@+id/value_one"
         android:title="@string/one" />
     <item
@@ -34,6 +31,9 @@
 	<item
         android:id="@+id/value_zero"
         android:title="@string/zero" />
+	<item
+        android:id="@+id/value_dot"
+        android:title="@string/dot" />
 	<item
         android:id="@+id/value_negative"
         android:title="@string/negative" />

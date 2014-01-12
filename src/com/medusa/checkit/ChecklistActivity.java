@@ -87,6 +87,7 @@ public class ChecklistActivity extends Activity {
             		currentStepId = Integer.parseInt(currentStepArray[3]);
             		currentStepType = currentStepArray[2];
         			openOptionsMenu();
+        			mAudioManager.playSoundEffect(AudioManager.FX_KEY_CLICK);
         		}
     		}
         });

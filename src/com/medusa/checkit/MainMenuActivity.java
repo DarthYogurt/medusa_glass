@@ -27,7 +27,7 @@ public class MainMenuActivity extends Activity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+//        setContentView(R.layout.activity_main_menu);
         
         checklistsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("checklists");
         stepsArray = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");

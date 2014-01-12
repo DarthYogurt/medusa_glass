@@ -13,12 +13,13 @@ import android.widget.TextView;
 public class SelectNumberActivity extends Activity {
 
 	TextView enteredNumber;
+	String number;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_number);
 		enteredNumber = (TextView)findViewById(R.id.entered_number);
-		
+		number = "";
 	}
 	
 	@Override
@@ -38,7 +39,65 @@ public class SelectNumberActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
-        	case R.id.newChecklist:
+        	case R.id.value_one:
+        		number += "1";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_two:
+        		number += "2";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_three:
+        		number += "3";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_four:
+        		number += "4";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_five:
+        		number += "5";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_six:
+        		number += "6";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_seven:
+        		number += "7";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_eight:
+        		number += "8";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_nine:
+        		number += "9";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_zero:
+        		number += "0";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_dot:
+        		number += ".";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
+        		return true;
+        	case R.id.value_negative:
+        		number += "-";
+        		enteredNumber.setText(number);
+        		openOptionsMenu();
         		return true;
             default:
                 return super.onOptionsItemSelected(item);
