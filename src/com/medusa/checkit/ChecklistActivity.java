@@ -37,10 +37,10 @@ public class ChecklistActivity extends Activity {
 	
 	private AudioManager mAudioManager;
 	private HTTPPostThread postThread;
-	private List<Card> mCards;
 	private StepCardScrollAdapter adapter;
     private CardScrollView mCardScrollView;
     private JSONWriter jsonWriter;
+    private List<Card> mCards;
 	private ArrayList<String[]> steps;
 	private Card currentCard;
 	private String[] currentStepArray;
@@ -73,7 +73,6 @@ public class ChecklistActivity extends Activity {
         
         mCardScrollView.setOnItemClickListener(new OnItemClickListener() {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        		
         		if (position == mCards.size() - 1) {
         			try { jsonWriter.finishNewChecklist(); } 
     				catch (IOException e) { e.printStackTrace(); }
@@ -103,7 +102,6 @@ public class ChecklistActivity extends Activity {
         	step = steps.get(i);
         	card = new Card(this);
         	card.setText(step[1]);
-//        	card.setFootnote("Step #" + step[0]);
         	card.setFootnote("Result:");
         	mCards.add(card);
         }
@@ -191,7 +189,7 @@ public class ChecklistActivity extends Activity {
 				catch (IOException e) { e.printStackTrace(); }
 				return true;
 			case 3:
-				recordMessage();
+				startActivity(new Intent(this, SelectNumberActivity.class));
 				return true;
 			case 4:
 				recordMessage();
