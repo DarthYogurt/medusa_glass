@@ -11,7 +11,6 @@
     <string name="finished_checklist">Finished Checklist!</string>
     <string name="click_to_continue">Click to continue</string>
     <string name="no_value_entered">No Value Entered</string>
-    
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>
@@ -24,5 +23,6 @@
     <string name="zero">0</string>
     <string name="dot">.</string>
     <string name="negative">-</string>
+    <string name="finish_number">Finished</string>
 
 </resources>

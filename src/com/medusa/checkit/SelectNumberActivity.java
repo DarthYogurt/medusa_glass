@@ -11,15 +11,17 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class SelectNumberActivity extends Activity {
+	
+	private static final int NUMBER_REQUEST = 5;
 
 	TextView enteredNumber;
-	String number;
+	String numberAsString;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_number);
 		enteredNumber = (TextView)findViewById(R.id.entered_number);
-		number = "";
+		numberAsString = "";
 	}
 	
 	@Override
@@ -40,64 +42,58 @@ public class SelectNumberActivity extends Activity {
         // Handle item selection.
         switch (item.getItemId()) {
         	case R.id.value_one:
-        		number += "1";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "1";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_two:
-        		number += "2";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "2";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_three:
-        		number += "3";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "3";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_four:
-        		number += "4";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "4";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_five:
-        		number += "5";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "5";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_six:
-        		number += "6";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "6";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_seven:
-        		number += "7";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "7";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_eight:
-        		number += "8";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "8";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_nine:
-        		number += "9";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "9";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_zero:
-        		number += "0";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "0";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_dot:
-        		number += ".";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += ".";
+        		enteredNumber.setText(numberAsString);
         		return true;
         	case R.id.value_negative:
-        		number += "-";
-        		enteredNumber.setText(number);
-        		openOptionsMenu();
+        		numberAsString += "-";
+        		enteredNumber.setText(numberAsString);
+        		return true;
+        	case R.id.finish_number:
+        		Intent intent = new Intent();
+        		intent.putExtra("numberAsString", numberAsString);
+        		setResult(NUMBER_REQUEST, intent);
+        		finish();
         		return true;
             default:
                 return super.onOptionsItemSelected(item);

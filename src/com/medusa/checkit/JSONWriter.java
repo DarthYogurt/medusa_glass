@@ -60,7 +60,6 @@ public class JSONWriter {
 	    } catch (IOException e) { e.printStackTrace(); }
 		try { fos.close(); } 
 		catch (IOException e) { e.printStackTrace(); }
-		
 	}
 	
 	public void writeStepBoolean(int stepId, boolean result) throws IOException {
@@ -77,18 +76,17 @@ public class JSONWriter {
 	public void writeStepDouble(int stepId, double result) throws IOException {
 		try {
 			checklistWriter.beginObject();
-			checklistWriter.name("stepId").value(2);
+			checklistWriter.name("stepId").value(stepId);
 			checklistWriter.name("stepType").value("double");
-			checklistWriter.name("value").value("2");
+			checklistWriter.name("value").value(result);
 			checklistWriter.endObject();
 		} catch (IOException e) { e.printStackTrace(); }
-		Log.v("recorded double", Double.toString(result));
 	}
 	
 	public void writeStepText(int stepId, String result) throws IOException {
 		try {
 			checklistWriter.beginObject();
-			checklistWriter.name("stepId").value(3);
+			checklistWriter.name("stepId").value(stepId);
 			checklistWriter.name("stepType").value("text");
 			checklistWriter.name("value").value(result);
 			checklistWriter.endObject();

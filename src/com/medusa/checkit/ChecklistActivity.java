@@ -30,6 +30,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ChecklistActivity extends Activity {
 	
 	private static final int SPEECH_REQUEST = 0;
+	private static final int NUMBER_REQUEST = 5;
 	private static final String STEPTYPE_BOOL = "bool";
 	private static final String STEPTYPE_DOUBLE = "double";
 	private static final String STEPTYPE_TEXT = "text";
@@ -48,6 +49,7 @@ public class ChecklistActivity extends Activity {
 	private int currentStepId;
 	private String currentStepType;
 	private String spokenText;
+	private String numberAsString;
 	
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -190,7 +192,8 @@ public class ChecklistActivity extends Activity {
 				catch (IOException e) { e.printStackTrace(); }
 				return true;
 			case 3:
-				startActivity(new Intent(this, SelectNumberActivity.class));
+				Intent getNumberIntent = new Intent(this, SelectNumberActivity.class);
+				startActivityForResult(getNumberIntent, NUMBER_REQUEST);
 				return true;
 			case 4:
 				recordMessage();
@@ -225,9 +228,11 @@ public class ChecklistActivity extends Activity {
 		startActivityForResult(intent, 1);
 	}
 	
-	// Handles voice recording, picture taking, video recording processing after completed
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		// Handles speech recording to text after finished
 	    if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
 	        List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 	        spokenText = results.get(0);
@@ -239,15 +244,24 @@ public class ChecklistActivity extends Activity {
 				adapter.notifyDataSetChanged();
 	        }
 	        
-	        if (currentStepType.equalsIgnoreCase(STEPTYPE_DOUBLE)) {
-	        	Double converted = Double.parseDouble(spokenText);
-	        	try { jsonWriter.writeStepDouble(currentStepId, converted); } 
-				catch (IOException e) { e.printStackTrace(); }
-	        	currentCard.setFootnote("Result: " + spokenText);
-				adapter.notifyDataSetChanged();
-	        }
+//	        if (currentStepType.equalsIgnoreCase(STEPTYPE_DOUBLE)) {
+//	        	Double converted = Double.parseDouble(spokenText);
+//	        	try { jsonWriter.writeStepDouble(currentStepId, converted); } 
+//				catch (IOException e) { e.printStackTrace(); }
+//	        	currentCard.setFootnote("Result: " + spokenText);
+//				adapter.notifyDataSetChanged();
+//	        }
 	    }
-	    super.onActivityResult(requestCode, resultCode, data);
+	    
+	    // Handles returned number after SelectNumberActivity finished
+	    if (requestCode == NUMBER_REQUEST) {
+	    	numberAsString = data.getStringExtra("numberAsString");
+	    	currentCard.setFootnote("Result: " + numberAsString);
+			adapter.notifyDataSetChanged();
+			Double parsedDouble = Double.parseDouble(numberAsString);
+			try { jsonWriter.writeStepDouble(currentStepId, parsedDouble); } 
+			catch (IOException e) { e.printStackTrace(); }
+	    }
 	}
 	
 	private class HTTPPostThread extends Thread {

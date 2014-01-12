@@ -30,6 +30,7 @@ public final class R {
     public static final class id {
         public static final int continueChecklist=0x7f0a0002;
         public static final int entered_number=0x7f0a0000;
+        public static final int finish_number=0x7f0a0010;
         public static final int newChecklist=0x7f0a0001;
         public static final int stop=0x7f0a0003;
         public static final int value_dot=0x7f0a000e;
@@ -70,6 +71,7 @@ public final class R {
         public static final int continueChecklist=0x7f070004;
         public static final int dot=0x7f070014;
         public static final int eight=0x7f070011;
+        public static final int finish_number=0x7f070016;
         public static final int finished_checklist=0x7f070007;
         public static final int five=0x7f07000e;
         public static final int four=0x7f07000d;
