@@ -82,6 +82,7 @@ public class JSONWriter {
 			checklistWriter.name("value").value("2");
 			checklistWriter.endObject();
 		} catch (IOException e) { e.printStackTrace(); }
+		Log.v("recorded double", Double.toString(result));
 	}
 	
 	public void writeStepText(int stepId, String result) throws IOException {
@@ -89,7 +90,7 @@ public class JSONWriter {
 			checklistWriter.beginObject();
 			checklistWriter.name("stepId").value(3);
 			checklistWriter.name("stepType").value("text");
-			checklistWriter.name("value").value("Monkey is caged");
+			checklistWriter.name("value").value(result);
 			checklistWriter.endObject();
 		} catch (IOException e) { e.printStackTrace(); }
 	}

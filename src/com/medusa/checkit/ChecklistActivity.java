@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
@@ -29,6 +30,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class ChecklistActivity extends Activity {
 	
+	private static final int SPEECH_REQUEST = 0;
+	
 	private AudioManager mAudioManager;
 	private HTTPPostThread postThread;
 	private List<Card> mCards;
@@ -41,8 +44,8 @@ public class ChecklistActivity extends Activity {
 	private int checklistId;
 	private int currentStepId;
 	private String currentStepType;
+	private String spokenText;
 	
-
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -147,7 +150,7 @@ public class ChecklistActivity extends Activity {
 		}
 		
 		if (currentStepType.equalsIgnoreCase("double")){
-			menu.add(Menu.NONE, 3, Menu.NONE, "Enter Number");
+			menu.add(Menu.NONE, 3, Menu.NONE, "Record Number");
 		}
 		
 		if (currentStepType.equalsIgnoreCase("text")){
@@ -186,13 +189,10 @@ public class ChecklistActivity extends Activity {
 				catch (IOException e) { e.printStackTrace(); }
 				return true;
 			case 3:
-				currentCard.setFootnote("Result: NUMBER ENTERED");
-				adapter.notifyDataSetChanged();
+				recordMessage();
 				return true;
 			case 4:
 				recordMessage();
-				currentCard.setFootnote("Result: MESSAGE RECORDED");
-				adapter.notifyDataSetChanged();
 				return true;
 			case 5:
 				takePicture();
@@ -209,7 +209,6 @@ public class ChecklistActivity extends Activity {
 		}
 	}
 	
-	private static final int SPEECH_REQUEST = 0;
 	private void recordMessage() {
 	    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 	    startActivityForResult(intent, SPEECH_REQUEST);
@@ -225,13 +224,27 @@ public class ChecklistActivity extends Activity {
 		startActivityForResult(intent, 1);
 	}
 	
+	// Handles voice recording, picture taking, video recording after done
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
 	        List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-	        String spokenText = results.get(0);
-	        // Do something with spokenText
-	        Log.v("spoken text", spokenText);
+	        spokenText = results.get(0);
+	        
+	        if (currentStepType.equalsIgnoreCase("double")) {
+	        	Double converted = Double.parseDouble(spokenText);
+	        	try { jsonWriter.writeStepDouble(currentStepId, converted); } 
+				catch (IOException e) { e.printStackTrace(); }
+	        	currentCard.setFootnote("Result: " + spokenText);
+				adapter.notifyDataSetChanged();
+	        }
+	        
+	        if (currentStepType.equalsIgnoreCase("text")) {
+	        	try { jsonWriter.writeStepText(currentStepId, spokenText); } 
+				catch (IOException e) { e.printStackTrace(); }
+	        	currentCard.setFootnote("Result: " + spokenText);
+				adapter.notifyDataSetChanged();
+	        }
 	    }
 	    super.onActivityResult(requestCode, resultCode, data);
 	}
