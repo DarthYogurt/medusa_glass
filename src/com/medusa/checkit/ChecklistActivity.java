@@ -154,6 +154,7 @@ public class ChecklistActivity extends Activity {
 		
 		if (currentStepType.equalsIgnoreCase(STEPTYPE_DOUBLE)){
 			menu.add(Menu.NONE, 3, Menu.NONE, "Enter Number");
+			menu.add(Menu.NONE, 4, Menu.NONE, "Record Number");
 		}
 		
 		if (currentStepType.equalsIgnoreCase(STEPTYPE_TEXT)){
@@ -244,13 +245,14 @@ public class ChecklistActivity extends Activity {
 				adapter.notifyDataSetChanged();
 	        }
 	        
-//	        if (currentStepType.equalsIgnoreCase(STEPTYPE_DOUBLE)) {
-//	        	Double converted = Double.parseDouble(spokenText);
-//	        	try { jsonWriter.writeStepDouble(currentStepId, converted); } 
-//				catch (IOException e) { e.printStackTrace(); }
-//	        	currentCard.setFootnote("Result: " + spokenText);
-//				adapter.notifyDataSetChanged();
-//	        }
+	        if (currentStepType.equalsIgnoreCase(STEPTYPE_DOUBLE)) {
+	        	spokenText.replaceAll(" ", "");
+	        	Double converted = Double.parseDouble(spokenText);
+	        	try { jsonWriter.writeStepDouble(currentStepId, converted); } 
+				catch (IOException e) { e.printStackTrace(); }
+	        	currentCard.setFootnote("Result: " + spokenText);
+				adapter.notifyDataSetChanged();
+	        }
 	    }
 	    
 	    // Handles returned number after SelectNumberActivity finished
