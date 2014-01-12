@@ -16,7 +16,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
@@ -31,6 +30,10 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ChecklistActivity extends Activity {
 	
 	private static final int SPEECH_REQUEST = 0;
+	private static final String STEPTYPE_BOOL = "bool";
+	private static final String STEPTYPE_DOUBLE = "double";
+	private static final String STEPTYPE_TEXT = "text";
+	private static final String STEPTYPE_FILE = "file";
 	
 	private AudioManager mAudioManager;
 	private HTTPPostThread postThread;
@@ -112,7 +115,6 @@ public class ChecklistActivity extends Activity {
     }
 	
 	private class StepCardScrollAdapter extends CardScrollAdapter {
-
         @Override
         public int findIdPosition(Object id) {
             return -1;
@@ -144,20 +146,20 @@ public class ChecklistActivity extends Activity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
 		
-		if (currentStepType.equalsIgnoreCase("bool")) {
+		if (currentStepType.equalsIgnoreCase(STEPTYPE_BOOL)) {
 			menu.add(Menu.NONE, 1, Menu.NONE, "Yes");
 			menu.add(Menu.NONE, 2, Menu.NONE, "No");
 		}
 		
-		if (currentStepType.equalsIgnoreCase("double")){
-			menu.add(Menu.NONE, 3, Menu.NONE, "Record Number");
+		if (currentStepType.equalsIgnoreCase(STEPTYPE_DOUBLE)){
+			menu.add(Menu.NONE, 3, Menu.NONE, "Enter Number");
 		}
 		
-		if (currentStepType.equalsIgnoreCase("text")){
+		if (currentStepType.equalsIgnoreCase(STEPTYPE_TEXT)){
 			menu.add(Menu.NONE, 4, Menu.NONE, "Record Message");
 		}
 		
-		if (currentStepType.equalsIgnoreCase("file")){
+		if (currentStepType.equalsIgnoreCase(STEPTYPE_FILE)){
 			menu.add(Menu.NONE, 5, Menu.NONE, "Take Picture");
 			menu.add(Menu.NONE, 6, Menu.NONE, "Record Video");
 		}
@@ -224,23 +226,23 @@ public class ChecklistActivity extends Activity {
 		startActivityForResult(intent, 1);
 	}
 	
-	// Handles voice recording, picture taking, video recording after done
+	// Handles voice recording, picture taking, video recording processing after completed
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
 	        List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 	        spokenText = results.get(0);
 	        
-	        if (currentStepType.equalsIgnoreCase("double")) {
-	        	Double converted = Double.parseDouble(spokenText);
-	        	try { jsonWriter.writeStepDouble(currentStepId, converted); } 
+	        if (currentStepType.equalsIgnoreCase(STEPTYPE_TEXT)) {
+	        	try { jsonWriter.writeStepText(currentStepId, spokenText); } 
 				catch (IOException e) { e.printStackTrace(); }
 	        	currentCard.setFootnote("Result: " + spokenText);
 				adapter.notifyDataSetChanged();
 	        }
 	        
-	        if (currentStepType.equalsIgnoreCase("text")) {
-	        	try { jsonWriter.writeStepText(currentStepId, spokenText); } 
+	        if (currentStepType.equalsIgnoreCase(STEPTYPE_DOUBLE)) {
+	        	Double converted = Double.parseDouble(spokenText);
+	        	try { jsonWriter.writeStepDouble(currentStepId, converted); } 
 				catch (IOException e) { e.printStackTrace(); }
 	        	currentCard.setFootnote("Result: " + spokenText);
 				adapter.notifyDataSetChanged();
@@ -250,13 +252,11 @@ public class ChecklistActivity extends Activity {
 	}
 	
 	private class HTTPPostThread extends Thread {
-		
 		@Override
 		public void run() {
 			HTTPPostRequest post = new HTTPPostRequest(getApplicationContext());
-			try {
-				post.multipartPost(JSONWriter.CHECKLIST_FILENAME);
-			} catch (ClientProtocolException e) { e.printStackTrace(); } 
+			try { post.multipartPost(JSONWriter.CHECKLIST_FILENAME); } 
+			catch (ClientProtocolException e) { e.printStackTrace(); } 
 			catch (IOException e) { e.printStackTrace(); }
 		}
 	}
