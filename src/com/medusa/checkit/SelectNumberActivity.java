@@ -14,13 +14,14 @@ public class SelectNumberActivity extends Activity {
 	
 	private static final int NUMBER_REQUEST = 5;
 
-	TextView enteredNumber;
+	TextView number;
 	String numberAsString;
+	boolean isNegative;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_number);
-		enteredNumber = (TextView)findViewById(R.id.entered_number);
+		number = (TextView)findViewById(R.id.entered_number);
 		numberAsString = "";
 	}
 	
@@ -30,66 +31,90 @@ public class SelectNumberActivity extends Activity {
         openOptionsMenu();
     }
 	
+//	@Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.select_number, menu);
+//        return true;
+//    }
+	
 	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.select_number, menu);
-        return true;
-    }
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.clear();
+		menu.add(Menu.NONE, 1, Menu.NONE, "1");
+		menu.add(Menu.NONE, 2, Menu.NONE, "2");
+		menu.add(Menu.NONE, 3, Menu.NONE, "3");
+		menu.add(Menu.NONE, 4, Menu.NONE, "4");
+		menu.add(Menu.NONE, 5, Menu.NONE, "5");
+		menu.add(Menu.NONE, 6, Menu.NONE, "6");
+		menu.add(Menu.NONE, 7, Menu.NONE, "7");
+		menu.add(Menu.NONE, 8, Menu.NONE, "8");
+		menu.add(Menu.NONE, 9, Menu.NONE, "9");
+		menu.add(Menu.NONE, 0, Menu.NONE, "0");
+		menu.add(Menu.NONE, 10, Menu.NONE, ".");
+        if (!isNegative) { menu.add(Menu.NONE, 11, Menu.NONE, "Make Negative"); } 
+        if (isNegative) { menu.add(Menu.NONE, 12, Menu.NONE, "Make Positive"); }
+        menu.add(Menu.NONE, 13, Menu.NONE, "Finish Number");
+		return super.onPrepareOptionsMenu(menu);
+	}
 	
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
-        	case R.id.value_one:
+        	case 1:
         		numberAsString += "1";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_two:
+        	case 2:
         		numberAsString += "2";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_three:
+        	case 3:
         		numberAsString += "3";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_four:
+        	case 4:
         		numberAsString += "4";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_five:
+        	case 5:
         		numberAsString += "5";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_six:
+        	case 6:
         		numberAsString += "6";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_seven:
+        	case 7:
         		numberAsString += "7";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_eight:
+        	case 8:
         		numberAsString += "8";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_nine:
+        	case 9:
         		numberAsString += "9";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_zero:
+        	case 0:
         		numberAsString += "0";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_dot:
+        	case 10:
         		numberAsString += ".";
-        		enteredNumber.setText(numberAsString);
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.value_negative:
-        		numberAsString += "-";
-        		enteredNumber.setText(numberAsString);
+        	case 11:
+        		makeNumberNegative();
+        		number.setText(numberAsString);
         		return true;
-        	case R.id.finish_number:
+        	case 12:
+        		makeNumberPositive();
+        		number.setText(numberAsString);
+        		return true;
+        	case 13:
         		Intent intent = new Intent();
         		intent.putExtra("numberAsString", numberAsString);
         		setResult(NUMBER_REQUEST, intent);
@@ -109,5 +134,15 @@ public class SelectNumberActivity extends Activity {
         }
         return false;
     }
+	
+	private void makeNumberNegative() {
+		numberAsString = "-" + numberAsString;
+		isNegative = true;
+	}
+	
+	private void makeNumberPositive() {
+		numberAsString = numberAsString.substring(1);
+		isNegative = false;
+	}
 	
 }

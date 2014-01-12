@@ -3,12 +3,12 @@
     
     <item
         android:id="@+id/newChecklist"
-        android:title="@string/newChecklist"
+        android:title="@string/new_checklist"
         android:icon="@drawable/ic_check" />
     
     <item
         android:id="@+id/continueChecklist"
-        android:title="@string/continueChecklist"
+        android:title="@string/continue_checklist"
         android:icon="@drawable/ic_forward" />
     
     <item

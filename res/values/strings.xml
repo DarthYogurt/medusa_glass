@@ -4,8 +4,8 @@
     <string name="check_it">Check It</string>
     <string name="app_name">Do Checklist</string>
     <string name="voice_trigger_start_program">do checklist</string>
-    <string name="newChecklist">New Checklist</string>
-    <string name="continueChecklist">Continue</string>
+    <string name="new_checklist">New Checklist</string>
+    <string name="continue_checklist">Continue</string>
     <string name="stop">Stop</string>
     <string name="loading">Loading Please Wait</string>
     <string name="finished_checklist">Finished Checklist!</string>
@@ -22,7 +22,8 @@
     <string name="nine">9</string>
     <string name="zero">0</string>
     <string name="dot">.</string>
-    <string name="negative">-</string>
+    <string name="make_negative">Make Negative</string>
+    <string name="make_positive">Make Positive</string>
     <string name="finish_number">Finished</string>
 
 </resources>

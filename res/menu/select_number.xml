@@ -34,9 +34,15 @@
 	<item
         android:id="@+id/value_dot"
         android:title="@string/dot" />
-	<item
-        android:id="@+id/value_negative"
-        android:title="@string/negative" />
+	
+    <item
+       	android:id="@+id/make_negative"
+       	android:title="@string/make_negative" />
+
+    <item
+       	android:id="@+id/make_positive"
+       	android:title="@string/make_positive" />
+
 	<item
 	    android:id="@+id/finish_number"
 	    android:title="@string/finish_number" />
