@@ -26,5 +26,6 @@
     <string name="make_positive">Make Positive</string>
     <string name="clear_number">Clear</string>
     <string name="finish_number">Finished</string>
+    <string name="already_has_decimal">Already has a decimal</string>
 
 </resources>

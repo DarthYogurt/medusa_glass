@@ -15,6 +15,7 @@ public class SelectNumberActivity extends Activity {
 	private static final int NUMBER_REQUEST = 5;
 
 	TextView number;
+	TextView tip;
 	String numberAsString;
 	boolean isNegative;
 	
@@ -22,6 +23,7 @@ public class SelectNumberActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_number);
 		number = (TextView)findViewById(R.id.entered_number);
+		tip = (TextView)findViewById(R.id.select_number_tip);
 		numberAsString = "";
 	}
 	
@@ -104,8 +106,13 @@ public class SelectNumberActivity extends Activity {
         		number.setText(numberAsString);
         		return true;
         	case 10:
-        		numberAsString += ".";
-        		number.setText(numberAsString);
+        		if (hasDecimal()) {
+        			tip.setText("Already has decimal");
+        		} 
+        		else {
+        			numberAsString += ".";
+            		number.setText(numberAsString);
+        		}
         		return true;
         	case 11:
         		makeNumberNegative();
@@ -139,6 +146,10 @@ public class SelectNumberActivity extends Activity {
         }
         return false;
     }
+	
+	private boolean hasDecimal() {
+		return numberAsString.contains(".");
+	}
 	
 	private void makeNumberNegative() {
 		numberAsString = "-" + numberAsString;

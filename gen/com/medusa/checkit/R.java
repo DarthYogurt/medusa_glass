@@ -28,10 +28,11 @@ public final class R {
         public static final int new_checklist_bg=0x7f020004;
     }
     public static final class id {
-        public static final int continueChecklist=0x7f0a0002;
+        public static final int continueChecklist=0x7f0a0003;
         public static final int entered_number=0x7f0a0000;
-        public static final int newChecklist=0x7f0a0001;
-        public static final int stop=0x7f0a0003;
+        public static final int newChecklist=0x7f0a0002;
+        public static final int select_number_tip=0x7f0a0001;
+        public static final int stop=0x7f0a0004;
     }
     public static final class layout {
         public static final int activity_checklist=0x7f030000;
@@ -50,6 +51,7 @@ public final class R {
         public static final int checklist1=0x7f050000;
     }
     public static final class string {
+        public static final int already_has_decimal=0x7f070019;
         public static final int app_name=0x7f070001;
         public static final int check_it=0x7f070000;
         public static final int clear_number=0x7f070017;
