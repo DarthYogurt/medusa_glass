@@ -54,7 +54,8 @@ public class SelectNumberActivity extends Activity {
 		menu.add(Menu.NONE, 10, Menu.NONE, ".");
         if (!isNegative) { menu.add(Menu.NONE, 11, Menu.NONE, "Make Negative"); } 
         if (isNegative) { menu.add(Menu.NONE, 12, Menu.NONE, "Make Positive"); }
-        menu.add(Menu.NONE, 13, Menu.NONE, "Finish Number");
+        menu.add(Menu.NONE, 13, Menu.NONE, "Clear");
+        menu.add(Menu.NONE, 14, Menu.NONE, "Finish Number");
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
@@ -115,6 +116,10 @@ public class SelectNumberActivity extends Activity {
         		number.setText(numberAsString);
         		return true;
         	case 13:
+        		clearNumber();
+        		number.setText("No Value Entered");
+        		return true;
+        	case 14:
         		Intent intent = new Intent();
         		intent.putExtra("numberAsString", numberAsString);
         		setResult(NUMBER_REQUEST, intent);
@@ -143,6 +148,10 @@ public class SelectNumberActivity extends Activity {
 	private void makeNumberPositive() {
 		numberAsString = numberAsString.substring(1);
 		isNegative = false;
+	}
+	
+	private void clearNumber() {
+		numberAsString = "";
 	}
 	
 }

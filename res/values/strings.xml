@@ -24,6 +24,7 @@
     <string name="dot">.</string>
     <string name="make_negative">Make Negative</string>
     <string name="make_positive">Make Positive</string>
+    <string name="clear_number">Clear</string>
     <string name="finish_number">Finished</string>
 
 </resources>

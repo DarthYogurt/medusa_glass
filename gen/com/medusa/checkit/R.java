@@ -30,22 +30,8 @@ public final class R {
     public static final class id {
         public static final int continueChecklist=0x7f0a0002;
         public static final int entered_number=0x7f0a0000;
-        public static final int finish_number=0x7f0a0011;
-        public static final int make_negative=0x7f0a000f;
-        public static final int make_positive=0x7f0a0010;
         public static final int newChecklist=0x7f0a0001;
         public static final int stop=0x7f0a0003;
-        public static final int value_dot=0x7f0a000e;
-        public static final int value_eight=0x7f0a000b;
-        public static final int value_five=0x7f0a0008;
-        public static final int value_four=0x7f0a0007;
-        public static final int value_nine=0x7f0a000c;
-        public static final int value_one=0x7f0a0004;
-        public static final int value_seven=0x7f0a000a;
-        public static final int value_six=0x7f0a0009;
-        public static final int value_three=0x7f0a0006;
-        public static final int value_two=0x7f0a0005;
-        public static final int value_zero=0x7f0a000d;
     }
     public static final class layout {
         public static final int activity_checklist=0x7f030000;
@@ -59,8 +45,6 @@ public final class R {
     public static final class menu {
         public static final int continue_checklist=0x7f090000;
         public static final int main_menu=0x7f090001;
-        public static final int new_checklist=0x7f090002;
-        public static final int select_number=0x7f090003;
     }
     public static final class raw {
         public static final int checklist1=0x7f050000;
@@ -68,11 +52,12 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f070001;
         public static final int check_it=0x7f070000;
+        public static final int clear_number=0x7f070017;
         public static final int click_to_continue=0x7f070008;
         public static final int continue_checklist=0x7f070004;
         public static final int dot=0x7f070014;
         public static final int eight=0x7f070011;
-        public static final int finish_number=0x7f070017;
+        public static final int finish_number=0x7f070018;
         public static final int finished_checklist=0x7f070007;
         public static final int five=0x7f07000e;
         public static final int four=0x7f07000d;
