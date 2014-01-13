@@ -182,7 +182,7 @@ public class ChecklistActivity extends Activity {
 		/*	itemId 1 = Yes/True
 			itemId 2 = No/False
 			itemId 3 = Enter Number
-			itemId 4 = Record Message
+			itemId 4 = Record Speech
 			itemId 5 = Take Picture
 			itemId 6 = Record Video
 		*/
@@ -307,14 +307,5 @@ public class ChecklistActivity extends Activity {
 			catch (IOException e) { e.printStackTrace(); }
 		}
 	}
-	
-//	private void checkStepValues() {
-//		for (int i = 0; i < stepValues.length; i++) {
-//			if (stepValues[i] == null) {
-//			} else {
-//				Log.v(Integer.toString(i), stepValues[i].toString());
-//			}
-//		}
-//	}
 
 }
