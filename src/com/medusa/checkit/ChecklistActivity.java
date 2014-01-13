@@ -46,10 +46,11 @@ public class ChecklistActivity extends Activity {
 	private Card currentCard;
 	private String[] currentStepArray;
 	private int checklistId;
+	private int currentStepOrder;
 	private int currentStepId;
 	private String currentStepType;
-	private String spokenText;
 	private String numberAsString;
+	private Object[] stepValues;
 	
 	@SuppressWarnings("unchecked")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class ChecklistActivity extends Activity {
 		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		postThread = new HTTPPostThread();
 		steps = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
+		stepValues = new Object[steps.size() + 1]; // Step 1 = stepValues[1], Step 2 = stepValues[2], etc
 		
 		createCards();
         mCardScrollView = new CardScrollView(this);
@@ -78,6 +80,7 @@ public class ChecklistActivity extends Activity {
         		if (position == mCards.size() - 1) {
         			try { jsonWriter.finishNewChecklist(); } 
     				catch (IOException e) { e.printStackTrace(); }
+        			checkStepValues();
     				postThread.start();
     				Log.v("HTTP POST", "Checklist JSON sent to server");
     				startActivity(new Intent(getApplicationContext(), FinishChecklistActivity.class));
@@ -86,8 +89,9 @@ public class ChecklistActivity extends Activity {
         		else {
         			currentCard = mCards.get(position);
             		currentStepArray = steps.get(position);
-            		currentStepId = Integer.parseInt(currentStepArray[3]);
+            		currentStepOrder = Integer.parseInt(currentStepArray[0]);
             		currentStepType = currentStepArray[2];
+            		currentStepId = Integer.parseInt(currentStepArray[3]);
         			openOptionsMenu();
         			mAudioManager.playSoundEffect(AudioManager.FX_KEY_CLICK);
         		}
@@ -183,14 +187,16 @@ public class ChecklistActivity extends Activity {
 			case 1:
 				currentCard.setFootnote("Result: YES");
 				adapter.notifyDataSetChanged();
-				try { jsonWriter.writeStepBoolean(currentStepId, true);	} 
-				catch (IOException e) { e.printStackTrace(); }
+				stepValues[currentStepOrder] = true; 
+//				try { jsonWriter.writeStepBoolean(currentStepId, true);	} 
+//				catch (IOException e) { e.printStackTrace(); }
 				return true;
 			case 2:
 				currentCard.setFootnote("Result: NO");
 				adapter.notifyDataSetChanged();
-				try { jsonWriter.writeStepBoolean(currentStepId, false); } 
-				catch (IOException e) { e.printStackTrace(); }
+				stepValues[currentStepOrder] = false; 
+//				try { jsonWriter.writeStepBoolean(currentStepId, false); } 
+//				catch (IOException e) { e.printStackTrace(); }
 				return true;
 			case 3:
 				Intent getNumberIntent = new Intent(this, SelectNumberActivity.class);
@@ -232,6 +238,7 @@ public class ChecklistActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		String spokenText;
 		
 		// Handles speech recording to text after finished
 	    if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
@@ -239,8 +246,9 @@ public class ChecklistActivity extends Activity {
 	        spokenText = results.get(0);
 	        
 	        if (currentStepType.equalsIgnoreCase(STEPTYPE_TEXT)) {
-	        	try { jsonWriter.writeStepText(currentStepId, spokenText); } 
-				catch (IOException e) { e.printStackTrace(); }
+//	        	try { jsonWriter.writeStepText(currentStepId, spokenText); } 
+//				catch (IOException e) { e.printStackTrace(); }
+	        	stepValues[currentStepOrder] = spokenText;
 	        	currentCard.setFootnote("Result: " + spokenText);
 				adapter.notifyDataSetChanged();
 	        }
@@ -261,8 +269,9 @@ public class ChecklistActivity extends Activity {
 	    	currentCard.setFootnote("Result: " + numberAsString);
 			adapter.notifyDataSetChanged();
 			Double parsedDouble = Double.parseDouble(numberAsString);
-			try { jsonWriter.writeStepDouble(currentStepId, parsedDouble); } 
-			catch (IOException e) { e.printStackTrace(); }
+			stepValues[currentStepOrder] = parsedDouble;
+//			try { jsonWriter.writeStepDouble(currentStepId, parsedDouble); } 
+//			catch (IOException e) { e.printStackTrace(); }
 	    }
 	}
 	
@@ -273,6 +282,15 @@ public class ChecklistActivity extends Activity {
 			try { post.multipartPost(JSONWriter.CHECKLIST_FILENAME); } 
 			catch (ClientProtocolException e) { e.printStackTrace(); } 
 			catch (IOException e) { e.printStackTrace(); }
+		}
+	}
+	
+	private void checkStepValues() {
+		for (int i = 0; i < stepValues.length; i++) {
+			if (stepValues[i] == null) {
+			} else {
+				Log.v(Integer.toString(i), stepValues[i].toString());
+			}
 		}
 	}
 

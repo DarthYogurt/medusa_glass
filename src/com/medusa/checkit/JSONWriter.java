@@ -57,9 +57,8 @@ public class JSONWriter {
 			checklistWriter.endArray();
 			checklistWriter.endObject();
 			checklistWriter.close();
+			fos.close();
 	    } catch (IOException e) { e.printStackTrace(); }
-		try { fos.close(); } 
-		catch (IOException e) { e.printStackTrace(); }
 	}
 	
 	public void writeStepBoolean(int stepId, boolean result) throws IOException {
