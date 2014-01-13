@@ -60,6 +60,10 @@ public class ChecklistActivity extends Activity {
 		steps = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
 		stepValues = new Object[steps.size() + 1]; // Step 1 = stepValues[1], Step 2 = stepValues[2], etc
 		
+		for (int i = 0; i < steps.size(); i++) {
+			Log.v("this checklist steps", Arrays.toString(steps.get(i)));
+		}
+		
 		createCards();
         mCardScrollView = new CardScrollView(this);
         adapter = new StepCardScrollAdapter();
@@ -77,10 +81,13 @@ public class ChecklistActivity extends Activity {
         
         mCardScrollView.setOnItemClickListener(new OnItemClickListener() {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        		// Clicked Finish Checklist Card
         		if (position == mCards.size() - 1) {
-        			try { jsonWriter.finishNewChecklist(); } 
+        			
+        			try { 
+        				writeAllStepsToJSON();
+        				jsonWriter.finishNewChecklist(); } 
     				catch (IOException e) { e.printStackTrace(); }
-        			checkStepValues();
     				postThread.start();
     				Log.v("HTTP POST", "Checklist JSON sent to server");
     				startActivity(new Intent(getApplicationContext(), FinishChecklistActivity.class));
@@ -187,16 +194,12 @@ public class ChecklistActivity extends Activity {
 			case 1:
 				currentCard.setFootnote("Result: YES");
 				adapter.notifyDataSetChanged();
-				stepValues[currentStepOrder] = true; 
-//				try { jsonWriter.writeStepBoolean(currentStepId, true);	} 
-//				catch (IOException e) { e.printStackTrace(); }
+				stepValues[currentStepOrder] = true;
 				return true;
 			case 2:
 				currentCard.setFootnote("Result: NO");
 				adapter.notifyDataSetChanged();
-				stepValues[currentStepOrder] = false; 
-//				try { jsonWriter.writeStepBoolean(currentStepId, false); } 
-//				catch (IOException e) { e.printStackTrace(); }
+				stepValues[currentStepOrder] = false;
 				return true;
 			case 3:
 				Intent getNumberIntent = new Intent(this, SelectNumberActivity.class);
@@ -256,8 +259,7 @@ public class ChecklistActivity extends Activity {
 	        if (currentStepType.equalsIgnoreCase(STEPTYPE_DOUBLE)) {
 	        	spokenText.replaceAll(" ", "");
 	        	Double converted = Double.parseDouble(spokenText);
-	        	try { jsonWriter.writeStepDouble(currentStepId, converted); } 
-				catch (IOException e) { e.printStackTrace(); }
+	        	stepValues[currentStepOrder] = converted;
 	        	currentCard.setFootnote("Result: " + spokenText);
 				adapter.notifyDataSetChanged();
 	        }
@@ -270,9 +272,27 @@ public class ChecklistActivity extends Activity {
 			adapter.notifyDataSetChanged();
 			Double parsedDouble = Double.parseDouble(numberAsString);
 			stepValues[currentStepOrder] = parsedDouble;
-//			try { jsonWriter.writeStepDouble(currentStepId, parsedDouble); } 
-//			catch (IOException e) { e.printStackTrace(); }
 	    }
+	}
+	
+	private void writeAllStepsToJSON() {
+		for (int i = 1; i < stepValues.length; i++) {
+			currentStepArray = steps.get(i - 1);
+			
+			if (stepValues[i] instanceof Boolean) {
+				Log.v("check if bool", "working");
+				try { jsonWriter.writeStepBoolean(Integer.parseInt(currentStepArray[3]), (Boolean)stepValues[i]); } 
+				catch (IOException e) { e.printStackTrace(); }
+			}
+			if (stepValues[i].getClass().equals(Double.TYPE)) {
+				try { jsonWriter.writeStepDouble((Integer)stepValues[i], (Double)stepValues[i]); } 
+				catch (IOException e) { e.printStackTrace(); }
+			}
+			if (stepValues[i].getClass().equals(String.class)) {
+				try { jsonWriter.writeStepText((Integer)stepValues[i], (String)stepValues[i]); } 
+				catch (IOException e) { e.printStackTrace(); }
+			}
+		}
 	}
 	
 	private class HTTPPostThread extends Thread {
@@ -285,13 +305,13 @@ public class ChecklistActivity extends Activity {
 		}
 	}
 	
-	private void checkStepValues() {
-		for (int i = 0; i < stepValues.length; i++) {
-			if (stepValues[i] == null) {
-			} else {
-				Log.v(Integer.toString(i), stepValues[i].toString());
-			}
-		}
-	}
+//	private void checkStepValues() {
+//		for (int i = 0; i < stepValues.length; i++) {
+//			if (stepValues[i] == null) {
+//			} else {
+//				Log.v(Integer.toString(i), stepValues[i].toString());
+//			}
+//		}
+//	}
 
 }
