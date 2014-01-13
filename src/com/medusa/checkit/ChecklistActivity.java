@@ -60,10 +60,6 @@ public class ChecklistActivity extends Activity {
 		steps = (ArrayList<String[]>) this.getIntent().getSerializableExtra("steps");
 		stepValues = new Object[steps.size() + 1]; // Step 1 = stepValues[1], Step 2 = stepValues[2], etc
 		
-		for (int i = 0; i < steps.size(); i++) {
-			Log.v("this checklist steps", Arrays.toString(steps.get(i)));
-		}
-		
 		createCards();
         mCardScrollView = new CardScrollView(this);
         adapter = new StepCardScrollAdapter();
@@ -83,10 +79,8 @@ public class ChecklistActivity extends Activity {
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         		// Clicked Finish Checklist Card
         		if (position == mCards.size() - 1) {
-        			
-        			try { 
-        				writeAllStepsToJSON();
-        				jsonWriter.finishNewChecklist(); } 
+        			writeAllStepsToJSON();
+        			try { jsonWriter.finishNewChecklist(); } 
     				catch (IOException e) { e.printStackTrace(); }
     				postThread.start();
     				Log.v("HTTP POST", "Checklist JSON sent to server");
@@ -249,8 +243,6 @@ public class ChecklistActivity extends Activity {
 	        spokenText = results.get(0);
 	        
 	        if (currentStepType.equalsIgnoreCase(STEPTYPE_TEXT)) {
-//	        	try { jsonWriter.writeStepText(currentStepId, spokenText); } 
-//				catch (IOException e) { e.printStackTrace(); }
 	        	stepValues[currentStepOrder] = spokenText;
 	        	currentCard.setFootnote("Result: " + spokenText);
 				adapter.notifyDataSetChanged();
@@ -280,16 +272,15 @@ public class ChecklistActivity extends Activity {
 			currentStepArray = steps.get(i - 1);
 			
 			if (stepValues[i] instanceof Boolean) {
-				Log.v("check if bool", "working");
 				try { jsonWriter.writeStepBoolean(Integer.parseInt(currentStepArray[3]), (Boolean)stepValues[i]); } 
 				catch (IOException e) { e.printStackTrace(); }
 			}
-			if (stepValues[i].getClass().equals(Double.TYPE)) {
-				try { jsonWriter.writeStepDouble((Integer)stepValues[i], (Double)stepValues[i]); } 
+			if (stepValues[i] instanceof Double) {
+				try { jsonWriter.writeStepDouble(Integer.parseInt(currentStepArray[3]), (Double)stepValues[i]); } 
 				catch (IOException e) { e.printStackTrace(); }
 			}
-			if (stepValues[i].getClass().equals(String.class)) {
-				try { jsonWriter.writeStepText((Integer)stepValues[i], (String)stepValues[i]); } 
+			if (stepValues[i] instanceof String) {
+				try { jsonWriter.writeStepText(Integer.parseInt(currentStepArray[3]), (String)stepValues[i]); } 
 				catch (IOException e) { e.printStackTrace(); }
 			}
 		}
