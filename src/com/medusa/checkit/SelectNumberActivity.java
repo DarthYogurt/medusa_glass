@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class SelectNumberActivity extends Activity {
 	
-	private static final int NUMBER_REQUEST = 5;
+	private static final int NUMBER_REQUEST = 3;
 
 	TextView number;
 	TextView tip;

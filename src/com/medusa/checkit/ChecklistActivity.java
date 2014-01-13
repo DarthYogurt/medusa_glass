@@ -30,7 +30,9 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ChecklistActivity extends Activity {
 	
 	private static final int SPEECH_REQUEST = 0;
-	private static final int NUMBER_REQUEST = 5;
+	private static final int PICTURE_REQUEST = 1;
+	private static final int VIDEO_REQUEST = 2;
+	private static final int NUMBER_REQUEST = 3;
 	private static final String STEPTYPE_BOOL = "bool";
 	private static final String STEPTYPE_DOUBLE = "double";
 	private static final String STEPTYPE_TEXT = "text";
@@ -159,7 +161,7 @@ public class ChecklistActivity extends Activity {
 		
 		if (currentStepType.equalsIgnoreCase(STEPTYPE_DOUBLE)){
 			menu.add(Menu.NONE, 3, Menu.NONE, "Enter Number");
-			menu.add(Menu.NONE, 4, Menu.NONE, "Record Number");
+			menu.add(Menu.NONE, 4, Menu.NONE, "Say Number");
 		}
 		
 		if (currentStepType.equalsIgnoreCase(STEPTYPE_TEXT)){
@@ -200,7 +202,7 @@ public class ChecklistActivity extends Activity {
 				startActivityForResult(getNumberIntent, NUMBER_REQUEST);
 				return true;
 			case 4:
-				recordMessage();
+				recordSpeech();
 				return true;
 			case 5:
 				takePicture();
@@ -217,19 +219,19 @@ public class ChecklistActivity extends Activity {
 		}
 	}
 	
-	private void recordMessage() {
+	private void recordSpeech() {
 	    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 	    startActivityForResult(intent, SPEECH_REQUEST);
 	}
 	
 	private void takePicture() {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		startActivityForResult(intent, 1);
+		startActivityForResult(intent, PICTURE_REQUEST);
 	}
 	
 	private void takeVideo() {
 		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-		startActivityForResult(intent, 1);
+		startActivityForResult(intent, VIDEO_REQUEST);
 	}
 	
 	@Override
@@ -255,6 +257,16 @@ public class ChecklistActivity extends Activity {
 	        	currentCard.setFootnote("Result: " + spokenText);
 				adapter.notifyDataSetChanged();
 	        }
+	    }
+	    
+	    // Handles picture taking after finished
+	    if (requestCode == PICTURE_REQUEST && resultCode == RESULT_OK) {
+
+	    }
+	    
+	    // Handles video taking after finished
+	    if (requestCode == VIDEO_REQUEST && resultCode == RESULT_OK) {
+
 	    }
 	    
 	    // Handles returned number after SelectNumberActivity finished
