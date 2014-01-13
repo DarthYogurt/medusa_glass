@@ -161,7 +161,7 @@ public class ChecklistActivity extends Activity {
 		
 		if (currentStepType.equalsIgnoreCase(STEPTYPE_DOUBLE)){
 			menu.add(Menu.NONE, 3, Menu.NONE, "Enter Number");
-			menu.add(Menu.NONE, 4, Menu.NONE, "Say Number");
+//			menu.add(Menu.NONE, 4, Menu.NONE, "Say Number");
 		}
 		
 		if (currentStepType.equalsIgnoreCase(STEPTYPE_TEXT)){
